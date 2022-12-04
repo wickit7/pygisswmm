@@ -25,12 +25,12 @@ Die vorhandenen JSON- und Batch-Dateien wurden für die Testdaten (data\INPUT.gd
 ## Ausführung Skripte
 Es wurden mehrere Skripte erstellt, die nacheinander ausgeführt werden. Im Folgenden werden die Skripte kurz beschrieben.
 
-### 0_BasicFunctions
+### [0_BasicFunctions](sia2gisswmm)
 Eine Sammlung an Funktionen die in den folgenden Python-Skripten importiert und angewendet werden.
 
 
-### 1_SIA2GISSWMM
-#### sia2gisswmm.py
+### [1_SIA2GISSWMM](1_SIA2GISSWMM)
+#### [sia2gisswmm.py](1_SIA2GISSWMM/sia2gisswmm.py)
 Das Abwasserkataster (sia405) in einen vereinfachten GIS-Datensatz konvertieren, welcher als Grundlage für die Weiterverarbeitung verwendet wird. Dem Skript wird eine JSON-Datei mit den folgenden Parametern übergeben:
 
 | Parameter | Beschreibung | Beispiel |
@@ -52,8 +52,8 @@ Das Abwasserkataster (sia405) in einen vereinfachten GIS-Datensatz konvertieren,
 | default_values_link <br />  - InOffset <br />  - SurchargeDepth <br />  - InitFlow <br />  - MaxFlow | Liste mit Dictionaries für das Mapping von zusätzlichen Output Feldern inklusive Standardwerte für die Output Feature-Klasse "out_link".| ![image](https://user-images.githubusercontent.com/45633047/205505226-cb84ae6a-fc96-4dba-8203-79a9e7470200.png) |
 | default_values_node <br />  - InitDepth <br />  - SurchargeDepth <br />  - PondedArea <br /> | Liste mit Dictionaries für das Mapping von zusätzlichen Output Feldern inklusive Standardwerte für die Output Feature-Klasse "out_node".| ![image](https://user-images.githubusercontent.com/45633047/205505287-f1abcfce-bc19-48ed-85c3-96798a5aa70a.png)|
 
-### 2_GISSWMM
-#### gisswmm_upd.py
+### [2_GISSWMM](2_GISSWMM)
+#### [gisswmm_upd.py](2_GISSWMM/2_GISSWMM.py)
 - Erstellung Netzwerktopologie: Haltungen werden bei Einlaufknoten aufgetrennt um eine strikte Knoten-Haltung-Knoten Topologie zu erhalten. 
 - Ermittlung Deckelkote: Für Knoten ohne gemessene Deckelkote (Höhe des Schachtdeckels m ü. M.), wird die Höhe aus einem Höhenmodell (DHM) extrahiert.
 - Interpolation Sohlenkote: Für Knoten ohne gemessene Sohlenkote (Höhe der Schachtsohle m ü. M.), wird die Höhe mit einem Algorithmus berechnet. 
@@ -83,7 +83,7 @@ Dem Skript wird eine JSON-Datei mit den folgenden Parametern übergeben:
 | link_length | Bezeichnung vom Feld mit der Haltungslänge in der Feature-Klasse "in_link". | "Length" |
 | mean_slope | Mittleres Gefälle für die Berechnung der Sohlenkote. Dieses Gefälle wird nur verwendet, falls entlang eines Haltungstranges nur eine einzige Sohlenkote vorhanden ist. | 0.05 |
 
-#### copy_from_vx_to_vy.py
+#### [copy_from_vx_to_vy.py](2_GISSWMM/copy_from_vx_to_vy.py)
 Mit diesem Skript können Haltungen (link) und Knoten (node) von einem Dataset (Simulation) in ein neues Dataset kopiert werden. Dem Skript wird eine JSON-Datei mit folgenden Parameter übergeben:
 
 | Parameter | Beschreibung | Beispiel |
