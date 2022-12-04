@@ -1,0 +1,43 @@
+{
+	"log_folder": "C:/pygisswmm/3_SUBCATCHMENT/Logs",
+	"sim_nr": "v1",
+	"method": "3",
+	"snap_distance": "1",
+	"min_area":"1", 
+	"mapping_land_imperv": {
+		"in_field": "ART",
+		"mapping": {"0":"100","1":"100","2":"100","3":"100","4":"100","5":"100","6":"0","7":"100","8":"0","9":"0","10":"0", "11":"0","12":"0","13":"0","14":"0", "15":"0","16":"0","17":"0", "18":"0","19":"80","20":"80","21":"60","22":"80","23":"30","24":"0", "25":"0"}
+		},
+	"mapping_land_roughness": {
+		"in_field": "ART",
+		"mapping": {"0":"0.01","1":"0.01","2":"0.01","3":"0.01","4":"0.02","5":"0.01","6":"0.3","7":"0.01","8":"0.04","9":"0.05","10":"0.04", "11":"0.05","12":"0.03","13":"0.03","14":"0.1", "15":"0.1","16":"0.2","17":"0.3", "18":"0.2","19":"0.02","20":"0.02","21":"0.05","22":"0.05","23":"0.05","24":"0.2", "25":"0.2"}
+		},
+	"mapping_land_depression_storage": {
+		"in_field": "ART",
+		"mapping": {"0":"0.05","1":"0.05","2":"0.05","3":"0.05","4":"0.07","5":"0.05","6":"0","7":"0.05","8":"0.2","9":"0.2","10":"0.2", "11":"0.2","12":"0.2","13":"0.2","14":"0", "15":"0","16":"0","17":"0.4", "18":"0.3","19":"0.05","20":"0.05","21":"0.05","22":"0.05","23":"0.05","24":"0.3", "25":"0.3"}
+		},
+	"infiltration": {
+		"max_rate":"3",
+		"min_rate":"0.5",
+		"decay":"4",
+		"dry_time":"7",
+		"max_infil":"0"
+	},
+	"gisswmm_workspace": "C:/pygisswmm/data/GISSWMM.gdb",
+	"overwrite": "True",
+	"out_subcatchment": "subcatchment",
+	"in_node": "node",
+	"node_id": "Name",	
+	"node_type": "SWMM_TYPE",
+	"type_inlet": "INLET",
+	"dhm_workspace": "C:/pygisswmm/data/Input.gdb",
+	"in_dhm": "DHM", 
+	"max_slope": "60",
+	"land_workspace": "C:/pygisswmm/data/Input.gdb",
+	"in_land": "BODENBEDECKUNG",
+	"out_raster_workspace": "C:/pygisswmm/data/Default.gdb",
+	"out_raster_prefix": "test",
+	"parcel_workspace": "C:/pygisswmm/data/Input.gdb",
+	"in_parcel": "LIEGENSCHAFTEN",
+	"parcel_id": "NUMMER"
+}

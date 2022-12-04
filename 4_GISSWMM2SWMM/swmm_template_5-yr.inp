@@ -1,0 +1,173 @@
+[TITLE]
+;;Project Title/Notes
+Testgebiet - 5-yr rainfall
+
+[OPTIONS]
+;;Option             Value
+FLOW_UNITS           CMS
+INFILTRATION         HORTON
+FLOW_ROUTING         DYNWAVE
+LINK_OFFSETS         DEPTH
+MIN_SLOPE            0
+ALLOW_PONDING        NO
+SKIP_STEADY_STATE    NO
+
+START_DATE           06/17/2006
+START_TIME           15:40:00
+REPORT_START_DATE    06/17/2006
+REPORT_START_TIME    15:40:00
+END_DATE             06/17/2006
+END_TIME             18:20:00
+SWEEP_START          1/1
+SWEEP_END            12/31
+DRY_DAYS             0
+REPORT_STEP          00:01:00
+WET_STEP             00:01:00
+DRY_STEP             00:01:00
+ROUTING_STEP         0:00:15 
+RULE_STEP            00:00:00
+
+INERTIAL_DAMPING     PARTIAL
+NORMAL_FLOW_LIMITED  BOTH
+FORCE_MAIN_EQUATION  H-W
+VARIABLE_STEP        0.75
+LENGTHENING_STEP     0
+MIN_SURFAREA         0
+MAX_TRIALS           8
+HEAD_TOLERANCE       0.0015
+SYS_FLOW_TOL         5
+LAT_FLOW_TOL         5
+MINIMUM_STEP         0.5
+THREADS              1
+
+[EVAPORATION]
+;;Data Source    Parameters
+;;-------------- ----------------
+CONSTANT         0.0
+DRY_ONLY         NO
+
+[RAINGAGES]
+;;               Rain      Time   Snow   Data      
+;;Name           Type      Intrvl Catch  Source    
+;;-------------- --------- ------ ------ ----------
+RainGage         INTENSITY 0:10   1.0    TIMESERIES 5-yr    
+
+[SUBCATCHMENTS]
+;;                                                 Total    Pcnt.             Pcnt.    Curb     Snow    
+;;Name           Raingage         Outlet           Area     Imperv   Width    Slope    Length   Pack    
+;;-------------- ---------------- ---------------- -------- -------- -------- -------- -------- --------
+
+[SUBAREAS]
+;;Subcatchment   N-Imperv   N-Perv     S-Imperv   S-Perv     PctZero    RouteTo    PctRouted 
+;;-------------- ---------- ---------- ---------- ---------- ---------- ---------- ----------
+
+[INFILTRATION]
+;;Subcatchment   MaxRate    MinRate    Decay      DryTime    MaxInfil  
+;;-------------- ---------- ---------- ---------- ---------- ----------
+
+[JUNCTIONS]
+;;               Invert     Max.       Init.      Surcharge  Ponded    
+;;Name           Elev.      Depth      Depth      Depth      Area      
+;;-------------- ---------- ---------- ---------- ---------- ----------
+
+[OUTFALLS]
+;;               Invert     Outfall    Stage/Table      Tide
+;;Name           Elev.      Type       Time Series      Gate
+;;-------------- ---------- ---------- ---------------- ----
+
+[STORAGE]
+;;               Invert   Max.     Init.    Storage    Curve                      Ponded   Evap.   
+;;Name           Elev.    Depth    Depth    Curve      Params                     Area     Frac.    Infiltration Parameters
+;;-------------- -------- -------- -------- ---------- -------- -------- -------- -------- -------- -----------------------
+
+[CONDUITS]
+;;               Inlet            Outlet                      Manning    Inlet      Outlet     Init.      Max.      
+;;Name           Node             Node             Length     N          Offset     Offset     Flow       Flow      
+
+[PUMPS]
+;;               Inlet            Outlet           Pump             Init.  Startup  Shutoff 
+;;Name           Node             Node             Curve            Status Depth    Depth   
+;;-------------- ---------------- ---------------- ---------------- ------ -------- --------
+
+[ORIFICES]
+;;               Inlet            Outlet           Orifice      Crest      Disch.     Flap Open/Close
+;;Name           Node             Node             Type         Height     Coeff.     Gate Time      
+;;-------------- ---------------- ---------------- ------------ ---------- ---------- ---- ----------
+
+[WEIRS]
+;;               Inlet            Outlet           Weir         Crest      Disch.     Flap End      End       
+;;Name           Node             Node             Type         Height     Coeff.     Gate Con.     Coeff.    
+;;-------------- ---------------- ---------------- ------------ ---------- ---------- ---- -------- ----------
+
+[XSECTIONS]
+;;Link           Shape        Geom1            Geom2      Geom3      Geom4      Barrels   
+;;-------------- ------------ ---------------- ---------- ---------- ---------- ----------
+
+[LOSSES]
+;;Link           Inlet      Outlet     Average    Flap Gate 
+;;-------------- ---------- ---------- ---------- ----------
+
+[DWF]
+;;                                Average    Time      
+;;Node           Parameter        Value      Patterns  
+;;-------------- ---------------- ---------- ----------
+
+[CURVES]
+;;Name           Type       X-Value    Y-Value   
+
+[TIMESERIES]
+;;Name           Date       Time       Value     
+;;-------------- ---------- ---------- ----------
+;wie in GEP
+5-yr             06/17/2006 15:40      14.4      
+5-yr             06/17/2006 15:50      95.4      
+5-yr             06/17/2006 16:00      43.2      
+5-yr             06/17/2006 16:10      7.2       
+5-yr             06/17/2006 16:20      21.6      
+5-yr             06/17/2006 16:30      10.8      
+5-yr             06/17/2006 16:40      0         
+5-yr             06/17/2006 16:50      0.612     
+5-yr             06/17/2006 17:00      2.412     
+5-yr             06/17/2006 17:10      1.188     
+5-yr             06/17/2006 17:20      0         
+5-yr             06/17/2006 17:30      0.612     
+5-yr             06/17/2006 17:40      0         
+5-yr             06/17/2006 17:50      0         
+5-yr             06/17/2006 18:00      1.188     
+5-yr             06/17/2006 18:10      1.8       
+5-yr             06/17/2006 18:20      0.612  
+
+[REPORT]
+;;Reporting Options
+INPUT      NO
+CONTROLS   NO
+SUBCATCHMENTS ALL
+NODES ALL
+LINKS ALL
+
+[TAGS]
+
+[MAP]
+DIMENSIONS 2664306.000 1210657.000 2664670.000 1210987.000
+Units      Meters
+
+[COORDINATES]
+;;Node           X-Coord            Y-Coord           
+;;-------------- ------------------ ------------------
+
+[VERTICES]
+;;Link           X-Coord            Y-Coord           
+;;-------------- ------------------ ------------------
+
+[Polygons]
+;;Subcatchment   X-Coord            Y-Coord           
+;;-------------- ------------------ ------------------
+
+[SYMBOLS]
+;;Gage           X-Coord            Y-Coord           
+;;-------------- ------------------ ------------------
+
+[LABELS]
+;;X-Coord          Y-Coord            Label   
+
+[BACKDROP]

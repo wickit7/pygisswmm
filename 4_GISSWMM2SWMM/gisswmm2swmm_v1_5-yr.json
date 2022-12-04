@@ -1,0 +1,9 @@
+{
+	"log_folder": "C:/pygisswmm/4_GISSWMM2SWMM/Logs",
+	"sim_nr": "v1",
+	"gisswmm_workspace": "C:/pygisswmm/data/GISSWMM.gdb",
+	"in_node": "node",
+	"in_link": "link",
+	"in_subcatchment": "subcatchment",
+	"template_swmm_file": "C:/pygisswmm/4_GISSWMM2SWMM/swmm_template_5-yr.inp"
+}

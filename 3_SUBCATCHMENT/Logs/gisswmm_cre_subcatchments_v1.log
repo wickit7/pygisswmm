@@ -1,0 +1,25 @@
+2022-12-04 12:03:38,031 INFO ****************************************************************
+2022-12-04 12:03:38,032 INFO Start logging: Sun Dec  4 12:03:38 2022
+2022-12-04 12:03:39,436 INFO Raster "C:/pygisswmm/data/Default.gdb\test_v1_sd1_fill" erstellen
+2022-12-04 12:03:51,682 INFO Raster "C:/pygisswmm/data/Default.gdb\test_v1_sd1_flowdir" erstellen
+2022-12-04 12:04:03,484 INFO Raster "C:/pygisswmm/data/Default.gdb\test_v1_sd1_flowaccu" erstellen
+2022-12-04 12:04:18,843 INFO Layer mit Schächten, für welche ein Teileinzugsgebiet berechnet werden soll, erstellen
+2022-12-04 12:04:19,213 INFO Raster "C:/pygisswmm/data/Default.gdb\test_v1_sd1_pourpoint" erstellen
+2022-12-04 12:04:31,054 INFO Raster "C:/pygisswmm/data/Default.gdb\test_v1_sd1_watershed" erstellen
+2022-12-04 12:04:44,187 INFO Raster "C:/pygisswmm/data/Default.gdb\test_v1_sd1_watershed" zu Polygon subcatchment_ras2poly konvertieren
+2022-12-04 12:04:49,621 INFO Der Featureklasse "hyd_subcatchment" Felder hinzufügen
+2022-12-04 12:04:59,100 INFO Schächte und Teileinzugebiete miteinander joinen um den Teileinzugsgebieten die ID des Auslaufschachtes zu übergeben
+2022-12-04 12:04:59,593 INFO Feld Outlet berechnen
+2022-12-04 12:04:59,913 INFO Teileinzugsgebiete mit Methode "3" erstellen
+2022-12-04 12:04:59,923 INFO Feature "subcatchment_v1" erstellen
+2022-12-04 12:17:13,890 INFO Gebietsweite pro subcatchment berechnen
+2022-12-04 12:17:13,938 INFO Raster C:/pygisswmm/data/Default.gdb\test_v1_sd1_slope erstellen
+2022-12-04 12:17:14,326 INFO Raster C:/pygisswmm/data/Default.gdb\test_v1_sd1_slope_max60 erstellen
+2022-12-04 12:17:19,736 INFO Mittlere Steigung (Terraingefälle) pro Einzugsgebiet berechnen
+2022-12-04 12:17:20,751 INFO Join slope table zu subcatchment um Neigung pro Einzugsgebiet zu berechnen
+2022-12-04 12:17:21,045 INFO Feld PercSlope berechnen
+2022-12-04 12:17:22,479 INFO Skript Laufzeit: 824 sec.
+2022-12-04 12:17:22,480 INFO 0 Fehler gefunden. Check Log.
+2022-12-04 12:17:22,480 INFO End time: Sun Dec  4 12:17:22 2022
+2022-12-04 12:17:22,480 INFO ****************************************************************
+
