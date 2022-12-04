@@ -29,7 +29,7 @@ Es wurden mehrere Skripte erstellt, die nacheinander ausgeführt werden. Im Folg
 Eine Sammlung an Funktionen die in den folgenden Python-Skripten importiert und angewendet werden.
 
 
-### [1_SIA2GISSWMM](1_SIA2GISSWMM)
+### [1_SIA2GISSWMM](1_SIA2GISSWMM/)
 #### [sia2gisswmm.py](1_SIA2GISSWMM/sia2gisswmm.py)
 Das Abwasserkataster (sia405) in einen vereinfachten GIS-Datensatz konvertieren, welcher als Grundlage für die Weiterverarbeitung verwendet wird. Dem Skript wird eine JSON-Datei mit den folgenden Parametern übergeben:
 
@@ -52,8 +52,8 @@ Das Abwasserkataster (sia405) in einen vereinfachten GIS-Datensatz konvertieren,
 | default_values_link <br />  - InOffset <br />  - SurchargeDepth <br />  - InitFlow <br />  - MaxFlow | Liste mit Dictionaries für das Mapping von zusätzlichen Output Feldern inklusive Standardwerte für die Output Feature-Klasse "out_link".| ![image](https://user-images.githubusercontent.com/45633047/205505226-cb84ae6a-fc96-4dba-8203-79a9e7470200.png) |
 | default_values_node <br />  - InitDepth <br />  - SurchargeDepth <br />  - PondedArea <br /> | Liste mit Dictionaries für das Mapping von zusätzlichen Output Feldern inklusive Standardwerte für die Output Feature-Klasse "out_node".| ![image](https://user-images.githubusercontent.com/45633047/205505287-f1abcfce-bc19-48ed-85c3-96798a5aa70a.png)|
 
-### [2_GISSWMM](2_GISSWMM)
-#### [gisswmm_upd.py](2_GISSWMM/2_GISSWMM.py)
+### [2_GISSWMM](2_GISSWMM/)
+#### [gisswmm_upd.py](2_GISSWMM/gisswmm_upd.py)
 - Erstellung Netzwerktopologie: Haltungen werden bei Einlaufknoten aufgetrennt um eine strikte Knoten-Haltung-Knoten Topologie zu erhalten. 
 - Ermittlung Deckelkote: Für Knoten ohne gemessene Deckelkote (Höhe des Schachtdeckels m ü. M.), wird die Höhe aus einem Höhenmodell (DHM) extrahiert.
 - Interpolation Sohlenkote: Für Knoten ohne gemessene Sohlenkote (Höhe der Schachtsohle m ü. M.), wird die Höhe mit einem Algorithmus berechnet. 
