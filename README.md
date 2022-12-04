@@ -25,7 +25,7 @@ Die vorhandenen JSON- und Batch-Dateien wurden für die Testdaten (data\INPUT.gd
 ## Ausführung Skripte
 Es wurden mehrere Skripte erstellt, die nacheinander ausgeführt werden. Im Folgenden werden die Skripte kurz beschrieben.
 
-### [0_BasicFunctions](sia2gisswmm)
+### [0_BasicFunctions](0_BasicFunctions/)
 Eine Sammlung an Funktionen die in den folgenden Python-Skripten importiert und angewendet werden.
 
 
