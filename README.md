@@ -19,42 +19,42 @@ Zusätzlich werden die Python-Packages «swmmio» und «swmm_api» benötigt:
 > pip install swmmio==0.4.9
 > pip install swmm_api==0.2.0.18.3
 
-Die vorhandenen JSON- und Batch-Dateien wurden für die Testdaten (data\INPUT.gdb) erstellt. Diese Dateien müssen für die eigenen Daten entsprechend angepasst werden.
+Die vorhandenen JSON- und Batch-Dateien wurden für die Testdaten (data\INPUT.gdb) erstellt. Diese Dateien müssen für die eigenen Daten jeweils entsprechend angepasst werden.
 
 
 ## Ausführung Skripte
 Es wurden mehrere Skripte erstellt, die nacheinander ausgeführt werden. Im Folgenden werden die Skripte kurz beschrieben.
 
 ### [0_BasicFunctions](0_BasicFunctions/)
-Eine Sammlung an Funktionen die in den folgenden Python-Skripten importiert und angewendet werden.
-
+Eine Sammlung an Funktionen, die in den folgenden Python-Skripten importiert und angewendet werden.
 
 ### [1_SIA2GISSWMM](1_SIA2GISSWMM/)
 #### [sia2gisswmm.py](1_SIA2GISSWMM/sia2gisswmm.py)
-Das Abwasserkataster (sia405) in einen vereinfachten GIS-Datensatz konvertieren, welcher als Grundlage für die Weiterverarbeitung verwendet wird. Dem Skript wird eine JSON-Datei mit den folgenden Parametern übergeben:
+Das Abwasserkataster (sia405) in einen vereinfachten GIS-Datensatz konvertieren, welcher als Grundlage für die Weiterverarbeitung verwendet wird. 
+Dem Skript wird eine JSON-Datei mit den folgenden Parametern übergeben:
 
 | Parameter | Beschreibung | Beispiel |
 | --- | --- | --- |
 | log_folder | Pfad zum Ordner, in dem die log-Datei gespeichert werden soll. | "C:/pygisswmm/1_SIA2GISSWMM/Logs" |
 | sim_nr | Die Bezeichnung der aktuellen Simulation (Szenario). Das Esri Feature-Dataset im Workspace " gisswmm _workspace" erhält diese Bezeichnung. Zudem wird die Bezeichnung den Feature-Klassen ("out_node", "out_link") und der Log-Datei als Postfix hinzugefügt. | "v1" |
-| lk_workspace | Pfad zum arcpy Workspace, der das zu konvertierende Abwasserkataster (SIA405) enthält. | "C:/pygisswmm/data/INPUT.gdb" |
+| lk_workspace | Pfad zum arcpy Workspace, welcher das zu konvertierende Abwasserkataster (SIA405) enthält. | "C:/pygisswmm/data/INPUT.gdb" |
 | in_node | Name der Input Feature-Klasse mit den Abwasserknoten (Schächte) im Workspace "lk_workspace". | "AWK_ABWASSERKNOTEN" |
-| in_link | Name der Input Feature-Klasse mit den Haltungen (Leitungen) Workspace "lk_workspace". | "AWK_HALTUNG" |
-| boundary_workspace | Pfad zum arcpy Workspace, der die Input Feature-Klasse mit der Begrenzungsfläche des Untersuchungsgebietes enthält. | "C:/pygisswmm/data/INPUT.gdb" |
+| in_link | Name der Input Feature-Klasse mit den Haltungen (Leitungen) im Workspace "lk_workspace". | "AWK_HALTUNG" |
+| boundary_workspace | Pfad zum arcpy Workspace, welcher die Input Feature-Klasse mit der Begrenzungsfläche des Untersuchungsgebietes enthält. | "C:/pygisswmm/data/INPUT.gdb" |
 | in_boundary | Name der Feature-Klasse mit der Input Begrenzungsfläche im Workspace "boundary_workspace". | "BEGRENZUNG" |
 | gisswmm_workspace |Pfad zum Output arcpy Workspace, in dem die Output Feature-Klassen ("out_node", "out_link") gespeichert werden sollen.| "C:/pygisswmm/data/GISSWMM.gdb" |
 | out_node | Name der Output Feature-Klasse mit den konvertierten Abwasserknoten (dieser Name wird im Skript noch mit dem Postfix "sim_nr" ergänzt). | "node" |
-| in_boundary | Name der Feature-Klasse mit der Input Begrenzungsfläche im Workspace "boundary_workspace". | "BEGRENZUNG" |
 | out_link | Name der Ausgabe Feature-Klasse mit den konvertierten Haltungen (dieser Name wird im Skript noch mit dem Postfix "sim_nr" ergänzt). | "link" |
 | overwrite | Die arcpy Workspace-Einstellung "overwirte" | "True" |
-| mapping_link <br />  - in_field <br />  - out_field <br />  - where <br />  - out_type <br /> -mapping | Liste mit Dictionaries für das Mapping von der Input Feature-Klasse "in_link" (Abwasserkataster) zur Output Feature-Klasse "out_link" (gisswmm). | ![image](https://user-images.githubusercontent.com/45633047/205503673-33d1ec2d-6575-4c13-8984-afbd85b2e7a8.png) |
-| mapping_node <br />  - in_field <br />  - out_field <br />  - where <br />  - out_type <br /> -mapping | Liste mit Dictionaries für das Mapping von der Input Feature-Klasse "in_node" (Abwasserkataster) zur Output Feature-Klasse "out_node" (gisswmm). | ![image](https://user-images.githubusercontent.com/45633047/205505157-d31d14e0-8d68-4f46-8175-4dc1bba7155e.png) |
-| default_values_link <br />  - InOffset <br />  - SurchargeDepth <br />  - InitFlow <br />  - MaxFlow | Liste mit Dictionaries für das Mapping von zusätzlichen Output Feldern inklusive Standardwerte für die Output Feature-Klasse "out_link".| ![image](https://user-images.githubusercontent.com/45633047/205505226-cb84ae6a-fc96-4dba-8203-79a9e7470200.png) |
-| default_values_node <br />  - InitDepth <br />  - SurchargeDepth <br />  - PondedArea <br /> | Liste mit Dictionaries für das Mapping von zusätzlichen Output Feldern inklusive Standardwerte für die Output Feature-Klasse "out_node".| ![image](https://user-images.githubusercontent.com/45633047/205505287-f1abcfce-bc19-48ed-85c3-96798a5aa70a.png)|
+| mapping_link <br />  - in_field <br />  - out_field <br />  - where <br />  - out_type <br /> -mapping | Liste mit Dictionaries für das Mapping von der Input Feature-Klasse "in_link" (Abwasserkataster) zur Output Feature-Klasse "out_link" (gisswmm). | siehe in [Beispiel Json-Datei](1_SIA2GISSWMM/sia2gisswmm_v1.json) |
+| mapping_node <br />  - in_field <br />  - out_field <br />  - where <br />  - out_type <br /> -mapping | Liste mit Dictionaries für das Mapping von der Input Feature-Klasse "in_node" (Abwasserkataster) zur Output Feature-Klasse "out_node" (gisswmm). | siehe in [Beispiel Json-Datei](1_SIA2GISSWMM/sia2gisswmm_v1.json)|
+| default_values_link <br />  - InOffset <br />  - SurchargeDepth <br />  - InitFlow <br />  - MaxFlow | Liste mit Dictionaries für das Mapping von zusätzlichen Output Feldern inklusive Standardwerten für die Output Feature-Klasse "out_link".| "default_values_link": <br /> {"InOffset":"0", "OutOffset":"0", "InitFlow":"0", "MaxFlow":"0"} |
+| default_values_node <br />  - InitDepth <br />  - SurchargeDepth <br />  - PondedArea | Liste mit Dictionaries für das Mapping von zusätzlichen Output Feldern inklusive Standardwerten für die Output Feature-Klasse "out_node".| "default_values_node": <br /> {"InitDepth":"0","SurchargeDepth":"0","PondedArea":"0"}	|
 
 ### [2_GISSWMM](2_GISSWMM/)
 #### [gisswmm_upd.py](2_GISSWMM/gisswmm_upd.py)
-- Erstellung Netzwerktopologie: Haltungen werden bei Einlaufknoten aufgetrennt um eine strikte Knoten-Haltung-Knoten Topologie zu erhalten. 
+Den vereinfachten GIS-Datensatz aktualisieren:
+- Erstellung Netzwerktopologie: Haltungen werden bei den Einlaufknoten aufgetrennt, um eine strikte Knoten-Haltung-Knoten Topologie zu erhalten. 
 - Ermittlung Deckelkote: Für Knoten ohne gemessene Deckelkote (Höhe des Schachtdeckels m ü. M.), wird die Höhe aus einem Höhenmodell (DHM) extrahiert.
 - Interpolation Sohlenkote: Für Knoten ohne gemessene Sohlenkote (Höhe der Schachtsohle m ü. M.), wird die Höhe mit einem Algorithmus berechnet. 
 Dem Skript wird eine JSON-Datei mit den folgenden Parametern übergeben:
@@ -62,40 +62,114 @@ Dem Skript wird eine JSON-Datei mit den folgenden Parametern übergeben:
 | Parameter | Beschreibung | Beispiel |
 | --- | --- | --- |
 | log_folder | Pfad zum Ordner, in dem die log-Datei gespeichert werden soll. | "C:/pygisswmm/2_GISSWMM/Logs" |
-| sim_nr | Bezeichnung der aktuellen Simulation. Das Feature-Dataset in "gisswmm_workspace " hat diese Bezeichnung und die enthaltenen Feature-Klasse haben diese Bezeichnung als Postfix. | «v1» |
+| sim_nr | Bezeichnung der aktuellen Simulation. Das Feature-Dataset in "gisswmm_workspace " hat diese Bezeichnung und die enthaltenen Feature-Klassen haben diese Bezeichnung als Postfix. | "v1" |
 | overwrite | Die arcpy Workspace-Einstellung "overwirte". | "TRUE" |
 | dhm_workspace | Pfad zum arcpy Workspace mit dem Höhenmodell (DHM). | "C:/pygisswmm/data/INPUT.gdb" |
 | in_dhm | Name des DHM-Rasters im Workspace "dhm_workspace". | "DHM" |
-| gisswmm_workspace | Pfad zum Output arcpy Workspace, in dem die Feature-Klassen "in_node" und "out_link" gespeichert sind. | "C:/pygisswmm/data/GISSWMM.gdb" |
+| gisswmm_workspace | Pfad zum Output arcpy Workspace, in dem die Feature-Klassen "in_node" und "in_link" gespeichert sind. | "C:/pygisswmm/data/GISSWMM.gdb" |
 | in_node | Name der Feature-Klasse mit den Knoten (ohne Postfix "_sim_nr"!) im Workspace "gisswmm_workspace". | "node" |
-| node_id | Bezeichnung vom ID-Feld der Feature-Klasse "in_node". | "Name" |
-| node_dk | Bezeichnung vom Feld mit der Deckelkote der Feature-Klasse "in_node". | "ELev" |
-| node_sk | Bezeichnung vom Feld mit der Sohlenkote der Feature-Klasse "in_node". | "InvertElev" |
-| tag_dk | Wert für tag-Feld, um zu kennzeichnen, welche Deckelkoten mit DHM berechnet wurden. | "dk_dhm" |
-| tag_sk | Wert für tag-Feld, um zu kennzeichnen, welche Sohlenkoten interpoliert wurden. | "sk_ip" |
-| node_to_link | Bezeichnung vom Feld in der Feature-Klasse "in_node"., mit der ID von der Haltung, auf welcher der Einlaufschacht liegt. | "NodeToLink" |
-| node_type | Bezeichnung vom Feld mit dem Schachttyp, in der Feature-Klasse "in_node". | "SWMM_TYPE" |
+| node_id | Bezeichnung vom ID-Feld in der Feature-Klasse "in_node". | "Name" |
+| node_dk | Bezeichnung vom Feld mit der Deckelkote in der Feature-Klasse "in_node". | "ELev" |
+| node_sk | Bezeichnung vom Feld mit der Sohlenkote in der Feature-Klasse "in_node". | "InvertElev" |
+| tag_dk | Wert für tag-Feld, um zu kennzeichnen, welche Deckelkoten mit dem DHM berechnet wurden. | "dk_dhm" |
+| tag_sk | Wert für tag-Feld, um zu kennzeichnen, welche Sohlenkoten durch Interpolation ermittelt wurden. | "sk_ip" |
+| node_to_link | Name des Feldes in der Feature-Klasse "in_node", das die ID des Schachts enthält, auf dem sich der Einlaufschacht befindet. | "NodeToLink" |
+| node_type | Bezeichnung vom Feld mit dem Schachttyp in der Feature-Klasse "in_node". | "SWMM_TYPE" |
 | type_inlet | Wert im Feld Schachttyp ("node_type"), welcher dem Einlaufschacht entspricht. | "INLET" |
-| min_depth | Minimale Schachttiefe (m), die nicht unterschritten werden darf. Annahme: Deckelkote genauer als Sohlenkote. | "0.1" |
-| mean_depth | Schachttiefe (m) die verwendet wird, falls die Sohlenkote nicht interpoliert werden konnte. Dies kommt nur vor, falls entlang eines Haltungsstranges keine einzige Sohlenkote bekannt ist. | "1.5" |
+| min_depth | Minimale Schachttiefe (m), die nicht unterschritten werden darf. | "0.1" |
+| mean_depth | Schachttiefe (m), die verwendet wird, falls die Sohlenkote nicht interpoliert werden konnte. Dieser Fall tritt nur auf, falls entlang eines Haltungsstranges keine einzige Sohlenkote bekannt ist. | "1.5" |
 | in_link | Bezeichnung vom ID-Feld in der Feature-Klasse "in_link". | "Name" |
 | link_from | Bezeichnung vom Feld mit der ID vom Bis-Schacht in der Feature-Klasse "in_link". | "OutletNode" |
 | link_length | Bezeichnung vom Feld mit der Haltungslänge in der Feature-Klasse "in_link". | "Length" |
 | mean_slope | Mittleres Gefälle für die Berechnung der Sohlenkote. Dieses Gefälle wird nur verwendet, falls entlang eines Haltungstranges nur eine einzige Sohlenkote vorhanden ist. | 0.05 |
 
 #### [copy_from_vx_to_vy.py](2_GISSWMM/copy_from_vx_to_vy.py)
-Mit diesem Skript können Haltungen (link) und Knoten (node) von einem Dataset (Simulation) in ein neues Dataset kopiert werden. Dem Skript wird eine JSON-Datei mit folgenden Parameter übergeben:
+Mit diesem Skript können Haltungen (link) und Knoten (node) von einem Dataset (Simulation) in ein neues Dataset kopiert werden. 
+Dem Skript wird eine JSON-Datei mit den folgenden Parametern übergeben:
 
 | Parameter | Beschreibung | Beispiel |
 | --- | --- | --- |
 | log_folder | Pfad zum Ordner, in dem die log-Datei gespeichert werden soll. | "C:/pygisswmm/2_GISSWMM/Logs" |
-| sim_nr | Bezeichnung der aktuellen Simulation. Das Feature-Dataset in "gisswmm_workspace " hat diese Bezeichnung und die enthaltenen Feature-Klasse haben diese Bezeichnung als Postfix. | «v1» |
-| gisswmm_workspace | Pfad zum Output arcpy Workspace, in dem die Feature-Klassen "in_node" und "out_link" gespeichert sind. | "C:/pygisswmm/data/GISSWMM.gdb" |
+| sim_nr | Bezeichnung der aktuellen Simulation. Das Feature-Dataset in "gisswmm_workspace " hat diese Bezeichnung und die enthaltenen Feature-Klassen haben diese Bezeichnung als Postfix. | "v1" |
+| gisswmm_workspace | Pfad zum Output arcpy Workspace, in dem die Feature-Klassen "in_node" und "in_link" gespeichert sind. | "C:/pygisswmm/data/GISSWMM.gdb" |
 | from_sim_nr | Bezeichnung des Datasets im Workspace "gisswmm_workspace" (Bezeichnung der Simulation), welches kopiert werden soll. | "v1" |
 | to_sim_nrs | Liste mit Datasets (Simulationen), die erstellt werden sollen. | ["v2", "v3", "v4"] |
 | in_link | Name der Feature-Klasse mit den Haltungen (ohne Postfix "_sim_nr"!). | "link" |
 | in_node | Name der Feature-Klasse mit den Knoten (ohne Postfix "_sim_nr"!) im Workspace "gisswmm_workspace". | "node" |
 | overwrite | Die arcpy Workspace-Einstellung "overwirte". | "TRUE" |
+
+
+### [3_SUBCATCHMENT](3_SUBCATCHMENT/)
+#### [gisswmm_cre_subcatchments.py](3_SUBCATCHMENT/gisswmm_cre_subcatchments.py)
+Die Teileinzugsgebiete mit einer der vier Methoden erstellen:
+ 1. Parzellen als Teileinzugsgebiete 
+ 2. Parzellen unterteilt in Flächen mit homogener Bodenbedeckung
+ 3. Topographische Einzugsgebiete als Teileinzugsgebiete
+ 4. Topographische Einzugsgebite untrteilt in Flächen mit homogener Bodenbedeckung
+Bei der Methode 1 und 2 werden die topographischen Einzugsgebiete verwendet, um den Entwässerungsknoten der Teileinzugsgebiete (Parzellen) zu bestimmen.
+Dem Skript wird eine JSON-Datei mit den folgenden Parametern übergeben:
+
+| Parameter | Beschreibung | Beispiel |
+| --- | --- | --- |
+| log_folder | Pfad zum Ordner, in dem die log-Datei gespeichert werden soll. | "C:/pygisswmm/3_SUBCATCHMENT/Logs" |
+| sim_nr | Bezeichnung der aktuellen Simulation. Das Feature-Dataset in "gisswmm_workspace " hat diese Bezeichnung und die enthaltenen Feature-Klassen haben diese Bezeichnung als Postfix. | "v1" |
+| method | Methode mit welcher die Teileinzugsgebiete erstellt werden sollen (1-4). | "1" |
+| snap_distance | Fangtoleranz (m) für die Funktion arcpy.sa.SnapPourPoint, mit welcher die Anfangspunkte für die Berechnung der topographischen Teileinzugsgebiete festgelegt werden. | "1" |
+| min_area | Minimale Fläche, die ein Teileinzugsgebiet aufweisen soll (m2). | "1" |
+| mapping_land_imperv <br />  - in_field <br /> - mapping | Dictionary mit der Art der Bodenbedeckung als "key" und "%imperviousness" als "value". | "mapping_land_imperv": <br /> {"in_field": "ART", "mapping": {"0":"100","1":"100",....,"24":"0", "25":"0"}} |
+| mapping_land_roughness <br />  - in_field <br /> - mapping | Dictionary mit der Art der Bodenbedeckung als "key" und "roughness" als "value". | "mapping_land_roughness":<br /> {"in_field": "ART", "mapping": {"0":"0.01","1":"0.01",...,"24":"0.2", "25":"0.2"}} |
+| mapping_land_depression_storage <br />  - in_field <br /> - mapping | Dictionary mit der Art der Bodenbedeckung als "key" und "depression storage" als "value". | 
+"mapping_land_depression_storage": <br /> {"in_field": "ART", "mapping": {"0":"0.05",..., "25":"0.3"}} |
+| Infiltration <br />  - max_rate <br /> - min_rate <br /> - decay <br /> - dry_time <br /> - max_infil| Dictionary mit den Kennwerten zur Infiltration nach Horton. | "infiltration": <br /> {"max_rate":"3", "min_rate":"0.5", "decay":"4", "dry_time":"7", "max_infil":"0"} |
+| gisswmm_workspace | Pfad zum Output arcpy Workspace, in dem die Feature-Klasse "in_node" gespeichert ist und "out_subcatchment" gespeichert werden soll. | "C:/pygisswmm/data/GISSWMM.gdb" |
+| overwrite | Die arcpy Workspace-Einstellung "overwirte". | "TRUE" |
+| out_subcatchment | Name der Output Feature-Klasse mit den Teileinzugsgebieten (ohne Postfix "_sim_nr"!). | "subcatchment" |
+| in_node | Name der Feature-Klasse mit den Knoten (ohne Postfix "_sim_nr"!). | "node" |
+| node_id | Bezeichnung vom ID-Feld in der Feature-Klasse "in_node". | "Name" |
+| node_type | Bezeichnung vom Feld mit dem Schachttyp in der Feature-Klasse "in_node". | "SWMM_TYPE" |
+| type_inlet | Wert von Schachttyp ("node_type"), welcher dem Einlaufschacht entspricht. | "INLET" |
+| overwrite | Die arcpy Workspace-Einstellung "overwirte". | "TRUE" |
+| dhm_workspace | Pfad zum arcpy Workspace mit dem Höhenmodell (DHM). | "C:/pygisswmm/data/INPUT.gdb" |
+| in_dhm | Name des DHM-Rasters im Workspace "dhm_workspace". | "DHM" |
+| max_slope | Maximales Gefälle in %, das ein Teileinzugsgebiet haben soll. | "60" |
+| land_workspace | Pfad zum arcpy Workspace mit der Bodenbedeckung. | "C:/pygisswmm/data/INPUT.gdb" |
+| in_land | Name des Bodenbedeckung-Rasters im Workspace "land_workspace". | "BODENBEDECKUNG" |
+| out_raster_workspace | Workspace in welchem Output Rasterdaten gespeichert werden sollen. | "C:/pygissmm/data/Default.gdb" |
+| out_raster_prefix | Prefix von Output Rasterdaten. | "testdata" |
+| parcel_workspace | Pfad zum arcpy Workspace mit den Parzellen (Liegenschaften)| "C:/pygisswmm/data/INPUT.gdb" |
+| in_parcel | Bezeichnung der Feature-Klasse mit den Parzellen im Workspace "parcel_workspace". | "LIEGENSCHAFTEN" |
+| parcel_id | Bezeichnung vom ID-Feld in der Feature-Klasse "in_parcel".  | "NUMMER" |
+
+
+### [4_GISSWMM2SWMM](4_GISSWMM2SWMM/)
+#### [gisswmm2swmm.py](4_GISSWMM2SWMM/gisswmm2swmm.py)
+Die GIS-Datensätze («node», «link», «subcatchment») in die Template SWMM-Inptdatei (.inp) importieren. Die SWMM-Objekte EVAPORATION, RAINGAGES, MAP, REPORT, STORAGE, DWF, CURVES, ORIFICES, WEIRS, LOSSES, TIMESERIES, TAGS, SYMBOLS und LABELS werden noch nicht berücksichtig und müssten bei Bedarf in der SWMM-Software weiterbearbeitet werden. Bei den SWMM-Objekten OUTFALLS und PUMPS werden nicht alle Felder berücksichtigt.
+Dem Skript wird eine JSON-Datei mit den folgenden Parametern übergeben:
+
+| Parameter | Beschreibung | Beispiel |
+| --- | --- | --- |
+| log_folder | Pfad zum Ordner, in dem die log-Datei gespeichert werden soll. | "C:/pygisswmm/4_GISSWMM2SWMM/Logs" |
+| sim_nr | Bezeichnung der aktuellen Simulation. Das Feature-Dataset in "gisswmm_workspace " hat diese Bezeichnung und die enthaltenen Feature-Klassen haben diese Bezeichnung als Postfix. | "v1" |
+| gisswmm_workspace | Pfad zum Output arcpy Workspace, in dem die Feature-Klassen "in_node", "in_link" und "in_subcatchment" gespeichert sind. | "C:/pygisswmm/data/GISSWMM.gdb" |
+| in_node | Name der Feature-Klasse mit den Knoten (ohne Postfix "_sim_nr"!). | "node" |
+| in_link | Name der Feature-Klasse mit den Haltungen (ohne Postfix "_sim_nr"!). | "link" |
+| in_subcatchment | Name der Feature-Klasse mit den Teileinzugsgebieten (ohne Postfix "_sim_nr"!). | "subcatchment" |
+| template_swmm_file | Pfad zur Template SWMM-Inputdatei (.inp). | --- |
+
+### [5_GISSWMM2SWMM](5_GISSWMM2SWMM/)
+Die Python-Skripte zur Analyse der Simulationsergebnisse wurden spezifisch für die Beispielsimulation erstellt und müssen bei der Verwendung für eine andere Simulation angepasst werden. Die Eingabeparameter werden nicht über eine JSON-Datei übergeben.
+
+#### [swmm_analyze_inp.py](5_GISSWMM2SWMM/swmm_analyze_inp.py)
+Diagramme mit Informationen aus der SWMM-Inputdatei erstellen (z. B. Flächenverteilung).
+
+#### [swmm_analyze_out.py](5_GISSWMM2SWMM/swmm_analyze_out.py)
+Diagramme mit Informationen aus der SWMM-Outputdatei «.out» erstellen (z. B. Abfluss über die Simulationszeit bei einem bestimmten Knoten).
+
+#### [swmm_analyze_rpt.py](5_GISSWMM2SWMM/swmm_analyze_rpt_plot.py)
+Diagramme mit Informationen aus der SWMM-Outputdatei ".rpt" erstellen (z. B. Verteilung Abflussbeiwert).
+
+#### [swmm_rpt2excel.py](5_GISSWMM2SWMM/swmm_rpt2excel.py)
+Die SWMM-Outputdateien ".rpt" werden zu Excel-Dateien konvertiert, die anschliessend in ArcGIS Pro zu den GIS-Datensätzen ("node", "link", "subcatchment") angehängt werden können, um die Ergebnisse in Karten zu präsentieren.
 
 ## Referenzen
 - Erispaha, A. S., & Brown, C. (2018). Automating Model Builds for Sequence Optimization of Flood Mitigation Investment Phases. Journal of Water Management Modeling.
