@@ -165,10 +165,10 @@ Diagramme mit Informationen aus der SWMM-Inputdatei erstellen (z. B. Flächenver
 #### [swmm_analyze_out.py](5_RESULT/swmm_analyze_out.py)
 Diagramme mit Informationen aus der SWMM-Outputdatei «.out» erstellen (z. B. Abfluss über die Simulationszeit bei einem bestimmten Knoten).
 
-#### [swmm_analyze_rpt.py](5_RESULT/swmm_analyze_rpt_plot.py)
+#### [swmm_analyze_rpt.py](5_RESULT/swmm_analyze_rpt.py)
 Diagramme mit Informationen aus der SWMM-Outputdatei ".rpt" erstellen (z. B. Verteilung Abflussbeiwert).
 
-#### [swmm_rpt2excel.py](5_RESULT/swmm_rpt2excel.py)
+#### [swmm_rpt2excel.py](5_RESULT/swmm_rpt2excel .py)
 Die SWMM-Outputdateien ".rpt" werden zu Excel-Dateien konvertiert, die anschliessend in ArcGIS Pro zu den GIS-Datensätzen ("node", "link", "subcatchment") angehängt werden können, um die Ergebnisse in Karten zu präsentieren.
 
 [Beispieldiagramme](5_RESULT/figures/)
