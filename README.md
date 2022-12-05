@@ -22,7 +22,7 @@ Zusätzlich werden die Python-Packages «swmmio» und «swmm_api» benötigt:
 Die vorhandenen JSON- und Batch-Dateien wurden für die Testdaten (data\INPUT.gdb) erstellt. Diese Dateien müssen für die eigenen Daten jeweils entsprechend angepasst werden.
 
 
-## Ausführung Skripte
+## Ausführung Python-Skripte
 Es wurden mehrere Skripte erstellt, die nacheinander ausgeführt werden. Im Folgenden werden die Skripte kurz beschrieben.
 
 ### [0_BasicFunctions](0_BasicFunctions/)
