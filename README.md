@@ -156,20 +156,22 @@ Dem Skript wird eine JSON-Datei mit den folgenden Parametern übergeben:
 | in_subcatchment | Name der Feature-Klasse mit den Teileinzugsgebieten (ohne Postfix "_sim_nr"!). | "subcatchment" |
 | template_swmm_file | Pfad zur Template SWMM-Inputdatei (.inp). | --- |
 
-### [5_GISSWMM2SWMM](5_GISSWMM2SWMM/)
+### [5_RESULT](5_RESULT/)
 Die Python-Skripte zur Analyse der Simulationsergebnisse wurden spezifisch für die Beispielsimulation erstellt und müssen bei der Verwendung für eine andere Simulation angepasst werden. Die Eingabeparameter werden nicht über eine JSON-Datei übergeben.
 
-#### [swmm_analyze_inp.py](5_GISSWMM2SWMM/swmm_analyze_inp.py)
+#### [swmm_analyze_inp.py](5_RESULT/swmm_analyze_inp.py)
 Diagramme mit Informationen aus der SWMM-Inputdatei erstellen (z. B. Flächenverteilung).
 
-#### [swmm_analyze_out.py](5_GISSWMM2SWMM/swmm_analyze_out.py)
+#### [swmm_analyze_out.py](5_RESULT/swmm_analyze_out.py)
 Diagramme mit Informationen aus der SWMM-Outputdatei «.out» erstellen (z. B. Abfluss über die Simulationszeit bei einem bestimmten Knoten).
 
-#### [swmm_analyze_rpt.py](5_GISSWMM2SWMM/swmm_analyze_rpt_plot.py)
+#### [swmm_analyze_rpt.py](5_RESULT/swmm_analyze_rpt_plot.py)
 Diagramme mit Informationen aus der SWMM-Outputdatei ".rpt" erstellen (z. B. Verteilung Abflussbeiwert).
 
-#### [swmm_rpt2excel.py](5_GISSWMM2SWMM/swmm_rpt2excel.py)
+#### [swmm_rpt2excel.py](5_RESULT/swmm_rpt2excel.py)
 Die SWMM-Outputdateien ".rpt" werden zu Excel-Dateien konvertiert, die anschliessend in ArcGIS Pro zu den GIS-Datensätzen ("node", "link", "subcatchment") angehängt werden können, um die Ergebnisse in Karten zu präsentieren.
+
+[Beispieldiagramme](5_RESULT/figures/)
 
 ## Referenzen
 - Erispaha, A. S., & Brown, C. (2018). Automating Model Builds for Sequence Optimization of Flood Mitigation Investment Phases. Journal of Water Management Modeling.
