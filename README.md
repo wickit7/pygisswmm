@@ -91,7 +91,6 @@ Dem Skript wird eine JSON-Datei mit den folgenden Parametern übergeben:
 | Parameter | Beschreibung | Beispiel |
 | --- | --- | --- |
 | log_folder | Der Pfad zum Ordner, in dem die log-Datei gespeichert werden soll. | "C:/pygisswmm/2_GISSWMM/Logs" |
-| sim_nr | Die Bezeichnung der aktuellen Simulation. Das Feature-Dataset in "gisswmm_workspace" hat diese Bezeichnung und die enthaltenen Feature-Klassen haben diese Bezeichnung als Postfix. | "v1" |
 | gisswmm_workspace | Der Pfad zum Output arcpy Workspace, in dem die Feature-Klassen "in_node" und "in_link" gespeichert sind. | "C:/pygisswmm/data/GISSWMM.gdb" |
 | from_sim_nr | Die Bezeichnung des Datasets im Workspace "gisswmm_workspace" (Bezeichnung der Simulation), welches kopiert werden soll. | "v1" |
 | to_sim_nrs | Eine Liste mit Datasets (Simulationen), die erstellt werden sollen. | ["v2", "v3", "v4"] |
