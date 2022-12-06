@@ -77,6 +77,7 @@ Dem Skript wird eine JSON-Datei mit den folgenden Parametern übergeben:
 | type_inlet | Den Wert im Feld Schachttyp ("node_type"), welcher dem Einlaufschacht entspricht. | "INLET" |
 | min_depth | Eine minimale Schachttiefe (m), die nicht unterschritten werden darf. | "0.1" |
 | mean_depth | Eine Schachttiefe (m), die verwendet wird, falls die Sohlenkote nicht interpoliert werden konnte. Dieser Fall tritt nur auf, falls entlang eines Haltungsstranges keine einzige Sohlenkote bekannt ist. | "1.5" |
+| in_link | Der Name der Feature-Klasse mit den Haltungen (ohne Postfix "_sim_nr"!) im Workspace "gisswmm_workspace". | "link" |
 | in_link | Die Bezeichnung vom ID-Feld in der Feature-Klasse "in_link". | "Name" |
 | link_from | Die Bezeichnung vom Feld mit der ID vom Bis-Schacht in der Feature-Klasse "in_link". | "OutletNode" |
 | link_length | Die Bezeichnung vom Feld mit der Haltungslänge in der Feature-Klasse "in_link". | "Length" |
