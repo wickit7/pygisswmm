@@ -79,8 +79,9 @@ Dem Skript wird eine JSON-Datei mit den folgenden Parametern übergeben:
 | mean_depth | Eine Schachttiefe (m), die verwendet wird, falls die Sohlenkote nicht interpoliert werden konnte. Dieser Fall tritt nur auf, falls entlang eines Haltungsstranges keine einzige Sohlenkote bekannt ist. | "1.5" |
 | in_link | Der Name der Feature-Klasse mit den Haltungen (ohne Postfix "_sim_nr"!) im Workspace "gisswmm_workspace". | "link" |
 | link_id | Die Bezeichnung vom ID-Feld in der Feature-Klasse "in_link". | "Name" |
-| link_from | Die Bezeichnung vom Feld mit der ID vom Bis-Schacht in der Feature-Klasse "in_link". | "OutletNode" |
-| link_length | Die Bezeichnung vom Feld mit der Haltungslänge in der Feature-Klasse "in_link". | "Length" |
+| link_from | Die Bezeichnung vom Feld mit der ID vom Von-Schacht in der Feature-Klasse "in_link". | "InletNode" |
+| link_to | Die Bezeichnung vom Feld mit der ID vom Bis-Schacht in der Feature-Klasse "in_link". | "OutletNode" |
+| link_length | Die Bezeichnung vom Feld mit der Haltungslänge in der Feature-Klasse "in_link".	 | "Length" |
 | mean_slope | Ein mittleres Gefälle für die Berechnung der Sohlenkote. Dieses Gefälle wird nur verwendet, falls entlang eines Haltungstranges nur eine einzige Sohlenkote vorhanden ist. | 0.05 |
 
 #### [copy_from_vx_to_vy.py](2_GISSWMM/copy_from_vx_to_vy.py)
