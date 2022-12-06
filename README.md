@@ -68,7 +68,7 @@ Dem Skript wird eine JSON-Datei mit den folgenden Parametern übergeben:
 | gisswmm_workspace | Der Pfad zum Output arcpy Workspace, in dem die Feature-Klassen "in_node" und "in_link" gespeichert sind. | "C:/pygisswmm/data/GISSWMM.gdb" |
 | in_node | Der Name der Feature-Klasse mit den Knoten (ohne Postfix "_sim_nr"!) im Workspace "gisswmm_workspace". | "node" |
 | node_id | Die Bezeichnung vom ID-Feld in der Feature-Klasse "in_node". | "Name" |
-| node_dk | Die Bezeichnung vom Feld mit der Deckelkote in der Feature-Klasse "in_node". | "ELev" |
+| node_dk | Die Bezeichnung vom Feld mit der Deckelkote in der Feature-Klasse "in_node". | "Elev" |
 | node_sk | Die Bezeichnung vom Feld mit der Sohlenkote in der Feature-Klasse "in_node". | "InvertElev" |
 | tag_dk | Den Wert für das tag-Feld, um zu kennzeichnen, welche Deckelkoten mit dem DHM berechnet wurden. | "dk_dhm" |
 | tag_sk | Den Wert für das tag-Feld, um zu kennzeichnen, welche Sohlenkoten durch Interpolation ermittelt wurden. | "sk_ip" |
