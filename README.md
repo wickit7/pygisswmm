@@ -82,7 +82,7 @@ Dem Skript wird eine JSON-Datei mit den folgenden Parametern übergeben:
 | link_from | Die Bezeichnung vom Feld mit der ID vom Von-Schacht in der Feature-Klasse "in_link". | "InletNode" |
 | link_to | Die Bezeichnung vom Feld mit der ID vom Bis-Schacht in der Feature-Klasse "in_link". | "OutletNode" |
 | link_length | Die Bezeichnung vom Feld mit der Haltungslänge in der Feature-Klasse "in_link".	 | "Length" |
-| mean_slope | Ein mittleres Gefälle für die Berechnung der Sohlenkote. Dieses Gefälle wird nur verwendet, falls entlang eines Haltungstranges nur eine einzige Sohlenkote vorhanden ist. | 0.05 |
+| mean_slope | Ein mittleres Gefälle für die Berechnung der Sohlenkote. Dieses Gefälle wird nur verwendet, falls entlang eines Haltungsstranges nur eine einzige Sohlenkote vorhanden ist. | 0.05 |
 
 #### [copy_from_vx_to_vy.py](2_GISSWMM/copy_from_vx_to_vy.py)
 Mit diesem Skript können Haltungen (link) und Knoten (node) von einem Dataset (Simulation) in ein neues Dataset kopiert werden.
