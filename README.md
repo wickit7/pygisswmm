@@ -44,7 +44,7 @@ Dem Skript wird eine JSON-Datei mit den folgenden Parametern übergeben:
 | gisswmm_workspace | Der Pfad zum Output arcpy Workspace, in dem die Output Feature-Klassen ("out_node", "out_link") gespeichert werden sollen.| "C:/pygisswmm/data/GISSWMM.gdb" |
 | out_node | Der Name der Output Feature-Klasse mit den konvertierten Abwasserknoten (dieser Name wird im Skript noch mit dem Postfix "_sim_nr" ergänzt). | "node" |
 | out_link | Der Name der Output Feature-Klasse mit den konvertierten Haltungen (dieser Name wird im Skript noch mit dem Postfix "_sim_nr" ergänzt). | "link" |
-| overwrite | Die arcpy Umgebungseinstellung "overwirte". | "True" |
+| overwrite | Die arcpy Umgebungseinstellung "overwrite". | "True" |
 | mapping_link <br />  - in_field <br />  - out_field <br />  - where <br />  - out_type <br /> -mapping | Eine Liste mit Dictionaries für das Mapping von der Input Feature-Klasse "in_link" (Abwasserkataster) zur Output Feature-Klasse "out_link" (gisswmm). | siehe in [Beispiel Json-Datei](1_SIA2GISSWMM/sia2gisswmm_v1.json) |
 | mapping_node <br />  - in_field <br />  - out_field <br />  - where <br />  - out_type <br /> -mapping | Eine Liste mit Dictionaries für das Mapping von der Input Feature-Klasse "in_node" (Abwasserkataster) zur Output Feature-Klasse "out_node" (gisswmm). | siehe in [Beispiel Json-Datei](1_SIA2GISSWMM/sia2gisswmm_v1.json)|
 | default_values_link <br />  - InOffset <br />  - SurchargeDepth <br />  - InitFlow <br />  - MaxFlow | Eine Liste mit Dictionaries für das Mapping von zusätzlichen Output Feldern inklusive Standardwerten für die Output Feature-Klasse "out_link".| "default_values_link": <br /> {"InOffset":"0", "OutOffset":"0", "InitFlow":"0", "MaxFlow":"0"} |
@@ -62,7 +62,7 @@ Dem Skript wird eine JSON-Datei mit den folgenden Parametern übergeben:
 | --- | --- | --- |
 | log_folder | Der Pfad zum Ordner, in dem die log-Datei gespeichert werden soll. | "C:/pygisswmm/2_GISSWMM/Logs" |
 | sim_nr | Die Bezeichnung der aktuellen Simulation. Das Feature-Dataset in "gisswmm_workspace" hat diese Bezeichnung und die enthaltenen Feature-Klassen haben diese Bezeichnung als Postfix. | "v1" |
-| overwrite | Die arcpy Umgebungseinstellung "overwirte". | "TRUE" |
+| overwrite | Die arcpy Umgebungseinstellung "overwrite". | "TRUE" |
 | dhm_workspace | Der Pfad zum arcpy Workspace mit dem Höhenmodell (DHM). | "C:/pygisswmm/data/INPUT.gdb" |
 | in_dhm | Der Name des DHM-Rasters im Workspace "dhm_workspace". | "DHM" |
 | gisswmm_workspace | Der Pfad zum Output arcpy Workspace, in dem die Feature-Klassen "in_node" und "in_link" gespeichert sind. | "C:/pygisswmm/data/GISSWMM.gdb" |
@@ -95,7 +95,7 @@ Dem Skript wird eine JSON-Datei mit den folgenden Parametern übergeben:
 | to_sim_nrs | Eine Liste mit Datasets (Simulationen), die erstellt werden sollen. | ["v2", "v3", "v4"] |
 | in_link | Der Name der Feature-Klasse mit den Haltungen (ohne Postfix "_sim_nr"!). | "link" |
 | in_node | Der Name der Feature-Klasse mit den Knoten (ohne Postfix "_sim_nr"!) im Workspace "gisswmm_workspace". | "node" |
-| overwrite | Die arcpy Umgebungseinstellung "overwirte". | "TRUE" |
+| overwrite | Die arcpy Umgebungseinstellung "overwrite". | "TRUE" |
 
 ### [3_SUBCATCHMENT](3_SUBCATCHMENT/)
 #### [gisswmm_cre_subcatchments.py](3_SUBCATCHMENT/gisswmm_cre_subcatchments.py)
@@ -119,7 +119,7 @@ Dem Skript wird eine JSON-Datei mit den folgenden Parametern übergeben:
 | mapping_land_depression_storage <br />  - in_field <br /> - mapping | Ein Dictionary mit der Art der Bodenbedeckung als "key" und "depression storage" als "value". | "mapping_land_depression_storage": <br /> {"in_field": "ART", "mapping": {"0":"0.05",..., "25":"0.3"}} |
 | Infiltration <br />  - max_rate <br /> - min_rate <br /> - decay <br /> - dry_time <br /> - max_infil| Ein Dictionary mit den Kennwerten zur Infiltration nach Horton. | "infiltration": <br /> {"max_rate":"3", "min_rate":"0.5", "decay":"4", "dry_time":"7", "max_infil":"0"} |
 | gisswmm_workspace | Der Pfad zum Output arcpy Workspace, in dem die Feature-Klasse "in_node" gespeichert ist und "out_subcatchment" gespeichert werden soll. | "C:/pygisswmm/data/GISSWMM.gdb" |
-| overwrite | Die arcpy Umgebunseinstellung "overwirte". | "TRUE" |
+| overwrite | Die arcpy Umgebunseinstellung "overwrite". | "TRUE" |
 | out_subcatchment | Der Name der Output Feature-Klasse mit den Teileinzugsgebieten (ohne Postfix "_sim_nr"!). | "subcatchment" |
 | in_node | Der Name der Feature-Klasse mit den Knoten (ohne Postfix "_sim_nr"!). | "node" |
 | node_id | Die Bezeichnung vom ID-Feld in der Feature-Klasse "in_node". | "Name" |
