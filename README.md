@@ -10,6 +10,7 @@ Die folgende Abbildung gibt einen Überblick über die wichtigsten Inputdaten, A
 Die virtuelle Python-Umgebung von ArcGIS Pro 2.9.4 wurde in eine neue virtuelle Python-Umgebung kopiert, indem in der Python Command Prompt folgender Befehl ausgeführt wurde:
 
 > conda create --name arcgispro-py3-swmm --clone arcgispro-py3
+
 > activate arcgispro-py3-swmm
 
 Die Umgebung enthält unter anderem die Python-Bibliothek arcpy (v. 2.9).
