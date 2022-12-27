@@ -1,0 +1,120 @@
+{
+	"log_folder": "Logs",
+	"sim_nr": "v1",
+	"lk_workspace": "../data/Input.gdb",
+	"in_node": "AWK_ABWASSERKNOTEN",
+	"in_link": "AWK_HALTUNG",
+	"boundary_workspace": "../data/Input.gdb",
+	"in_boundary": "BEGRENZUNG",
+	"gisswmm_workspace": "../data/GISSWMM.gdb",
+	"out_node": "node",
+	"out_link": "link",
+	"overwrite": "True",
+	"mapping_link": [{
+			"in_field": "GlobalId",
+			"out_field": "Name",
+			"out_type": "Text"
+			},
+			{
+			"in_field": "FUNKTIONHIERARCHISCH",
+			"out_field": "FUNKTIONHIERARCHISCH"
+			},	
+			{
+			"in_field": "STATUS",
+			"out_field": "STATUS",
+			"where": "STATUS IS NULL OR STATUS = 0 OR STATUS = 1 OR STATUS = 103"
+			},
+			{
+			"in_field": "TYP_AA",
+			"out_field": "TYP_AA",
+			"where": "TYP_AA = 1 OR TYP_AA = 2 OR TYP_AA IS NULL"
+			},
+			{
+			"in_field": "FUNKTIONHYDRAULISCH",
+			"out_field": "SWMM_TYPE",
+			"out_type": "Text",
+			"mapping": {"None":"CONDUIT","0":"CONDUIT","4":"CONDUIT","5":"PUMP","17":"CONDUIT","101":"CONDUIT","102":"CONDUIT","103":"CONDUIT","106":"CONDUIT","107":"CONDUIT","108":"CONDUIT","110":"CONDUIT","111":"CONDUIT","115":"CONDUIT","116":"CONDUIT"}
+			},
+			{
+			"in_field": "NUTZUNGSART",
+			"out_field": "NUTZUNGSART",
+			"where": "NUTZUNGSART IS NULL OR NUTZUNGSART <> 7"			
+			},		
+			{
+			"in_field": "VONBAUWERK_REF",
+			"out_field": "InletNode"
+			},
+			{
+			"in_field": "BISBAUWERK_REF",
+			"out_field": "OutletNode"
+			},
+			{
+			"in_field": "MATERIAL",
+			"out_field": "Roughness",
+			"out_type": "Text",
+			"mapping": {"0":"0.015","101":"0.015","102":"0.015","103":"0.015","104":"0.015","105":"0.015","106":"0.015","107":"0.015","108":"0.015","109":"0.015","110":"0.01","111":"0.011","112":"0.017","113":"0.015","114":"0.015","115":"0.015","116":"0.015","117":"0.015","118":"0.01","120":"0.01","121":"0.01","122":"0.01","123":"0.01","124":"0.01","127":"0.02","128":"0.01","129":"0.02","130":"0.015","131":"0.015","132":"0.01","133":"0.02","142":"0.02","143":"0.02","144":"0.015","145":"0.01","146":"0.015","147":"0.015","148":"0.01","149":"0.015","1000":"0.025"}
+			},
+			{
+			"in_field": "PROFILTYP",
+			"out_field": "ShapeType",
+			"out_type": "Text",
+			"mapping": {"0":"CIRCULAR","2":"CIRCULAR","101":"EGG","103":"CATENARY","104":"RECT_OPEN","105":"RECT_CLOSED","106":"CIRCULAR","107":"CIRCULAR"}
+			},
+			{
+			"in_field": "LICHTE_HOEHE",
+			"out_field": "LICHTE_HOEHE"
+			},
+			{
+			"in_field": "BREITE",
+			"out_field": "BREITE"
+			}
+		],	
+	"mapping_node": [{
+			"in_field": "GlobalId",
+			"out_field": "Name",
+			"out_type": "Text"
+			},
+			{
+			"in_field": "FUNKTIONHIERARCHISCH",
+			"out_field": "FUNKTIONHIERARCHISCH"
+			},		
+			{
+			"in_field": "STATUS",
+			"out_field": "STATUS",
+			"where": "STATUS IS NULL OR STATUS = 0 OR STATUS = 1 OR STATUS = 103"
+			},
+			{
+			"in_field": "TYP_AA",
+			"out_field": "TYP_AA",
+			"where": "TYP_AA = 1 OR TYP_AA = 2 OR TYP_AA IS NULL"
+			},
+			{
+			"in_field": "FUNKTIONHYDRAULISCH",
+			"out_field": "FUNKTIONHYDRAULISCH"			},
+			{
+			"in_field": "NUTZUNGSART",
+			"out_field": "NUTZUNGSART",
+			"where": "NUTZUNGSART IS NULL OR NUTZUNGSART <> 7"	
+			},
+			{
+			"in_field": "ART_BAUWERK",
+			"out_field": "SWMM_TYPE",
+			"out_type": "Text",
+			"mapping": {"0":"JUNCTION","1":"JUNCTION","2":"JUNCTION","3":"JUNCTION","4":"JUNCTION","6":"JUNCTION","7":"JUNCTION","8":"JUNCTION","9":"JUNCTION","10":"INLET","11":"JUNCTION","12":"JUNCTION","13":"JUNCTION", "14":"JUNCTION"}	
+			},
+			{
+			"in_field": "SOHLENKOTE",
+			"out_field": "InvertElev"
+			},
+			{
+			"in_field": "SCHACHT_DECKELKOTE",
+			"out_field": "Elev"
+			},
+			{
+			"in_field": "EIN_HALTUNG_REF",
+			"out_field": "NodeToLink"
+			}		
+		],
+		"default_values_link":{"InOffset":"0", "OutOffset":"0", "InitFlow":"0", "MaxFlow":"0"},
+		"default_values_node":{"InitDepth":"0","SurchargeDepth":"0","PondedArea":"0"}	
+}
