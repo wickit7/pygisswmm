@@ -25,13 +25,12 @@ Die vorhandenen JSON- und Batch-Dateien wurden für die Testdaten (data\INPUT.gd
 ## Ausführung Skripte
 Es wurden mehrere Python-Skripte erstellt, die nacheinander ausgeführt werden. Die Skripte werden im Folgenden kurz beschrieben.
 
-### [0_BasicFunctions](0_BasicFunctions/)
-Eine Sammlung an Funktionen, die in den folgenden Python-Skripten importiert und angewendet werden.
+### JSON-Datei mit Parametern (settings_v1.json)
+Alle Eingabeparameter werden in einer JSON-Datei "settings_v1(settings_v1.json)" angegeben. Der Pfad zur JSON-Datei wird entweder direkt in den Python-Skripts angegeben ("paramFile = "...".json) oder als Parameter in einer Batch Datei:
 
-### [1_SIA2GISSWMM](1_SIA2GISSWMM/)
-#### [sia2gisswmm.py](1_SIA2GISSWMM/sia2gisswmm.py)
-Das Abwasserkataster (sia405) in einen vereinfachten GIS-Datensatz konvertieren, welcher als Grundlage für die Weiterverarbeitung verwendet wird. 
-Dem Skript wird eine JSON-Datei mit den folgenden Parametern übergeben:
+> C:\Users\wickit7\AppData\Local\ESRI\conda\envs\arcgispro-py3-swmm\python.exe  "sia2gisswmm.py" "sia2gisswmm_v1.json" 
+
+Die JSON-Datei enthält folgende Parameter:
 
 | Parameter | Beschreibung | Beispiel |
 | --- | --- | --- |
@@ -45,11 +44,23 @@ Dem Skript wird eine JSON-Datei mit den folgenden Parametern übergeben:
 | gisswmm_workspace | Der Pfad zum Output arcpy Workspace, in dem die Output Feature-Klassen ("out_node", "out_link") gespeichert werden sollen.| "C:/pygisswmm/data/GISSWMM.gdb" |
 | out_node | Der Name der Output Feature-Klasse mit den konvertierten Abwasserknoten (dieser Name wird im Skript noch mit dem Postfix "_sim_nr" ergänzt). | "node" |
 | out_link | Der Name der Output Feature-Klasse mit den konvertierten Haltungen (dieser Name wird im Skript noch mit dem Postfix "_sim_nr" ergänzt). | "link" |
-| overwrite | Die arcpy Umgebungseinstellung "overwrite". | "True" |
+| overwrite (optional)| Die arcpy Umgebungseinstellung "overwrite". Default = "True" | "True" |
 | mapping_link <br />  - in_field <br />  - out_field <br />  - where <br />  - out_type <br /> -mapping | Eine Liste mit Dictionaries für das Mapping von der Input Feature-Klasse "in_link" (Abwasserkataster) zur Output Feature-Klasse "out_link" (gisswmm). | siehe in [Beispiel Json-Datei](1_SIA2GISSWMM/sia2gisswmm_v1.json) |
 | mapping_node <br />  - in_field <br />  - out_field <br />  - where <br />  - out_type <br /> -mapping | Eine Liste mit Dictionaries für das Mapping von der Input Feature-Klasse "in_node" (Abwasserkataster) zur Output Feature-Klasse "out_node" (gisswmm). | siehe in [Beispiel Json-Datei](1_SIA2GISSWMM/sia2gisswmm_v1.json)|
 | default_values_link <br />  - InOffset <br />  - SurchargeDepth <br />  - InitFlow <br />  - MaxFlow | Eine Liste mit Dictionaries für das Mapping von zusätzlichen Output Feldern inklusive Standardwerten für die Output Feature-Klasse "out_link".| "default_values_link": <br /> {"InOffset":"0", "OutOffset":"0", "InitFlow":"0", "MaxFlow":"0"} |
 | default_values_node <br />  - InitDepth <br />  - SurchargeDepth <br />  - PondedArea | Eine Liste mit Dictionaries für das Mapping von zusätzlichen Output Feldern inklusive Standardwerten für die Output Feature-Klasse "out_node".| "default_values_node": <br /> {"InitDepth":"0","SurchargeDepth":"0","PondedArea":"0"}	|
+s
+
+
+
+### [0_BasicFunctions](0_BasicFunctions/)
+Eine Sammlung an Funktionen, die in den folgenden Python-Skripten importiert und angewendet werden.
+
+### [1_SIA2GISSWMM](1_SIA2GISSWMM/)
+#### [sia2gisswmm.py](1_SIA2GISSWMM/sia2gisswmm.py)
+Das Abwasserkataster (sia405) in einen vereinfachten GIS-Datensatz konvertieren, welcher als Grundlage für die Weiterverarbeitung verwendet wird. 
+Dem Skript wird eine JSON-Datei mit den folgenden Parametern übergeben:
+
 
 ### [2_GISSWMM](2_GISSWMM/)
 #### [gisswmm_upd.py](2_GISSWMM/gisswmm_upd.py)
