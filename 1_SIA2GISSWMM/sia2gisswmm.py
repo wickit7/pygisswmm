@@ -175,7 +175,12 @@ def main(in_node, in_link, boundary_workspace, in_boundary, gisswmm_workspace, o
             # Typ von Output-Feld anpassen
             out_type = lm.pop("out_type")
             type_mapping_node.update({lm['out_field']:out_type})
-
+    
+    # Prüfen ob gdb bereits existiert
+    if not arcpy.Exists(gisswmm_workspace):
+        gisswmm_workspace_path, gisswmm_workspace_name = os.path.split(gisswmm_workspace)
+        arcpy.management.CreateFileGDB(gisswmm_workspace_path, gisswmm_workspace_name)
+    
     # Output Feature-Dataset erstellen
     out_dataset_path = os.path.join(gisswmm_workspace, sim_nr)
     if arcpy.Exists(out_dataset_path):
@@ -218,7 +223,8 @@ def main(in_node, in_link, boundary_workspace, in_boundary, gisswmm_workspace, o
                             if val == "None":
                                 urow[ii] = value_mapping_link[update_link_fields[ii]]["None"]
                             else:
-                                arcpy.AddWarning(f'Feld "{update_link_fields[ii]}": Für den Wert "{val}" ist kein Mapping angegeben! Der Wert wird auf "None" gesetzt')
+                                arcpy.AddWarning(f'Feld "{update_link_fields[ii]}": Für den Wert "{val}" '
+                                                 'ist kein Mapping angegeben! Der Wert wird auf "None" gesetzt')
                                 urow[ii] = None
                     ucursor.updateRow(urow)
 
@@ -231,7 +237,8 @@ def main(in_node, in_link, boundary_workspace, in_boundary, gisswmm_workspace, o
                         try:
                             urow[ii] = value_mapping_node[update_node_fields[ii]][str(urow[ii])]
                         except KeyError:
-                            arcpy.AddWarning(f'Feld "{update_node_fields[ii]}": Für den Wert "{val}" ist kein Mapping angegeben! Der Wert wird auf "None" gesetzt')
+                            arcpy.AddWarning(f'Feld "{update_node_fields[ii]}": Für den Wert "{val}" '
+                                              'ist kein Mapping angegeben! Der Wert wird auf "None" gesetzt')
                             urow[ii] = None
                     ucursor.updateRow(urow)
                     
@@ -249,7 +256,8 @@ def main(in_node, in_link, boundary_workspace, in_boundary, gisswmm_workspace, o
     arcpy.management.AddField(out_link, "coords", "TEXT", field_length=10000)
 
     # Felder berechnen
-    with arcpy.da.UpdateCursor(out_link, ["Shape_Length", "Length", "SHAPE@", "coords","LICHTE_HOEHE","BREITE","Geom1","Geom2","Geom3","Geom4","Barrels"]) as ucursor:
+    with arcpy.da.UpdateCursor(out_link, ["Shape_Length", "Length", "SHAPE@", "coords","LICHTE_HOEHE","BREITE",
+                               "Geom1","Geom2","Geom3","Geom4","Barrels"]) as ucursor:
         for urow in ucursor:
             # Länge berechnen
             urow[1] = urow[0]
@@ -308,44 +316,52 @@ def main(in_node, in_link, boundary_workspace, in_boundary, gisswmm_workspace, o
 # Logginig initialisieren
 if __name__ == "__main__":
     # Globale Variabel für logging
-    global logger
+    global loggerf
     ### Input JSON-Datei ###
-    #paramFile = r'...\sia2gisswmm_v1.json'
+    # Falls Übergabe mittels Batch-Datei, JSON-Datei als Parameter übergeben:
     paramFile = arcpy.GetParameterAsText(0)
+    # Falls Skript direkt ausgeführt wird, JSON-Datei hier angeben:
+    if len(paramFile) == 0:
+        paramFile = os.path.join(os.path.dirname(__file__), '..', 'settings_v1.json')
 
     if paramFile:
         # Einlesen der json-Datei
         with open(paramFile, encoding='utf-8') as f:
             data = json.load(f)
-            # Pfad zu Ordner in welchem Log-Datei gespeichert wird
+            # Der Pfad zum Ordner, in dem die log-Datei gespeichert werden soll.	
             log_folder = data["log_folder"]
-            # Wird als Postfix für Log-Dateinamen und Ausgabe Dataset und Feature-Klassen verwendet
+            # Die Bezeichnung der aktuellen Simulation (Szenario). Das Esri Feature-Dataset im Workspace 
+            # "gisswmm _workspace" erhält diese Bezeichnung. Zudem wird die Bezeichnung den Feature-Klassen 
+            # ("out_node", "out_link") und der Log-Datei als Postfix hinzugefügt.	
             sim_nr = data["sim_nr"]
-            # Pfad zu arcpy Workspace (z. B. ".gdb" oder ".sde") mit Leitungskataster
+            # Der Pfad zum arcpy Workspace (.gdb, .sde), welcher das zu konvertierende Abwasserkataster (SIA405) enthält.	
             lk_workspace = data["lk_workspace"]
-            # Name der Feature-Klasse mit den Knoten (Normschächte etc.) in lk_workspace
+            # Der Name der Input Feature-Klasse mit den Abwasserknoten (Schächte) im Workspace "lk_workspace".	
             in_node = data["in_node"]
-            # Name der Feature-Klasse mit den Haltungen in lk_workspace
+            # Der Name der Input Feature-Klasse mit den Haltungen (Leitungen) im Workspace "lk_workspace".	
             in_link = data["in_link"]
-            # Pfad zum arcpy Workspace (z. B. ".gdb") mit der Begrenzungsfläche des Untersuchungsgebietes
+            # Der Pfad zum arcpy Workspace, welcher die Input Feature-Klasse mit der Begrenzungsfläche des Untersuchungsgebietes enthält.	
             boundary_workspace = data["boundary_workspace"]
-            # Name der Feature-Klasse mit der Begrenzungsfläche in Workspace boundary_workspace
+            # Der Name der Feature-Klasse mit der Input Begrenzungsfläche im Workspace "boundary_workspace".	
             in_boundary = data["in_boundary"]
-            # Pfad zum Ausgabe arcpy-Workspace  (z. B. ".gdb") mit den Ausgabe Feature-Klasen (Schächte und Haltungen)
+            # Der Pfad zum Output arcpy Workspace, in dem die Output Feature-Klassen ("out_node", "out_link") gespeichert werden sollen.	
             gisswmm_workspace = data["gisswmm_workspace"]
-            # Name der Ausgabe Feature-Klasse mit den konvertierten Knoten (dieser Name wird im Skript noch mit dem Postfix "sim_nr" ergänzt)
+            # Der Name der Output Feature-Klasse mit den konvertierten Abwasserknoten (dieser Name wird im Skript noch mit dem Postfix "_sim_nr" ergänzt).	
             out_node = data["out_node"]
-            # Name der Ausgabe Feature-Klasse mit den konvertierten Haltungen (dieser Name wird im Skript noch mit dem Postfix "sim_nr" ergänzt)
+            # Der Name der Output Feature-Klasse mit den konvertierten Haltungen (dieser Name wird im Skript noch mit dem Postfix "_sim_nr" ergänzt).	
             out_link = data["out_link"]
-            # arcpy Workspace-Einstellung overwirte ("True" oder "False")
-            overwrite = data["overwrite"]
-            # Liste mit Dictionaries für Mapping von Eingabe Feature-Klasse Haltung (Leitungskataster) zu Ausgabe Feature-Klasse Haltung (gisswmm)
+            # Die arcpy Umgebungseinstellung "overwrite".
+            if "overwrite" in data:
+                overwrite = data["overwrite"]
+            else: 
+                overwrite = "True"
+            # Eine Liste mit Dictionaries für das Mapping von der Input Feature-Klasse "in_link" (Abwasserkataster) zur Output Feature-Klasse "out_link" (gisswmm).	
             mapping_link = data["mapping_link"]
-            # Liste mit Dictionaries für Mapping von Eingabe Feature-Klasse Knoten (Leitungskataster) zu Ausgabe Feature-Klasse Knoten (gisswmm)
+            # Eine Liste mit Dictionaries für das Mapping von der Input Feature-Klasse "in_node" (Abwasserkataster) zur Output Feature-Klasse "out_node" (gisswmm).	
             mapping_node = data["mapping_node"]
-            # Liste mit Dictionaries für Mapping von zusätzlichen Ausgabe Felder inklusive Standardwerte für Ausagbe Feature-Klasse Haltung
+            # Eine Liste mit Dictionaries für das Mapping von zusätzlichen Output Feldern inklusive Standardwerten für die Output Feature-Klasse "out_link".	
             default_values_link = data["default_values_link"]
-            # Liste mit Dictionaries für Mapping von zusätzlichen Ausgabe Felder inklusive Standardwerte für Ausagbe Feature-Klasse Knoten
+            # Eine Liste mit Dictionaries für das Mapping von zusätzlichen Output Feldern inklusive Standardwerten für die Output Feature-Klasse "out_node".	
             default_values_node = data["default_values_node"]     
     else:
         raise ValueError('keine json-Datei mit den Parametern angegeben')

@@ -1,0 +1,6 @@
+{
+    "python.analysis.extraPaths": [
+        "./0_BasicFunctions",
+        "./0_BasicFunctions"
+    ]
+}
