@@ -25,8 +25,8 @@ Die vorhandenen JSON- und Batch-Dateien wurden für die Testdaten (data\INPUT.gd
 ## Ausführung Skripte
 Es wurden mehrere Python-Skripte erstellt, die nacheinander ausgeführt werden. Die Skripte werden im Folgenden kurz beschrieben.
 
-### JSON-Datei mit Parametern (settings_v1.json)
-Alle Eingabeparameter werden in einer JSON-Datei "settings_v1(settings_v1.json)" angegeben. Der Pfad zur JSON-Datei wird entweder direkt in den Python-Skripts angegeben ("paramFile = "...".json) oder als Parameter in einer Batch Datei:
+### JSON-Datei mit den Parametern
+Alle Eingabeparameter werden in einer JSON-Datei "[settings_v1](settings_v1.json)" angegeben. Der Pfad zur JSON-Datei wird entweder direkt in den Python-Skripts angegeben ("paramFile = "...".json) oder in einer Batch Datei als Parameter übergeben z. B.:
 
 > C:\Users\wickit7\AppData\Local\ESRI\conda\envs\arcgispro-py3-swmm\python.exe  "sia2gisswmm.py" "sia2gisswmm_v1.json" 
 
@@ -49,7 +49,23 @@ Die JSON-Datei enthält folgende Parameter:
 | mapping_node <br />  - in_field <br />  - out_field <br />  - where <br />  - out_type <br /> -mapping | Eine Liste mit Dictionaries für das Mapping von der Input Feature-Klasse "in_node" (Abwasserkataster) zur Output Feature-Klasse "out_node" (gisswmm). | siehe in [Beispiel Json-Datei](1_SIA2GISSWMM/sia2gisswmm_v1.json)|
 | default_values_link <br />  - InOffset <br />  - SurchargeDepth <br />  - InitFlow <br />  - MaxFlow | Eine Liste mit Dictionaries für das Mapping von zusätzlichen Output Feldern inklusive Standardwerten für die Output Feature-Klasse "out_link".| "default_values_link": <br /> {"InOffset":"0", "OutOffset":"0", "InitFlow":"0", "MaxFlow":"0"} |
 | default_values_node <br />  - InitDepth <br />  - SurchargeDepth <br />  - PondedArea | Eine Liste mit Dictionaries für das Mapping von zusätzlichen Output Feldern inklusive Standardwerten für die Output Feature-Klasse "out_node".| "default_values_node": <br /> {"InitDepth":"0","SurchargeDepth":"0","PondedArea":"0"}	|
-s
+| dhm_workspace | Der Pfad zum arcpy Workspace mit dem Höhenmodell (DHM). | "C:/pygisswmm/data/INPUT.gdb" |
+| in_dhm | Der Name des DHM-Rasters im Workspace "dhm_workspace". | "DHM" |
+| node_id | Die Bezeichnung vom ID-Feld in der Feature-Klasse "out_node". | "Name" |
+| node_dk | Die Bezeichnung vom Feld mit der Deckelkote in der Feature-Klasse "out_node". | "Elev" |
+| node_sk | Die Bezeichnung vom Feld mit der Sohlenkote in der Feature-Klasse "out_node". | "InvertElev" |
+| tag_dk (optional)| Den Wert für das tag-Feld, um zu kennzeichnen, welche Deckelkoten mit dem DHM berechnet wurden. | "dk_dhm" |
+| tag_sk (optional)| Den Wert für das tag-Feld, um zu kennzeichnen, welche Sohlenkoten durch Interpolation ermittelt wurden. | "sk_ip" |
+| node_to_link | Der Name des Feldes in der Feature-Klasse "out_node", das die ID der Haltung enthält, auf der sich der Einlaufschacht befindet. | "NodeToLink" |
+| node_type | Die Bezeichnung vom Feld mit dem Schachttyp in der Feature-Klasse "out_node". | "SWMM_TYPE" |
+| type_inlet | Der Wert im Feld Schachttyp ("node_type"), welcher dem Einlaufschacht entspricht. | "INLET" |
+| min_depth | Eine minimale Schachttiefe (m), die nicht unterschritten werden darf. | "0.1" |
+| mean_depth | Eine Schachttiefe (m), die verwendet wird, falls die Sohlenkote nicht interpoliert werden konnte. Dieser Fall tritt nur auf, falls entlang eines Haltungsstranges keine einzige Sohlenkote bekannt ist. | "1.5" |
+| link_id | Die Bezeichnung vom ID-Feld in der Feature-Klasse "out_link". | "Name" |
+| link_from | Die Bezeichnung vom Feld mit der ID vom Von-Schacht in der Feature-Klasse "out_link". | "InletNode" |
+| link_to | Die Bezeichnung vom Feld mit der ID vom Bis-Schacht in der Feature-Klasse "out_link". | "OutletNode" |
+| link_length | Die Bezeichnung vom Feld mit der Haltungslänge in der Feature-Klasse "out_link".	 | "Length" |
+| mean_slope | Ein mittleres Gefälle für die Berechnung der Sohlenkote. Dieses Gefälle wird nur verwendet, falls entlang eines Haltungsstranges nur eine einzige Sohlenkote vorhanden ist. | 0.05 |
 
 
 
@@ -59,7 +75,7 @@ Eine Sammlung an Funktionen, die in den folgenden Python-Skripten importiert und
 ### [1_SIA2GISSWMM](1_SIA2GISSWMM/)
 #### [sia2gisswmm.py](1_SIA2GISSWMM/sia2gisswmm.py)
 Das Abwasserkataster (sia405) in einen vereinfachten GIS-Datensatz konvertieren, welcher als Grundlage für die Weiterverarbeitung verwendet wird. 
-Dem Skript wird eine JSON-Datei mit den folgenden Parametern übergeben:
+Dem Skript wird eine JSON-Datei mit den Parametern übergeben ("[settings_v1](settings_v1.json)").
 
 
 ### [2_GISSWMM](2_GISSWMM/)
@@ -68,37 +84,12 @@ Den vereinfachten GIS-Datensatz aktualisieren:
 - Erstellung Netzwerktopologie: Haltungen werden bei den Einlaufknoten aufgetrennt, um eine strikte Knoten-Haltung-Knoten Topologie zu erhalten. 
 - Ermittlung Deckelkote: Für Knoten ohne gemessene Deckelkote (Höhe des Schachtdeckels m ü. M.), wird die Höhe aus einem Höhenmodell (DHM) extrahiert.
 - Interpolation Sohlenkote: Für Knoten ohne gemessene Sohlenkote (Höhe der Schachtsohle m ü. M.), wird die Höhe mit einem Algorithmus berechnet. 
-Dem Skript wird eine JSON-Datei mit den folgenden Parametern übergeben:
+Dem Skript wird eine JSON-Datei mit den Parametern übergeben ("[settings_v1](settings_v1.json)").
 
-| Parameter | Beschreibung | Beispiel |
-| --- | --- | --- |
-| log_folder | Der Pfad zum Ordner, in dem die log-Datei gespeichert werden soll. | "C:/pygisswmm/2_GISSWMM/Logs" |
-| sim_nr | Die Bezeichnung der aktuellen Simulation. Das Feature-Dataset in "gisswmm_workspace" hat diese Bezeichnung und die enthaltenen Feature-Klassen haben diese Bezeichnung als Postfix. | "v1" |
-| overwrite | Die arcpy Umgebungseinstellung "overwrite". | "TRUE" |
-| dhm_workspace | Der Pfad zum arcpy Workspace mit dem Höhenmodell (DHM). | "C:/pygisswmm/data/INPUT.gdb" |
-| in_dhm | Der Name des DHM-Rasters im Workspace "dhm_workspace". | "DHM" |
-| gisswmm_workspace | Der Pfad zum Output arcpy Workspace, in dem die Feature-Klassen "in_node" und "in_link" gespeichert sind. | "C:/pygisswmm/data/GISSWMM.gdb" |
-| in_node | Der Name der Feature-Klasse mit den Knoten (ohne Postfix "_sim_nr"!) im Workspace "gisswmm_workspace". | "node" |
-| node_id | Die Bezeichnung vom ID-Feld in der Feature-Klasse "in_node". | "Name" |
-| node_dk | Die Bezeichnung vom Feld mit der Deckelkote in der Feature-Klasse "in_node". | "Elev" |
-| node_sk | Die Bezeichnung vom Feld mit der Sohlenkote in der Feature-Klasse "in_node". | "InvertElev" |
-| tag_dk | Den Wert für das tag-Feld, um zu kennzeichnen, welche Deckelkoten mit dem DHM berechnet wurden. | "dk_dhm" |
-| tag_sk | Den Wert für das tag-Feld, um zu kennzeichnen, welche Sohlenkoten durch Interpolation ermittelt wurden. | "sk_ip" |
-| node_to_link | Der Name des Feldes in der Feature-Klasse "in_node", das die ID des Schachts enthält, auf dem sich der Einlaufschacht befindet. | "NodeToLink" |
-| node_type | Die Bezeichnung vom Feld mit dem Schachttyp in der Feature-Klasse "in_node". | "SWMM_TYPE" |
-| type_inlet | Den Wert im Feld Schachttyp ("node_type"), welcher dem Einlaufschacht entspricht. | "INLET" |
-| min_depth | Eine minimale Schachttiefe (m), die nicht unterschritten werden darf. | "0.1" |
-| mean_depth | Eine Schachttiefe (m), die verwendet wird, falls die Sohlenkote nicht interpoliert werden konnte. Dieser Fall tritt nur auf, falls entlang eines Haltungsstranges keine einzige Sohlenkote bekannt ist. | "1.5" |
-| in_link | Der Name der Feature-Klasse mit den Haltungen (ohne Postfix "_sim_nr"!) im Workspace "gisswmm_workspace". | "link" |
-| link_id | Die Bezeichnung vom ID-Feld in der Feature-Klasse "in_link". | "Name" |
-| link_from | Die Bezeichnung vom Feld mit der ID vom Von-Schacht in der Feature-Klasse "in_link". | "InletNode" |
-| link_to | Die Bezeichnung vom Feld mit der ID vom Bis-Schacht in der Feature-Klasse "in_link". | "OutletNode" |
-| link_length | Die Bezeichnung vom Feld mit der Haltungslänge in der Feature-Klasse "in_link".	 | "Length" |
-| mean_slope | Ein mittleres Gefälle für die Berechnung der Sohlenkote. Dieses Gefälle wird nur verwendet, falls entlang eines Haltungsstranges nur eine einzige Sohlenkote vorhanden ist. | 0.05 |
 
 #### [copy_from_vx_to_vy.py](2_GISSWMM/copy_from_vx_to_vy.py)
 Mit diesem Skript können Haltungen (link) und Knoten (node) von einem Dataset (Simulation) in ein neues Dataset kopiert werden.
-Dem Skript wird eine JSON-Datei mit den folgenden Parametern übergeben:
+Dem Skript wird eine JSON-Datei mit den folgenden Parametern übergeben (z. B. [copy_v1_to_v2_v3_v4.json](2_GISSWMM/copy_v1_to_v2_v3_v4.json)):
 
 | Parameter | Beschreibung | Beispiel |
 | --- | --- | --- |
@@ -106,8 +97,8 @@ Dem Skript wird eine JSON-Datei mit den folgenden Parametern übergeben:
 | gisswmm_workspace | Der Pfad zum Output arcpy Workspace, in dem die Feature-Klassen "in_node" und "in_link" gespeichert sind. | "C:/pygisswmm/data/GISSWMM.gdb" |
 | from_sim_nr | Die Bezeichnung des Datasets im Workspace "gisswmm_workspace" (Bezeichnung der Simulation), welches kopiert werden soll. | "v1" |
 | to_sim_nrs | Eine Liste mit Datasets (Simulationen), die erstellt werden sollen. | ["v2", "v3", "v4"] |
-| in_link | Der Name der Feature-Klasse mit den Haltungen (ohne Postfix "_sim_nr"!). | "link" |
-| in_node | Der Name der Feature-Klasse mit den Knoten (ohne Postfix "_sim_nr"!) im Workspace "gisswmm_workspace". | "node" |
+| out_link | Der Name der Feature-Klasse mit den Haltungen (ohne Postfix "_sim_nr"!). | "link" |
+| out_node | Der Name der Feature-Klasse mit den Knoten (ohne Postfix "_sim_nr"!) im Workspace "gisswmm_workspace". | "node" |
 | overwrite | Die arcpy Umgebungseinstellung "overwrite". | "TRUE" |
 
 ### [3_SUBCATCHMENT](3_SUBCATCHMENT/)
