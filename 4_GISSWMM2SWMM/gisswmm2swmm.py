@@ -56,14 +56,14 @@ def coords_to_list(coords):
 
 
 # Main module: Input-Daten aufbereiten und Funktionen aufrufen
-def main(in_node, in_link, in_subcatchment, template_swmm_file, sim_nr):
+def main(out_node, out_link, out_subcatchment, template_swmm_file, sim_nr):
     """Input-Daten aufbereiten und Funktionen für die Konvertierung der GIS Feature-Klassen (node, link, subcatchment)
     in das SWMM-Datenformat (.inp) aufrufen.
 
     Required:
-        in_node -- Name der Feature-Klasse mit den Schächten (ohne Postfix)
-        in_link -- Name der Feature-Klasse mit den Haltungen (ohne Postfix)
-        in_subcatchment -- Name der Feature-Klasse mit den Teileinzugsgebieten (ohne Postfix)
+        out_node -- Name der Feature-Klasse mit den Schächten (ohne Postfix)
+        out_link -- Name der Feature-Klasse mit den Haltungen (ohne Postfix)
+        out_subcatchment -- Name der Feature-Klasse mit den Teileinzugsgebieten (ohne Postfix)
         template_swmm_file -- Template .inp-Datei die alle Angaben ausser der Bauwerke enthält
         sim_nr -- Wird als Postfix für Log-Dateinamen und Feature-Klassen verwendet
     """
@@ -97,7 +97,7 @@ def main(in_node, in_link, in_subcatchment, template_swmm_file, sim_nr):
     # Mapping GISSWMM-Feld:swmmio-Feld für outfall    
     outfall_fields = {"InvertElev":"InvertElev", "OutfallType":"OutfallType"}
     # Daten aus GIS-Datensatz extrahieren
-    with arcpy.da.SearchCursor(in_node, node_fields_gis) as cursor:
+    with arcpy.da.SearchCursor(out_node, node_fields_gis) as cursor:
         for row in cursor:
             for ii, val in enumerate(row):
                 in_field = node_fields_gis[ii]
@@ -134,7 +134,7 @@ def main(in_node, in_link, in_subcatchment, template_swmm_file, sim_nr):
     # Mapping GISSWMM-Feld:swmmio-Feld für xsection
     xsections_fields = {"ShapeType":"Shape", "Geom1":"Geom1", "Geom2":"Geom2", "Geom3":"Geom3", "Geom4":"Geom4", "Barrels":"Barrels"} # Geom3, Geom4, Barrels nicht berücksichtigt
     # Daten aus GIS-Datensatz extrahieren
-    with arcpy.da.SearchCursor(in_link, link_fields_gis) as cursor:
+    with arcpy.da.SearchCursor(out_link, link_fields_gis) as cursor:
         for row in cursor:
             for ii, val in enumerate(row):
                 in_field = link_fields_gis[ii]
@@ -183,7 +183,7 @@ def main(in_node, in_link, in_subcatchment, template_swmm_file, sim_nr):
     infiltration_fields = {"MaxRate":"MaxRate", "MinRate":"MinRate", "Decay":"Decay", "DryTime":"DryTime", "MaxInfil":"MaxInfil"}                      
 
     # Daten aus GIS-Datensatz extrahieren
-    with arcpy.da.SearchCursor(in_subcatchment, subcatchments_fields_gis) as cursor:
+    with arcpy.da.SearchCursor(out_subcatchment, subcatchments_fields_gis) as cursor:
         for row in cursor:
             for ii, val in enumerate(row):
                 in_field = subcatchments_fields_gis[ii]
@@ -220,33 +220,40 @@ if __name__ == "__main__":
     # Globale Variabel für logging
     global logger
     # Input JSON-Datei
-    # paramFile = r'...\gisswmm2swmm_v1_li.json'
+    # Falls das Skript mittels einer Batch-Datei ausgeführt wird, wird die JSON-Datei als Parameter übergeben:
     paramFile = arcpy.GetParameterAsText(0)
+    # Falls das Skript direkt ausgeführt wird, wird die JSON-Datei hier angeben:
+    if len(paramFile) == 0:
+        paramFile = os.path.join(os.path.dirname(__file__), '..', 'settings_v1.json')
+
 
     if paramFile:
         #Einlesen der json-Datei
         with open(paramFile, encoding='utf-8') as f:
             data = json.load(f)
-            # Pfad zum Ordner in welchem die Log-Datei gespeichert wird
+            # Der Pfad zum Ordner, in dem die log-Datei gespeichert werden soll. 
             log_folder = data["log_folder"]
-            # Wird als Postfix für Log-Dateinamen und die SWMM Feature-Klassen (node, link, subcatchment) verwendet
+            # Wird als Postfix für Log-Dateinamen und die SWMM Feature-Klassen (node, link, subcatchment) verwendet.
             sim_nr = data["sim_nr"]
-            # Pfad zu arcpy Workspace GISSWMM (.gdb)  mit Knoten und Haltungen
+            # Pfad zu arcpy Workspace GISSWMM (.gdb)  mit dem Knoten (out_node), Haltungen (out_link) und Teileinzugsgebieten (out_subcatchment).
             gisswmm_workspace = data["gisswmm_workspace"]
-            # Name der Feature-Klasse mit den Knoten (ohne Postfix "_sim_nr"!)
-            in_node = data["in_node"]
-            # Name der Feature-Klasse mit den Haltungen (ohne Postfix "_sim_nr"!)
-            in_link = data["in_link"]
-            # Name der Feature-Klasse mit den Teileinzugsgebieten (ohne Postfix "_sim_nr"!)
-            in_subcatchment = data["in_subcatchment"]
-            # Pfad zur Template SWMM-Eingabedatei (.inp)
+            # Der Name der Feature-Klasse mit den Knoten (ohne Postfix "_sim_nr"!).
+            out_node = data["out_node"]
+            # Der Name der Feature-Klasse mit den Haltungen (ohne Postfix "_sim_nr"!).
+            out_link = data["out_link"]
+            # Der Name der Feature-Klasse mit den Teileinzugsgebieten (ohne Postfix "_sim_nr"!).
+            out_subcatchment = data["out_subcatchment"]
+            # Der Pfad zur Template SWMM-Eingabedatei (.inp).
             template_swmm_file = data["template_swmm_file"]
     else:
         raise ValueError('keine json-Datei mit den Parametern angegeben')
 
-    # Prüfen ob logfolder existiert
+    # Prüfen ob Logfolder existiert
     if not os.path.isdir(log_folder):
-        raise ValueError(f'Logfolder "{log_folder}" existiert nicht!')
+        try:
+            os.mkdir(log_folder)
+        except:
+            raise ValueError(f'Logfolder "{log_folder}" konnte nicht erstellt werden!')
    
     # Logging initialisieren
     filename = 'gisswmm2swmm_' + sim_nr + "_" + template_swmm_file.split("/")[-1].split(".")[0] + '.log'
@@ -261,31 +268,31 @@ if __name__ == "__main__":
 
     # Prüfen ob Eingabedatensätze vorhanden sind
     postfix = "_" + sim_nr
-    if not postfix in in_node:
-        in_node = in_node + postfix
-    if not postfix in in_link:
-        in_link = in_link + postfix
-    if not postfix in in_subcatchment:
-        in_subcatchment = in_subcatchment + postfix
-    if not arcpy.Exists(in_node):
-        err_txt = f'Die angegebene Feature-Klasse {in_node} ist nicht vorhanden!'
+    if not postfix in out_node:
+        out_node = out_node + postfix
+    if not postfix in out_link:
+        out_link = out_link + postfix
+    if not postfix in out_subcatchment:
+        out_subcatchment = out_subcatchment + postfix
+    if not arcpy.Exists(out_node):
+        err_txt = f'Die angegebene Feature-Klasse {out_node} ist nicht vorhanden!'
         logger.error(err_txt)
         raise ValueError(err_txt)  
-    if not arcpy.Exists(in_link):
-        err_txt = f'Die angegebene Feature-Klasse {in_link} ist nicht vorhanden!'
+    if not arcpy.Exists(out_link):
+        err_txt = f'Die angegebene Feature-Klasse {out_link} ist nicht vorhanden!'
         logger.error(err_txt)
         raise ValueError(err_txt)
-    if not arcpy.Exists(in_subcatchment):
-        err_txt = f'Die angegebene Feature-Klasse {in_subcatchment} ist nicht vorhanden!'
+    if not arcpy.Exists(out_subcatchment):
+        err_txt = f'Die angegebene Feature-Klasse {out_subcatchment} ist nicht vorhanden!'
         logger.error(err_txt)
         raise ValueError(err_txt)
 
     # Koordinatensystem
-    spatial_ref = arcpy.Describe(in_node).spatialReference
+    spatial_ref = arcpy.Describe(out_node).spatialReference
 
     # Main module aufrufen
     with arcpy.EnvManager(workspace = gisswmm_workspace, outputCoordinateSystem = spatial_ref):
-        main(in_node, in_link, in_subcatchment, template_swmm_file, sim_nr)
+        main(out_node, out_link, out_subcatchment, template_swmm_file, sim_nr)
 
     # Logging abschliessen
     end_time = time.time()

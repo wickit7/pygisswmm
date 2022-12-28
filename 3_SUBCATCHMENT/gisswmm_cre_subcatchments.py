@@ -65,7 +65,7 @@ def del_small_polygons(in_feature, min_area):
 # Main module: Input-Daten aufbereiten und Funktionen aufrufen
 def main(dhm_workspace, in_dhm, max_slope, parcel_workspace, in_parcel, land_workspace, in_land, mapping_land_imperv, 
          mapping_land_roughness, mapping_land_depression_storage, infiltration, out_raster_workspace, out_raster_prefix, 
-         gisswmm_workspace, in_node, node_id, node_type, type_inlet, snap_distance, min_area, method, out_subcatchment, sim_nr):
+         gisswmm_workspace, out_node, node_id, node_type, type_inlet, snap_distance, min_area, method, out_subcatchment, sim_nr):
     """Input-Daten aufbereiten und Funktionen für die Erstellung der Teileinzugsgebiete aufrufen
 
     Required:
@@ -83,7 +83,7 @@ def main(dhm_workspace, in_dhm, max_slope, parcel_workspace, in_parcel, land_wor
         out_raster_workspace -- Workspace von Ouput-Rasterdaten
         out_raster_prefix -- Prefix von Output-Rasterdaten
         gisswmm_workspace -- Pfad zu arcpy Workspace GISSWMM (.gdb) mit Schächten und Haltungen und der zu erstellenden Output Feature-Klasse (Teileinzugsgebiete)
-        in_node -- Name der Feature-Klasse mit den Schächten (ohne Postfix)
+        out_node -- Name der Feature-Klasse mit den Schächten (ohne Postfix)
         node_id -- Bezeichnung von ID-Feld der Schächte
         node_type -- Bezeichnung von Feld mit Schachttyp in der Feature-Klasse 'node_id'
         type_inlet -- Wert von Schachttyp ('node_type') welcher Einlaufschacht entspricht
@@ -141,16 +141,16 @@ def main(dhm_workspace, in_dhm, max_slope, parcel_workspace, in_parcel, land_wor
 
     # Layer mit Schächten, für welche ein Teileinzugsgebiet berechnet werden soll (ohne Einlaufschächte), erstellen
     logger.info(f'Layer mit Schächten, für welche ein Teileinzugsgebiet berechnet werden soll, erstellen')
-    in_node_lyr = 'in_node_lyr'
+    out_node_lyr = 'out_node_lyr'
     where_node = ('"' + node_type + '"' + " <> " + f"'{type_inlet}'" )
 
     # Feature Layer mit den Schächten erstellen
-    arcpy.management.MakeFeatureLayer(in_node, in_node_lyr, where_node)
+    arcpy.management.MakeFeatureLayer(out_node, out_node_lyr, where_node)
  
     # Abflusspunkte zu den Schächten zuordnen (innerhalb snap_distance)
     out_pourpoint_raster_path = os.path.join(out_raster_workspace, out_raster_prefix + "_pourpoint")
     logger.info(f'Raster "{out_pourpoint_raster_path}" erstellen')
-    out_pourpoint_raster = arcpy.sa.SnapPourPoint(in_node_lyr, out_accumulation_raster, snap_distance, "OBJECTID")
+    out_pourpoint_raster = arcpy.sa.SnapPourPoint(out_node_lyr, out_accumulation_raster, snap_distance, "OBJECTID")
     out_pourpoint_raster.save(out_pourpoint_raster_path)        
 
     # Topographische Teileinzugsgebiete erstellen (Raster)
@@ -213,13 +213,13 @@ def main(dhm_workspace, in_dhm, max_slope, parcel_workspace, in_parcel, land_wor
 
     # JOIN node on OBJECTID -> node ID Feld befüllen
     logger.info(f'Schächte und Teileinzugebiete miteinander joinen um den Teileinzugsgebieten die ID des Auslaufschachtes zu übergeben')
-    out_subcatchment_node = arcpy.management.AddJoin(hyd_subcatchment_path, "gridcode", in_node, "OBJECTID", "KEEP_ALL", "NO_INDEX_JOIN_FIELDS")
+    out_subcatchment_node = arcpy.management.AddJoin(hyd_subcatchment_path, "gridcode", out_node, "OBJECTID", "KEEP_ALL", "NO_INDEX_JOIN_FIELDS")
     # Das Feld "Outlet" (Auslaufschacht) mit der ID der Schächte befüllen
     logger.info(f'Feld Outlet berechnen')
-    expression = "!"+in_node+"."+node_id+"!"
+    expression = "!"+out_node+"."+node_id+"!"
     arcpy.management.CalculateField(out_subcatchment_node, 'Outlet', expression, "PYTHON3")    
     # Join entfernen
-    arcpy.management.RemoveJoin(out_subcatchment_node, in_node)
+    arcpy.management.RemoveJoin(out_subcatchment_node, out_node)
 
     # Pfad zur Bodenbedeckung definieren
     in_land_path = os.path.join(land_workspace, in_land)
@@ -533,64 +533,74 @@ if __name__ == "__main__":
     # Globale Variabel für logging
     global logger
     # Input JSON-Datei
-    #paramFile = r'...\gisswmm_cre_subcatchments_v1.json'
+    # Falls das Skript mittels einer Batch-Datei ausgeführt wird, wird die JSON-Datei als Parameter übergeben:
     paramFile = arcpy.GetParameterAsText(0)
+    # Falls das Skript direkt ausgeführt wird, wird die JSON-Datei hier angeben:
+    if len(paramFile) == 0:
+        paramFile = os.path.join(os.path.dirname(__file__), '..', 'settings_v1.json')
 
     if paramFile:
         #Einlesen der json-Datei
         with open(paramFile, encoding='utf-8') as f:
             data = json.load(f)
-            # Pfad zum Ordner in welchem die Log-Datei gespeichert wird
+            # Der Pfad zum Ordner, in dem die log-Datei gespeichert werden soll. 
             log_folder = data["log_folder"]
-            # Wird als Postfix für Log-Dateinamen und SWMM Feature-Klassen (node, link, subcatchment) verwendet
+            # Wird als Postfix für Log-Dateinamen und die SWMM Feature-Klassen (node, link, subcatchment) verwendet.
             sim_nr = data["sim_nr"]
-            # Methode mit der Teileinzugsgebiete erstellt werden sollen ('1', '2', '3' oder '4')
-            method  = data["method"]
-            # Snap distance (Fangtoleranz) für die Funktion 'arcpy.sa.SnapPourPoint', mit der die Anfangspunkte für die Berechnung 
-            # der topografischen Teileinzugsgebiete festgelegt werden. (m)
+            # Die Methode mit welcher die Teileinzugsgebiete erstellt werden sollen ("1", "2", "3" oder "4")
+            method  = data["subcatchment_method"]
+            # Eine Distanz (m), die als Fangtoleranz für die Funktion "arcpy.sa.SnapPourPoint" verwendet wird. Die Funktion verschiebt die Knoten innerhalb dieser 
+            # Distanz an die Position mit der grössten Abflussakkumulation, bevor die topographischen Teileinzugsgebiete von dieser Postion aus berechnet werden.
             snap_distance  = data["snap_distance"]
-            # Minimale Fläche die ein Teileinzugsgebiet aufweisen muss (m2)
+            # Eine minimale Fläche, die ein Teileinzugsgebiet aufweisen soll (m2).
             min_area  = float(data["min_area"])
-            # Dictionary mit Art der Bodenbedeckung als "key" und "%imperviousness" (Befestigungsgrad) als "value"
+            # Ein Dictionary mit der Art der Bodenbedeckung als "key" und "%imperviousness" als "value".
             mapping_land_imperv = data["mapping_land_imperv"]
-            # Dictionary mit Art der Bodenbedeckung als "key" und "roughness" (Rauhigkeit) als "value"
+            # Ein Dictionary mit der Art der Bodenbedeckung als "key" und "roughness" als "value".
             mapping_land_roughness = data["mapping_land_roughness"]
-            # Dictionary mit Art der Bodenbedeckung als "key" und "depression storage" (Muldentiefe) als "value"
+            # Ein Dictionary mit der Art der Bodenbedeckung als "key" und "depression storage" als "value".
             mapping_land_depression_storage = data["mapping_land_depression_storage"]
-            # Dictionary mit Kennwerten zur Infiltration nach Horton 
+            # Ein Dictionary mit den Kennwerten zur Infiltration nach Horton (max_rate, min_rate, decay, dry_time, max_infil). 
             infiltration = data["infiltration"]
-            # Pfad zu arcpy Workspace GISSWMM (.gdb) mit Schächten und Haltungen und der zu erstelltenden Ausgabe Feature-Klasse (Teileinzugsgebiete)
+            # Der Pfad zum arcpy Workspace GISSWMM (.gdb) mit den Schächten (out_node), Haltungen (out_link) 
+            # und der zu erstelltenden Output Feature-Klasse mit den Teileinzugsgebieten (out_subcatchment).
             gisswmm_workspace = data["gisswmm_workspace"]
-            # arcpy Workspace-Einstellung
-            overwrite = data["overwrite"]
-            # Name der Ausgabe Feature-Klasse mit den Teileinzugsgebieten (ohne Postfix '_sim_nr'!)
+            # Die arcpy Umgebungseinstellung "overwrite".
+            if "overwrite" in data:
+                overwrite = data["overwrite"]
+            else: 
+                overwrite = "True"
+            # Der Name der Output Feature-Klasse mit den Teileinzugsgebieten (ohne Postfix "_sim_nr"!). 
             out_subcatchment = data["out_subcatchment"]
-            # Name der Feature-Klasse mit den Schächten  (ohne Postfix '_sim_nr'!)
-            in_node = data["in_node"]
-            # Bezeichnung von ID-Feld der Feature-Klasse 'in_node'
+            # Der Name der Feature-Klasse mit den Schächten  (ohne Postfix '_sim_nr'!).
+            out_node = data["out_node"]
+            # Die Bezeichnung vom ID-Feld in der Feature-Klasse "out_node".
             node_id = data["node_id"]
-            # Bezeichnung von Feld mit Schachttyp der Feature-Klasse 'in_node'
+            # Die Bezeichnung vom Feld mit dem Schachttyp in der Feature-Klasse "out_node". 
             node_type = data["node_type"]
-            # Wert von Schachttyp ('node_type') welcher Einlaufschacht entspricht
+            # Der Wert im Feld Schachttyp ("node_type"), welcher dem Einlaufschacht entspricht.
             type_inlet = data["type_inlet"]           
-            # Pfad zu arcpy Workspace mit DHM (.gdb)
+            # Der Pfad zum arcpy Workspace mit dem Höhenmodell (DHM).
             dhm_workspace = data["dhm_workspace"]
-            # Name des DHM-Rasters
+            # Der Name des DHM-Rasters im Workspace "dhm_workspace".
             in_dhm = data["in_dhm"]
-            # Maximaler Neigungswert (Terraingefälle) mit welchem höhere Werte im Raster ersetzt werden, bevor die mittelere Steigung berechnet wird
+            # Ein maximales Terraingefälle in %, das ein Teileinzugsgebiet haben soll.
             max_slope = data["max_slope"]   
-            # Pfad zu arcpy Workspace mit Bodenbedeckung (.gdb)
+            # Der Pfad zum arcpy Workspace mit der Bodenbedeckung. 
             land_workspace = data["land_workspace"]
-            # Name des Bodenbedeckung-Rasters in Workspace 'land_workspace'
+            # Der Name des Bodenbedeckung-Rasters im Workspace "land_workspace".
             in_land = data["in_land"]
-            # Workspace in welchem Output Rasterdaten gespeichert werden
+            # Der Workspace in welchem Output Rasterdaten gespeichert werden sollen.
             out_raster_workspace = data["out_raster_workspace"]
-            # Prefix von Output Rasterdaten
-            out_raster_prefix = data["out_raster_prefix"]
+            # Ein Prefix für die Bezeichnung der Output Rasterdaten.
+            if "out_raster_prefix" in data:
+                out_raster_prefix = data["out_raster_prefix"]
+            else:
+                out_raster_prefix = "raster"
             if "parcel_workspace" in data:
-                # Pfad zu arcpy Workspace mit Parzellen (.gdb)
+                # Der Pfad zum arcpy Workspace mit den Parzellen (Liegenschaften). Wird bei den Methoden (subcatchment_method) "2" und "4" benötigt.
                 parcel_workspace = data["parcel_workspace"]
-                # Bezeichnung der Feature-Klasse mit den Parzellen in Workspace 'parcel_workspace'
+                # Die Bezeichnung der Feature-Klasse mit den Parzellen im Workspace "parcel_workspace". 
                 in_parcel = data["in_parcel"]
             else:
                 parcel_workspace = None
@@ -601,7 +611,10 @@ if __name__ == "__main__":
 
     # Prüfen ob Logfolder existiert
     if not os.path.isdir(log_folder):
-        raise ValueError(f'Logfolder "{log_folder}" existiert nicht!')
+        try:
+            os.mkdir(log_folder)
+        except:
+            raise ValueError(f'Logfolder "{log_folder}" konnte nicht erstellt werden!')
 
     # overwrite str -> bool
     if overwrite == 'True':
@@ -624,21 +637,21 @@ if __name__ == "__main__":
     arcpy.env.workspace = gisswmm_workspace
 
     postfix = "_" + sim_nr
-    if not postfix in in_node:
-        in_node = in_node + postfix
-    if not arcpy.Exists(in_node):
-        err_txt = f'Die angegebene Feature-Klasse {in_node} ist nicht vorhanden!'
+    if not postfix in out_node:
+        out_node = out_node + postfix
+    if not arcpy.Exists(out_node):
+        err_txt = f'Die angegebene Feature-Klasse {out_node} ist nicht vorhanden!'
         logger.error(err_txt)
         raise ValueError(err_txt)  
 
     # Koordinatensystem
-    spatial_ref = arcpy.Describe(in_node).spatialReference
+    spatial_ref = arcpy.Describe(out_node).spatialReference
 
     # Main module aufrufen
     with arcpy.EnvManager(workspace = gisswmm_workspace, outputCoordinateSystem = spatial_ref, overwriteOutput = overwrite):
         main(dhm_workspace, in_dhm, max_slope, parcel_workspace, in_parcel, land_workspace, in_land, mapping_land_imperv, 
              mapping_land_roughness, mapping_land_depression_storage, infiltration, out_raster_workspace, out_raster_prefix, 
-             gisswmm_workspace, in_node, node_id, node_type, type_inlet, snap_distance, min_area, method, out_subcatchment, sim_nr)
+             gisswmm_workspace, out_node, node_id, node_type, type_inlet, snap_distance, min_area, method, out_subcatchment, sim_nr)
 
     # Logging abschliessen
     end_time = time.time()

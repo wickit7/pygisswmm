@@ -74,31 +74,44 @@ if __name__ == "__main__":
     ### Input JSON-Datei ###
     #paramFile = r'...\gisswmm_copy_v5_to_v6_v7_v8.json'
     paramFile = arcpy.GetParameterAsText(0)
+
+    # Falls das Skript mittels einer Batch-Datei ausgeführt wird, wird die JSON-Datei als Parameter übergeben:
+    paramFile = arcpy.GetParameterAsText(0)
+    # Falls das Skript direkt ausgeführt wird, wird die JSON-Datei hier angeben:
+    if len(paramFile) == 0:
+        paramFile = "copy_v1_to_v2_v3_v4"
+
     if paramFile:
         #Einlesen der json-Datei
         with open(paramFile, encoding='utf-8') as f:
             data = json.load(f)
-            # Pfad zum Ordner in welchem die Log-Datei gespeichert wird
+            # Der Pfad zum Ordner, in dem die log-Datei gespeichert werden soll. 
             log_folder = data["log_folder"]
-            # Pfad zu arcpy Workspace (.gdb) mit Schächten und Haltungen
+            # Der Pfad zum Output arcpy Workspace, in dem die Feature-Klassen "in_node" und "in_link" gespeichert sind. 
             gisswmm_workspace = data["gisswmm_workspace"]
-            # Dataset (Simulationsnr.) mit den zu kopierenden Haltungen und Schächte
+            # Die Bezeichnung des Datasets im Workspace "gisswmm_workspace" (Bezeichnung der Simulation), welches kopiert werden soll. 
             from_sim_nr = data["from_sim_nr"]
-            # Datasets (Simulationsnummern) bei welchen die Haltungen und Schächte hinzugefügt werden sollen
+            #  Eine Liste mit Datasets (Simulationen), die erstellt werden sollen.
             to_sim_nrs = data["to_sim_nrs"]
-            # Name der Feature-Klasse mit den Schächten (ohne Postfix "_sim_nr"!)
-            in_node = data["in_node"]
-            # Name der Feature-Klasse mit den Haltungen (ohne Postfix "_sim_nr"!)
-            in_link = data["in_link"]
-            # arcpy Workspace-Einstellung
-            overwrite = data["overwrite"]
+            # Der Name der Feature-Klasse mit den Haltungen (ohne Postfix "_sim_nr"!).
+            in_node = data["out_node"]
+            # Der Name der Feature-Klasse mit den Knoten (ohne Postfix "_sim_nr"!).
+            in_link = data["out_link"]
+            # Die arcpy Umgebungseinstellung "overwrite".
+            if "overwrite" in data:
+                overwrite = data["overwrite"]
+            else: 
+                overwrite = "True"
 
     else:
         raise ValueError('keine json-Datei mit den Parametern angegeben')
 
-    # Prüfen ob logfolder existiert
+    # Prüfen ob Logfolder existiert
     if not os.path.isdir(log_folder):
-        raise ValueError(f'Logfolder "{log_folder}" existiert nicht!')
+        try:
+            os.mkdir(log_folder)
+        except:
+            raise ValueError(f'Logfolder "{log_folder}" konnte nicht erstellt werden!')
 
     # overwrite str -> bool
     if overwrite == 'True':

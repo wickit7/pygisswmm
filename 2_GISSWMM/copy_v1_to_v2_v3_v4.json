@@ -3,7 +3,7 @@
 	"gisswmm_workspace": "C:/pygisswmm/data/GISSWMM.gdb",
 	"from_sim_nr": "v1",
 	"to_sim_nrs": ["v2", "v3", "v4"],
-	"in_node": "node",
-	"in_link": "link",
+	"out_node": "node",
+	"out_link": "link",
 	"overwrite": "True"
 }

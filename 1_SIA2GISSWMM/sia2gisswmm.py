@@ -316,11 +316,11 @@ def main(in_node, in_link, boundary_workspace, in_boundary, gisswmm_workspace, o
 # Logginig initialisieren
 if __name__ == "__main__":
     # Globale Variabel für logging
-    global loggerf
+    global logger
     ### Input JSON-Datei ###
-    # Falls Übergabe mittels Batch-Datei, JSON-Datei als Parameter übergeben:
+    # Falls das Skript mittels einer Batch-Datei ausgeführt wird, wird die JSON-Datei als Parameter übergeben:
     paramFile = arcpy.GetParameterAsText(0)
-    # Falls Skript direkt ausgeführt wird, JSON-Datei hier angeben:
+    # Falls das Skript direkt ausgeführt wird, wird die JSON-Datei hier angeben:
     if len(paramFile) == 0:
         paramFile = os.path.join(os.path.dirname(__file__), '..', 'settings_v1.json')
 
@@ -368,7 +368,11 @@ if __name__ == "__main__":
 
     # Prüfen ob Logfolder existiert
     if not os.path.isdir(log_folder):
-        raise ValueError(f'Logfolder "{log_folder}" existiert nicht!')
+        try:
+            os.mkdir(log_folder)
+        except:
+            raise ValueError(f'Logfolder "{log_folder}" konnte nicht erstellt werden!')
+
 
     # overwrite str -> bool
     if overwrite == 'True':

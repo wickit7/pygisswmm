@@ -1,0 +1,17 @@
+2022-12-28 18:34:18,382 INFO ****************************************************************
+2022-12-28 18:34:18,384 INFO Start logging: Wed Dec 28 18:34:18 2022
+2022-12-28 18:34:19,375 INFO Feature-Klassen zu Layer konvertieren
+2022-12-28 18:34:20,527 INFO Räumliche Selektion durchführen
+2022-12-28 18:34:21,108 INFO Datenschema Haltung anpassen (Link-Mapping)
+2022-12-28 18:34:21,108 INFO Datenschema Knoten anpassen (Node-Mapping)
+2022-12-28 18:34:21,267 INFO Vorhandes Feature-Dataset v1 wird gelöscht
+2022-12-28 18:34:22,193 INFO Output Feature-Klassen erstellen
+2022-12-28 18:34:22,193 INFO Feld-Mapping von Layer "in_link_lyr" durchführen
+2022-12-28 18:34:22,289 INFO Layer "in_link_lyr" nach Feature-Klasse "link_v1" konvertieren
+2022-12-28 18:34:24,528 INFO Feld-Mapping von Layer "in_node_lyr" durchführen
+2022-12-28 18:34:24,608 INFO Layer "in_node_lyr" nach Feature-Klasse "node_v1" konvertieren
+2022-12-28 18:34:29,608 INFO Skript Laufzeit: 11 sec.
+2022-12-28 18:34:29,609 INFO 0 Fehler gefunden. Check Log.
+2022-12-28 18:34:29,610 INFO End time: Wed Dec 28 18:34:29 2022
+2022-12-28 18:34:29,610 INFO ****************************************************************
+

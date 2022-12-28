@@ -35,11 +35,11 @@ import logging_functions as lf
 import basic_functions as bf
 
 ## Funktionen für die Berechnung der Deckelkote
-def main_shaftheight(in_node, node_dk, dhm_workspace, in_dhm, tag):
+def main_shaftheight(out_node, node_dk, dhm_workspace, in_dhm, tag):
     """Input-Daten aufbereiten und Funktionen für die Berechnung der Deckelkote aufrufen
 
     Required:
-        in_node -- Name der Input Feature-Klasse mit den Knoten (Schächten)
+        out_node -- Name der Input Feature-Klasse mit den Knoten (Schächten)
         node_dk -- Bezeichnung von Input Feld mit Deckelkote
         dhm_workspace -- Pfad zu arcpy Workspace mit DHM (.gdb)
         in_dhm -- Name des DHM-Rasters
@@ -48,8 +48,8 @@ def main_shaftheight(in_node, node_dk, dhm_workspace, in_dhm, tag):
     """   
     # Feature-Klasse zu Layer konvertieren
     logger.info(f'Feature-Klasse zu Layer konvertieren')
-    in_node_lyr = 'in_node_lyr'
-    arcpy.management.MakeFeatureLayer(in_node, in_node_lyr)
+    out_node_lyr = 'out_node_lyr'
+    arcpy.management.MakeFeatureLayer(out_node, out_node_lyr)
 
     # Pfad des Input Höhenmodells (Raster)
     in_dhm_path = os.path.join(dhm_workspace, in_dhm)
@@ -58,44 +58,44 @@ def main_shaftheight(in_node, node_dk, dhm_workspace, in_dhm, tag):
     node_dk_dhm  = node_dk.lower() + "_dhm" 
 
     # Prüfen ob Felder vorhanden sind
-    fnames =  [field.name for field in arcpy.ListFields(in_node)]
+    fnames =  [field.name for field in arcpy.ListFields(out_node)]
     node_tag = "tag"
     if node_dk_dhm in fnames:
         logger.info(f'Vorhandenes Feld Deckelkote berechnet löschen')
-        arcpy.management.DeleteField(in_node, node_dk_dhm)
+        arcpy.management.DeleteField(out_node, node_dk_dhm)
     if node_tag not in fnames:
         logger.info(f'tag-Feld erstellen')
-        arcpy.AddField_management(in_node, node_tag, "TEXT", field_length=40)
+        arcpy.AddField_management(out_node, node_tag, "TEXT", field_length=40)
 
     # Werte aus Raster extrahieren 
     logger.info(f'Werte aus Höhenmodell extrahieren')
     # ArcGIS env setting "preserveGlobalIds=True" bei dieser Funktion nicht vorhanden, deshalb GlobalID zu Textfeld konvertieren
-    arcpy.sa.ExtractMultiValuesToPoints(in_node_lyr, [[in_dhm_path, node_dk_dhm]], 'NONE')
+    arcpy.sa.ExtractMultiValuesToPoints(out_node_lyr, [[in_dhm_path, node_dk_dhm]], 'NONE')
 
     # Attributbezogene Selektion (Schächte ohne Deckelkote)
     logger.info(f'Attributbezogene Selektion durchführen')
-    arcpy.management.MakeFeatureLayer(in_node, in_node_lyr)
+    arcpy.management.MakeFeatureLayer(out_node, out_node_lyr)
     where = '"' + node_dk + '"' + " IS NULL" 
-    arcpy.management.SelectLayerByAttribute(in_node_lyr, 'NEW_SELECTION', where, 'NON_INVERT')
+    arcpy.management.SelectLayerByAttribute(out_node_lyr, 'NEW_SELECTION', where, 'NON_INVERT')
     # Deckelkote berechnen
     logger.info(f'Fehlende Deckelkoten abfüllen')
     expression_dk = "!"+node_dk_dhm+"!"
-    arcpy.management.CalculateField(in_node_lyr, node_dk, expression_dk, "PYTHON3")    
+    arcpy.management.CalculateField(out_node_lyr, node_dk, expression_dk, "PYTHON3")    
     logger.info(f'Tag abfüllen')
-    bf.append_text(in_node_lyr, node_tag, tag)
+    bf.append_text(out_node_lyr, node_tag, tag)
 
 ## Funktionen für die Erstellung der Haltung-Knoten-Haltung Topologie
-def main_topology(in_node, node_id, node_to_link, node_type, type_inlet, in_link, link_id, link_from, 
+def main_topology(out_node, node_id, node_to_link, node_type, type_inlet, out_link, link_id, link_from, 
                   link_to, link_length, delete = True):
     """Input-Daten aufbereiten und Funktionen für die Erstellung der Topologie aufrufen
 
     Required:
-        in_node -- Name der Input Feature-Klasse mit den Schächten
+        out_node -- Name der Input Feature-Klasse mit den Schächten
         node_id -- Bezeichnung von ID-Feld der Schächte
         node_to_link -- Bezeichnung von Feld mit ID der Haltung auf welcher der Einlaufschacht liegt
         node_type -- Bezeichnung vom Feld in welchem der Schachttyp angegeben wird
         type_inlet -- Wert von Schachttyp ('node_type') der dem Einlaufschacht entspricht
-        in_link -- Name der Feature-Klasse mit den Haltungen
+        out_link -- Name der Feature-Klasse mit den Haltungen
         link_id -- Bezeichnung von ID-Feld der Haltungen
         link_from -- Bezeichnung von Feld mit ID von Von-Schacht
         link_to -- Bezeichnung von Feld mit ID von Bis-Schacht
@@ -107,7 +107,7 @@ def main_topology(in_node, node_id, node_to_link, node_type, type_inlet, in_link
     """   
     logger.info('Haltungen mit selben Von- und Bis-Schacht aktualisieren')
     where_link = ('"' + link_from + '"' +" = " + '"' + link_to + '"')   
-    with arcpy.da.UpdateCursor(in_link, [link_id, link_from, link_to], where_link) as ucursor:
+    with arcpy.da.UpdateCursor(out_link, [link_id, link_from, link_to], where_link) as ucursor:
         for urow in ucursor:
             logger.warning(f'Haltung mit ID {urow[0]} hat den selben Von- und Bis-Schacht! Von-Schacht wird auf Null gesetzt')
             urow[1] = None
@@ -115,12 +115,12 @@ def main_topology(in_node, node_id, node_to_link, node_type, type_inlet, in_link
 
     # Haltungen löschen die keinen vorhandenen Von- oder Bis-Schacht aufweisen
     if delete:
-        node_id_list = [row[0] for row in arcpy.da.SearchCursor(in_node, node_id)]
+        node_id_list = [row[0] for row in arcpy.da.SearchCursor(out_node, node_id)]
         logger.info('Haltungen ohne Von- oder Bis-Schacht löschen')
         where_link = ('"' + link_from + '"' +" NOT IN " + str(node_id_list).replace("[","(").replace("]",")") + " OR " + 
                     '"' + link_to + '"' +" NOT IN " + str(node_id_list).replace("[","(").replace("]",")"))
         cnt = 0
-        with arcpy.da.UpdateCursor(in_link, link_id, where_link) as dcursor:
+        with arcpy.da.UpdateCursor(out_link, link_id, where_link) as dcursor:
             for drow in dcursor:
                 logger.warning(f'Haltung mit ID {drow[0]} wird gelöscht')
                 dcursor.deleteRow() 
@@ -131,7 +131,7 @@ def main_topology(in_node, node_id, node_to_link, node_type, type_inlet, in_link
     logger.info('Listen mit Von- und Bis-Schächten erstellen')
     link_from_list = []
     link_to_list = []
-    with arcpy.da.SearchCursor(in_link, [link_from, link_to]) as cursor:
+    with arcpy.da.SearchCursor(out_link, [link_from, link_to]) as cursor:
         for row in cursor:
             link_from_list.append(row[0])
             link_to_list.append(row[1])
@@ -142,7 +142,7 @@ def main_topology(in_node, node_id, node_to_link, node_type, type_inlet, in_link
         where_node = ('"' + node_id + '"' +" NOT IN " + str(link_from_list).replace("[","(").replace("]",")") + " AND " +
                     '"' + node_id + '"' +" NOT IN " + str(link_to_list).replace("[","(").replace("]",")") )
         cnt = 0
-        with arcpy.da.UpdateCursor(in_node, node_id, where_node) as dcursor:
+        with arcpy.da.UpdateCursor(out_node, node_id, where_node) as dcursor:
             for drow in dcursor:
                 logger.warning(f'Schacht mit ID {drow[0]} wird gelöscht')
                 dcursor.deleteRow()
@@ -154,7 +154,7 @@ def main_topology(in_node, node_id, node_to_link, node_type, type_inlet, in_link
         where_node = ('"' + node_type + '"' + " = "+ "'" + type_inlet + "'"+ " AND " + 
                     '"' + node_id + '"' +" NOT IN " + str(link_to_list).replace("[","(").replace("]",")") )
         cnt = 0
-        with arcpy.da.UpdateCursor(in_node, node_id, where_node) as dcursor:
+        with arcpy.da.UpdateCursor(out_node, node_id, where_node) as dcursor:
             for drow in dcursor:
                 logger.warning(f'Einlaufschacht mit ID {drow[0]} wird gelöscht')
                 dcursor.deleteRow()
@@ -166,14 +166,14 @@ def main_topology(in_node, node_id, node_to_link, node_type, type_inlet, in_link
     where_node = ('"' + node_type + '"' + " = " + "'"+ type_inlet + "'" + " AND " + 
                 '"' + node_id + '"' +" NOT IN " + str(link_from_list).replace("[","(").replace("]",")") + " AND " +
                 '"' + node_id + '"' +" IN " + str(link_to_list).replace("[","(").replace("]",")") )
-    in_node_lyr = 'in_node_lyr'
-    arcpy.management.MakeFeatureLayer(in_node, in_node_lyr, where_node)
+    out_node_lyr = 'out_node_lyr'
+    arcpy.management.MakeFeatureLayer(out_node, out_node_lyr, where_node)
 
     # Liste mit ID's der Schächte und ID's der Haltungen in welche die Schächte übergehen
     logger.info('Liste mit den IDs der relevanten Schächte und Haltungen erstellen')
     node_id_list = []
     node_to_link_list = []
-    with arcpy.da.SearchCursor(in_node_lyr, [node_id, node_to_link]) as cursor:
+    with arcpy.da.SearchCursor(out_node_lyr, [node_id, node_to_link]) as cursor:
         for row in cursor:
             node_id_list.append(row[0])
             node_to_link_list.append(row[1])
@@ -185,23 +185,23 @@ def main_topology(in_node, node_id, node_to_link, node_type, type_inlet, in_link
             # Spezifischer Schacht auswählen
             logger.info(f'Haltungen mit Schacht {nid} trennen')
             where_node = '"' + node_id + '"' +" = " + f"'{nid}'"  
-            arcpy.management.MakeFeatureLayer(in_node, in_node_lyr, where_node)
+            arcpy.management.MakeFeatureLayer(out_node, out_node_lyr, where_node)
             
             # Haltungen auswählen, welche möglicherweise getrennt werden müssen 
             # ("LIKE" da ID evtl. bereits mit postifix "_u" oder "_l" aktualisiert wurde)
             where_link = '"' + link_id + '"'+" LIKE " + f"'{node_to_link_list[ii]}%'"
-            in_link_lyr = 'in_link_lyr'
-            arcpy.management.MakeFeatureLayer(in_link, in_link_lyr, where_link)
+            out_link_lyr = 'out_link_lyr'
+            arcpy.management.MakeFeatureLayer(out_link, out_link_lyr, where_link)
 
             # Haltungen mit dem spezifischen Schacht splitten 
             link_splited = "link_splited"
-            arcpy.management.SplitLineAtPoint(in_link_lyr, in_node_lyr, link_splited, "0.1 Meters")
+            arcpy.management.SplitLineAtPoint(out_link_lyr, out_node_lyr, link_splited, "0.1 Meters")
 
             # Feature-Layer von getrennten Haltungen erstellen
             link_splited_lyr = "link_splited_lyr"
             arcpy.management.MakeFeatureLayer(link_splited, link_splited_lyr)
             # Die zwei Haltungen auswählen, welche tatsächlich betroffen sind (da evtl. mehrere Enläufe pro Haltung)
-            arcpy.management.SelectLayerByLocation(link_splited_lyr, "INTERSECT", in_node_lyr, "0.1 Meters", 
+            arcpy.management.SelectLayerByLocation(link_splited_lyr, "INTERSECT", out_node_lyr, "0.1 Meters", 
                                                     "SUBSET_SELECTION", "NOT_INVERT")
 
             # ObjectIDs der betroffenen Haltungen
@@ -210,7 +210,7 @@ def main_topology(in_node, node_id, node_to_link, node_type, type_inlet, in_link
             if len(link_objectid_list) == 0:
                 # Einlaufschacht auf keiner Haltung -> löschen
                 logger.info('Schacht befindet sich auf keiner Haltung')
-                with arcpy.da.UpdateCursor(in_node, node_id, where_node) as dcursor:
+                with arcpy.da.UpdateCursor(out_node, node_id, where_node) as dcursor:
                     for drow in dcursor:
                         logger.warning(f'Schacht mit ID {drow[0]} wird gelöscht')
                         dcursor.deleteRow()
@@ -225,9 +225,9 @@ def main_topology(in_node, node_id, node_to_link, node_type, type_inlet, in_link
             node_to = [row[0] for row in arcpy.da.SearchCursor(link_splited_lyr, link_to)][0]
             # Layer mit Bis-Schacht erstellen
             where_node = '"' + node_id + '"' +" = " + f"'{node_to}'"  
-            arcpy.management.MakeFeatureLayer(in_node, in_node_lyr, where_node)
+            arcpy.management.MakeFeatureLayer(out_node, out_node_lyr, where_node)
             # Haltung auswählen die bei Bis-Schacht liegt
-            arcpy.management.SelectLayerByLocation(link_splited_lyr, "INTERSECT", in_node_lyr, "0.1 Meters", 
+            arcpy.management.SelectLayerByLocation(link_splited_lyr, "INTERSECT", out_node_lyr, "0.1 Meters", 
                                                     "SUBSET_SELECTION", "NOT_INVERT")
             link_objectid_lower = [row[0] for row in arcpy.da.SearchCursor(link_splited_lyr, "OBJECTID")][0]
 
@@ -237,14 +237,14 @@ def main_topology(in_node, node_id, node_to_link, node_type, type_inlet, in_link
             
             # Erneut Haltungen auswählen, welche aktualisiert werden müssen
             where_link = '"' + "OBJECTID" + '"'+" IN " + str(link_objectid_list).replace("[","(").replace("]",")")
-            in_link_lyr = 'in_link_lyr'
-            arcpy.management.MakeFeatureLayer(link_splited, in_link_lyr, where_link)
+            out_link_lyr = 'out_link_lyr'
+            arcpy.management.MakeFeatureLayer(link_splited, out_link_lyr, where_link)
             # Originale 'link_id'
-            link_id_orig = [row[0] for row in arcpy.da.SearchCursor(in_link_lyr, link_id)][0]
+            link_id_orig = [row[0] for row in arcpy.da.SearchCursor(out_link_lyr, link_id)][0]
 
             logger.info('Die zwei neuen Haltungen aktualiseren')
             # Die zwei neuen Haltungen aktualiseren
-            with arcpy.da.UpdateCursor(in_link_lyr, ["OBJECTID", link_id, link_from, link_to, link_length, "SHAPE@LENGTH"]) as ucursor:
+            with arcpy.da.UpdateCursor(out_link_lyr, ["OBJECTID", link_id, link_from, link_to, link_length, "SHAPE@LENGTH"]) as ucursor:
                 for urow in ucursor:
                     if urow[0] == link_objectid_lower:
                         # Link id anpassen
@@ -271,13 +271,13 @@ def main_topology(in_node, node_id, node_to_link, node_type, type_inlet, in_link
             logger.info(f'Ursprüngliche Haltung {link_id_orig} löschen')
             # Ursprüngliche Haltung löschen
             where_link = '"' + link_id + '"'+" = " + f"'{link_id_orig}'"
-            with arcpy.da.UpdateCursor(in_link, link_id, where_link) as dcursor:
+            with arcpy.da.UpdateCursor(out_link, link_id, where_link) as dcursor:
                 for urow in dcursor:
                     dcursor.deleteRow()
             
             # Neue Haltungen hinzufügen
             logger.info('Neue Haltungen hinzufügen')
-            arcpy.management.Append(in_link_lyr, in_link, 'NO_TEST')
+            arcpy.management.Append(out_link_lyr, out_link, 'NO_TEST')
             
             # Temporäre Feature Klasse mit getrennten Haltungen löschen
             logger.info('Temporäre Feature-Klasse mit getrennten Haltungen löschen')
@@ -290,19 +290,19 @@ def main_topology(in_node, node_id, node_to_link, node_type, type_inlet, in_link
     logger.info('Listen mit aktualisierten Von- und Bis-Schächten erstellen')
     link_from_list = []
     link_to_list = []
-    with arcpy.da.SearchCursor(in_link, [link_from, link_to, link_id]) as cursor:
+    with arcpy.da.SearchCursor(out_link, [link_from, link_to, link_id]) as cursor:
         for row in cursor:
             link_from_list.append(row[0])
             link_to_list.append(row[1])
     
     # Feld 'OutfallType' (Auslaufschacht) hinzufügen
     outfall_type = "OutfallType"
-    arcpy.management.AddField(in_node, outfall_type, "TEXT", field_length=128)
+    arcpy.management.AddField(out_node, outfall_type, "TEXT", field_length=128)
 
     # Auslaufschächte definieren
     logger.info('Auslaufschächte definieren')
     cnt = 0
-    with arcpy.da.UpdateCursor(in_node, [node_id, node_type, outfall_type]) as ucursor:
+    with arcpy.da.UpdateCursor(out_node, [node_id, node_type, outfall_type]) as ucursor:
         for urow in ucursor:
             if urow[0] not in link_from_list:
                 urow[1] = "OUTFALL"
@@ -608,12 +608,12 @@ def get_interpolated_sk(node_dict, id_node, mean_slope = 0.01, mean_depth = 1, m
     return sk
 
 
-def main_slope(in_node, node_id, node_dk, node_sk, tag, node_type, type_inlet, min_depth, 
-               mean_depth, in_link, link_id, link_from, link_to, link_length, mean_slope):
+def main_slope(out_node, node_id, node_dk, node_sk, tag, node_type, type_inlet, min_depth, 
+               mean_depth, out_link, link_id, link_from, link_to, link_length, mean_slope):
     """Input-Daten aufbereiten und Funktionen für die Interpolation der Sohlenkote aufrufen
 
     Required:
-        in_node -- Name der Input Feature-Klasse mit den Schächten
+        out_node -- Name der Input Feature-Klasse mit den Schächten
         node_id -- Bezeichnung von ID-Feld der Schächte
         node_dk -- Bezeichnung von Feld mit Deckelkote
         node_sk -- Bezeichnung von Feld mit Sohlenkote
@@ -623,7 +623,7 @@ def main_slope(in_node, node_id, node_dk, node_sk, tag, node_type, type_inlet, m
         min_depth -- Minimale Schachttiefe die nicht unterschritten werden darf. Annahme: Deckelkote genauer als Solhenkote
         mean_depth -- Schachttiefe die verwendet wird falls Sohlenkote nicht interpoliert werden konnte .
                       Dies kommt nur vor falls entlang eines Stranges keine einzige Sohlenkote bekannt ist.
-        in_link -- Name der Feature-Klasse mit den Haltungen
+        out_link -- Name der Feature-Klasse mit den Haltungen
         link_id -- Bezeichnung von ID-Feld
         link_from -- Bezeichnung von Feld mit ID von Von-Schacht
         link_to -- Bezeichnung von Feld mit ID von Bis-Schacht
@@ -633,17 +633,17 @@ def main_slope(in_node, node_id, node_dk, node_sk, tag, node_type, type_inlet, m
     """   
 
     # Prüfen ob Output-Feld und "tag"-Feld bereits vorhanden sind
-    fnames =  [field.name for field in arcpy.ListFields(in_node)]
+    fnames =  [field.name for field in arcpy.ListFields(out_node)]
     node_tag = "tag"
     if node_tag not in fnames:
         logger.info(f'tag-Feld erstellen')
-        arcpy.AddField_management(in_node, node_tag, "TEXT", field_length=40)
+        arcpy.AddField_management(out_node, node_tag, "TEXT", field_length=40)
 
     ## Sohlenkote interpolieren
     # Liste mit Haltungen erstellen
     logger.info('Liste mit allen Haltungen erstellen')
     link_dict_list = []
-    with arcpy.da.SearchCursor(in_link, [link_id, link_from, link_to, link_length]) as cursor:
+    with arcpy.da.SearchCursor(out_link, [link_id, link_from, link_to, link_length]) as cursor:
         for row in cursor:
             # Relevante Werte der Haltungen als Dictionary speichern
             if row[1] == row[2]:
@@ -655,7 +655,7 @@ def main_slope(in_node, node_id, node_dk, node_sk, tag, node_type, type_inlet, m
     logger.info('Dictionary mit allen Schächten mit den zugehörigen Haltungen (gemäss Topologie) erstellen')
     node_dict = {}
     # Dictionary für Schächte mit zugehörigen Haltungen erstellen um iterieren später im Skript zu vereinfachen
-    with arcpy.da.SearchCursor(in_node, [node_id, node_sk, node_dk, node_type]) as cursor:
+    with arcpy.da.SearchCursor(out_node, [node_id, node_sk, node_dk, node_type]) as cursor:
         for row in cursor:
             # Einlaufhaltungen (Haltungen oberhalb Schacht)
             links_up = []
@@ -703,15 +703,15 @@ def main_slope(in_node, node_id, node_dk, node_sk, tag, node_type, type_inlet, m
 
     # Attributbezogene Selektion (nur Schächte ohne Sohlenkote)
     logger.info('Schächte ohne Solhenkote selektieren')
-    in_node_lyr = 'in_node_lyr'
-    arcpy.management.MakeFeatureLayer(in_node, in_node_lyr)
+    out_node_lyr = 'out_node_lyr'
+    arcpy.management.MakeFeatureLayer(out_node, out_node_lyr)
     where = '"' + node_sk + '"' + " IS NULL" 
-    arcpy.management.SelectLayerByAttribute(in_node_lyr, 'NEW_SELECTION', where, 'NON_INVERT')
+    arcpy.management.SelectLayerByAttribute(out_node_lyr, 'NEW_SELECTION', where, 'NON_INVERT')
 
     # Sohlenkote aktualisieren
     logger.info('Sohlenkote aktualisieren')
     cnt = 0
-    with arcpy.da.UpdateCursor(in_node_lyr, [node_id, node_sk, node_tag]) as ucursor:
+    with arcpy.da.UpdateCursor(out_node_lyr, [node_id, node_sk, node_tag]) as ucursor:
         for urow in ucursor:
             urow[1] = node_dict[urow[0]]['node_sk']            
             if urow[2]:
@@ -726,41 +726,41 @@ def main_slope(in_node, node_id, node_dk, node_sk, tag, node_type, type_inlet, m
     ## Schachttiefe aktualisieren
     # Feld Schachttiefe ergänzen
     max_depth = "MaxDepth"
-    arcpy.management.AddField(in_node, max_depth, "FLOAT")   
+    arcpy.management.AddField(out_node, max_depth, "FLOAT")   
 
     logger.info('Schachttiefe aktualisieren')
     cnt = 0
-    with arcpy.da.UpdateCursor(in_node, [node_dk, node_sk, max_depth]) as ucursor:
+    with arcpy.da.UpdateCursor(out_node, [node_dk, node_sk, max_depth]) as ucursor:
         for urow in ucursor:
             urow[2] = float(urow[0]-urow[1])     
             ucursor.updateRow(urow)
 
    ## Steigung berechenen
    # Feld "slope" neu erstellen falls bereits vorhanden 
-    fnames = arcpy.ListFields(in_link)
+    fnames = arcpy.ListFields(out_link)
     link_slope = "slope"
     for in_field in fnames:
         if in_field.name == link_slope:
             logger.info(f'Vorhandenes slope-Feld löschen')
-            arcpy.management.DeleteField(in_link, in_field.name)
+            arcpy.management.DeleteField(out_link, in_field.name)
     
     logger.info(f'slope-Feld erstellen')
-    arcpy.AddField_management(in_link, link_slope, "FLOAT")
+    arcpy.AddField_management(out_link, link_slope, "FLOAT")
 
     logger.info(f'Steigung (Gefälle) berechnen und Feldwert abfüllen')
     # where (nur Haltungen mit Von- und Bisschacht)
     where = '"' + link_from + '"' + " IS NOT NULL" + " AND " + '"' + link_to + '"' + " IS NOT NULL"
     cnt = 0
-    with arcpy.da.UpdateCursor(in_link, [link_id, link_from, link_to, link_length, link_slope], where) as cursor:
+    with arcpy.da.UpdateCursor(out_link, [link_id, link_from, link_to, link_length, link_slope], where) as cursor:
         for row in cursor:
             # get node_sk Wert von Vonschacht
             where_from = '"' + node_id + '"' + " = " + f"'{row[1]}'" 
-            with arcpy.da.SearchCursor(in_node, [node_id, node_sk], where_from) as scursor:
+            with arcpy.da.SearchCursor(out_node, [node_id, node_sk], where_from) as scursor:
                 for srow in scursor:
                     sk_from = srow[1]
             # get node_sk Wert von Bisschacht
             where_to = '"' + node_id + '"' + " = " + f"'{row[2]}'" 
-            with arcpy.da.SearchCursor(in_node, [node_id, node_sk], where_to) as scursor:
+            with arcpy.da.SearchCursor(out_node, [node_id, node_sk], where_to) as scursor:
                 for srow in scursor:
                     sk_to = srow[1]
             
@@ -785,61 +785,73 @@ if __name__ == "__main__":
     # Globale Variabel für logging
     global logger
     ### Input JSON-Datei ###
-    # paramFile = r'...\gisswmm_upd_v1.json'
+    # Falls das Skript mittels einer Batch-Datei ausgeführt wird, wird die JSON-Datei als Parameter übergeben:
     paramFile = arcpy.GetParameterAsText(0)
+    # Falls das Skript direkt ausgeführt wird, wird die JSON-Datei hier angeben:
+    if len(paramFile) == 0:
+        paramFile = os.path.join(os.path.dirname(__file__), '..', 'settings_v1.json')
 
     if paramFile:
         # Einlesen der json-Datei
         with open(paramFile, encoding='utf-8') as f:
             data = json.load(f)
-            # Pfad zum Ordner in welchem Log-Datei gespeichert wird
+            # Der Pfad zum Ordner, in dem die log-Datei gespeichert werden soll.
             log_folder = data["log_folder"]
-            # Wird als Postfix für Log-Dateinamen verwendet
+            # Die Bezeichnung der aktuellen Simulation (Szenario).
             sim_nr = data["sim_nr"]
-            # arcpy Workspace-Einstellung ('True' oder 'False')
-            overwrite = data["overwrite"]
-            # Pfad zu arcpy Workspace (.gdb) mit Knoten und Haltungen
+            # Die arcpy Umgebungseinstellung "overwrite".
+            if "overwrite" in data:
+                overwrite = data["overwrite"]
+            else: 
+                overwrite = "True"
+            # Der Pfad zum arcpy Workspace (.gdb) mit den Knoten (out_node) und Haltungen (out_link).
             gisswmm_workspace = data["gisswmm_workspace"]
-            # Name der Feature-Klasse mit den Knoten (ohne Postfix "_sim_nr"!)
-            in_node = data["in_node"]
-            # Bezeichnung von ID-Feld der Feature-Klasse 'in_node'
+            # Der Name der Feature-Klasse mit den Knoten (ohne Postfix "_sim_nr"!).
+            out_node = data["out_node"]
+            # Die Bezeichnung vom ID-Feld in der Feature-Klasse "out_node".
             node_id = data["node_id"]
-            # Bezeichnung von Feld in Feature-Klasse 'in_node', mit der ID von der Haltung, auf welcher der Einlaufschacht liegt
+            # Die Bezeichnung vom Feld in der Feature-Klasse 'out_node', mit der ID von der Haltung, auf welcher der Einlaufschacht liegt.
             node_to_link = data["node_to_link"]
-            # Bezeichnung vom Feld in welchem der Schachttyp angegeben wird (in Feature-Klasse 'in_node')
+            # Die Bezeichnung vom Feld mit dem Schachttyp in der Feature-Klasse "out_node". 
             node_type = data["node_type"]
-            # Wert von Schachttyp ('node_type'), welcher dem Einlaufschacht entspricht
+            # Der Wert im Feld Schachttyp ("node_type"), welcher dem Einlaufschacht entspricht.
             type_inlet = data["type_inlet"]
-            # Name der Feature-Klasse mit den Haltungen (ohne Postfix "_sim_nr"!)
-            in_link = data["in_link"]
-            # Bezeichnung von ID-Feld der Feature-Klasse 'in_link'
+            # Der Name der Feature-Klasse mit den Haltungen (ohne Postfix "_sim_nr"!).
+            out_link = data["out_link"]
+            # Die Bezeichnung vom ID-Feld in der Feature-Klasse "out_link". 
             link_id = data["link_id"]
-            # Bezeichnung von Feld mit ID von Von-Schacht der Feature-Klasse 'in_link'
+            # Die Bezeichnung vom Feld mit der ID vom Von-Schacht in der Feature-Klasse "out_link". 
             link_from = data["link_from"]
-            # Bezeichnung von Feld mit ID von Bis-Schacht der Feature-Klasse 'in_link'
+            # Die Bezeichnung vom Feld mit der ID vom Bis-Schacht in der Feature-Klasse "out_link".
             link_to = data["link_to"]
-            # Bezeichnung von Feld mit Haltungslänge der Feature-Klasse 'in_link'
+            # Die Bezeichnung vom Feld mit der Haltungslänge in der Feature-Klasse "out_link".	 
             link_length = data["link_length"]
             # link_link_ref = data["link_link_ref"]   
-            # Pfad zu arcpy Workspace mit DHM (.gdb)
+            # Der Pfad zum arcpy Workspace mit dem Höhenmodell (DHM). 
             dhm_workspace = data["dhm_workspace"]
-            # Name des DHM-Rasters
+            # Der Name des DHM-Rasters im Workspace "dhm_workspace".
             in_dhm = data["in_dhm"]
-            # Bezeichnung von Feld mit Deckelkote der Feature-Klasse 'in_node'
+            # Die Bezeichnung vom Feld mit der Deckelkote in der Feature-Klasse "out_node".
             node_dk = data["node_dk"]
-            # Wert für tag-Feld um zu kennzeichnen, welche Deckelkote mit DHM berechnet wurden
-            tag = data["tag_dk"]          
-            # Bezeichnung von Feld mit Sohlenkote der Feature-Klasse 'in_node'
+            #  Den Wert für das tag-Feld, um zu kennzeichnen, welche Deckelkoten mit dem DHM berechnet wurden.
+            if "tag_dk" in data:
+                tag = data["tag_dk"]
+            else:
+                tag = None
+            # Die Bezeichnung vom Feld mit der Sohlenkote in der Feature-Klasse "out_node".
             node_sk = data["node_sk"]
-            # Wert für tag-Feld um zu kennzeichnen, welche Sohlenkoten interpoliert wurden
-            tag_sk = data["tag_sk"]
-            # Minimale Schachttiefe (m) die nicht unterschritten werden darf. Annahme: Deckelkote genauer als Sohlenkote
+            #  Den Wert für das tag-Feld, um zu kennzeichnen, welche Sohlenkoten durch Interpolation ermittelt wurden.
+            if "tag_sk" in data:
+                tag_sk = data["tag_sk"]
+            else:
+                tag_sk = None
+            # Eine minimale Schachttiefe (m), die nicht unterschritten werden darf. 
             min_depth = float(data["min_depth"])
-            # Schachttiefe (m) die verwendet wird, falls Sohlenkote nicht interpoliert werden konnte
-            # Dieser Fall tritt nur auf, falls entlang eines Stranges keine einzige Sohlenkote bekannt ist
+            # Eine Schachttiefe (m), die verwendet wird, falls die Sohlenkote nicht interpoliert werden konnte. Dieser Fall tritt nur auf, 
+            # falls entlang eines Haltungsstranges keine einzige Sohlenkote bekannt ist.
             mean_depth = float(data["mean_depth"])
-            # Mittlere Steigung für die Berechnung der Sohlenkote. Diese Steigung wird nur verwendet, 
-            # falls entlang eines Stranges nur eine einzige Sohlenkote vorhanden ist
+            # Ein mittleres Gefälle für die Berechnung der Sohlenkote. Dieses Gefälle wird nur verwendet, 
+            # falls entlang eines Haltungsstranges nur eine einzige Sohlenkote vorhanden ist.
             mean_slope = float(data["mean_slope"])  
 
     else:
@@ -847,7 +859,10 @@ if __name__ == "__main__":
 
     # Prüfen ob Logfolder existiert
     if not os.path.isdir(log_folder):
-        raise ValueError(f'Logfolder "{log_folder}" existiert nicht!')
+        try:
+            os.mkdir(log_folder)
+        except:
+            raise ValueError(f'Logfolder "{log_folder}" konnte nicht erstellt werden!')
 
     # overwrite str -> bool
     if overwrite == 'True':
@@ -868,34 +883,34 @@ if __name__ == "__main__":
     
     # Prüfen ob Eingabedatensätze vorhanden sind
     postfix = "_" + sim_nr
-    if not postfix in in_node:
-        in_node = in_node + postfix
-    if not postfix in in_link:
-        in_link = in_link + postfix
-    if not arcpy.Exists(in_node):
-        err_txt = f'Die angegebene Feature-Klasse {in_node} ist nicht vorhanden!'
+    if not postfix in out_node:
+        out_node = out_node + postfix
+    if not postfix in out_link:
+        out_link = out_link + postfix
+    if not arcpy.Exists(out_node):
+        err_txt = f'Die angegebene Feature-Klasse {out_node} ist nicht vorhanden!'
         logger.error(err_txt)
         raise ValueError(err_txt)  
-    if not arcpy.Exists(in_link):
-        err_txt = f'Die angegebene Feature-Klasse {in_link} ist nicht vorhanden!'
+    if not arcpy.Exists(out_link):
+        err_txt = f'Die angegebene Feature-Klasse {out_link} ist nicht vorhanden!'
         logger.error(err_txt)
         raise ValueError(err_txt)
 
     # Koordinatensystem
-    spatial_ref = arcpy.Describe(in_node).spatialReference
+    spatial_ref = arcpy.Describe(out_node).spatialReference
 
     ## Von allen Knoten Deckelkote ermitteln 
     logger.info('Deckelkote berechnen')
     with arcpy.EnvManager(workspace = gisswmm_workspace, outputCoordinateSystem = spatial_ref, overwriteOutput = overwrite):
-        main_shaftheight(in_node, node_dk, dhm_workspace, in_dhm, tag)
+        main_shaftheight(out_node, node_dk, dhm_workspace, in_dhm, tag)
 
     ## Zunächst nur PAA-Netz berücksichtigen
-    count_input = arcpy.GetCount_management(in_node)
+    count_input = arcpy.GetCount_management(out_node)
     where_clause_paa = "TYP_AA = 1"    
     node_paa = "node_lyr_paa"
     link_paa = "link_lyr_paa"
-    arcpy.management.MakeFeatureLayer(in_node, node_paa, where_clause_paa)
-    arcpy.management.MakeFeatureLayer(in_link, link_paa, where_clause_paa)
+    arcpy.management.MakeFeatureLayer(out_node, node_paa, where_clause_paa)
+    arcpy.management.MakeFeatureLayer(out_link, link_paa, where_clause_paa)
     count_paa = arcpy.GetCount_management(node_paa)
 
     # Sohlenkote zuerst nur von PAA Netz interpolieren, da üblicherweise präzisere Daten
@@ -904,7 +919,7 @@ if __name__ == "__main__":
         with arcpy.EnvManager(workspace = gisswmm_workspace, outputCoordinateSystem = spatial_ref, overwriteOutput = overwrite):
             ## Topologie für PAA-Netz erstellen
             logger.info('Topologie von PAA-Netz erstellen')
-            main_topology(in_node, node_id, node_to_link, node_type, type_inlet, in_link, link_id, link_from, 
+            main_topology(out_node, node_id, node_to_link, node_type, type_inlet, out_link, link_id, link_from, 
                           link_to, link_length, delete = False)
             ## Sohlenkote für PAA-Netz interpolieren
             logger.info('Sohlenkote von PAA-Netz interpolieren')
@@ -915,11 +930,11 @@ if __name__ == "__main__":
     with arcpy.EnvManager(workspace = gisswmm_workspace, outputCoordinateSystem = spatial_ref, overwriteOutput = overwrite):
         ## Topologie für gesamtes Netz erstellen
         logger.info('Topologie für gesamte Netz erstellen')
-        main_topology(in_node, node_id, node_to_link, node_type, type_inlet, in_link, link_id, link_from, link_to, link_length)
+        main_topology(out_node, node_id, node_to_link, node_type, type_inlet, out_link, link_id, link_from, link_to, link_length)
         ## Sohlenkote für gesamtes Netz interpolieren
         logger.info('Sohlenkote für gesamtes Netz interpolieren')
-        main_slope(in_node, node_id, node_dk, node_sk, tag_sk, node_type, type_inlet, min_depth, 
-                   mean_depth, in_link, link_id, link_from, link_to, link_length, mean_slope)
+        main_slope(out_node, node_id, node_dk, node_sk, tag_sk, node_type, type_inlet, min_depth, 
+                   mean_depth, out_link, link_id, link_from, link_to, link_length, mean_slope)
 
     # Logging abschliessen
     end_time = time.time()

@@ -1,0 +1,356 @@
+2022-12-28 18:39:58,820 INFO ****************************************************************
+2022-12-28 18:39:58,821 INFO Start logging: Wed Dec 28 18:39:58 2022
+2022-12-28 18:39:59,511 INFO Deckelkote berechnen
+2022-12-28 18:39:59,734 INFO Feature-Klasse zu Layer konvertieren
+2022-12-28 18:40:00,776 INFO tag-Feld erstellen
+2022-12-28 18:40:01,146 INFO Werte aus Höhenmodell extrahieren
+2022-12-28 18:40:03,287 INFO Attributbezogene Selektion durchführen
+2022-12-28 18:40:03,529 INFO Fehlende Deckelkoten abfüllen
+2022-12-28 18:40:03,758 INFO Tag abfüllen
+2022-12-28 18:40:04,442 INFO Topologie von PAA-Netz erstellen
+2022-12-28 18:40:04,443 INFO Haltungen mit selben Von- und Bis-Schacht aktualisieren
+2022-12-28 18:40:04,458 INFO Listen mit Von- und Bis-Schächten erstellen
+2022-12-28 18:40:04,461 INFO Layer mit relevanten Einlaufschächten erstellen
+2022-12-28 18:40:04,608 INFO Liste mit den IDs der relevanten Schächte und Haltungen erstellen
+2022-12-28 18:40:04,615 INFO Durch alle relevanten Schächte iterieren
+2022-12-28 18:40:04,616 INFO Haltungen mit Schacht {A32F74F8-CDFD-411B-B2F2-10D2064E02C5} trennen
+2022-12-28 18:40:06,352 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:40:06,358 INFO Ursprüngliche Haltung {7EB5C8B9-44C4-4885-94B5-3132C6B8FBFE} löschen
+2022-12-28 18:40:06,374 INFO Neue Haltungen hinzufügen
+2022-12-28 18:40:06,671 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:40:06,862 INFO Haltungen mit Schacht {C3364F98-B325-4FE6-85DE-D57AA75343AC} trennen
+2022-12-28 18:40:08,386 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:40:08,393 INFO Ursprüngliche Haltung {E64A34FA-4423-4102-852A-5AEC7066B80A} löschen
+2022-12-28 18:40:08,408 INFO Neue Haltungen hinzufügen
+2022-12-28 18:40:08,643 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:40:08,825 INFO Haltungen mit Schacht {34413F41-A7EC-4C20-B5D3-FF63463DA36E} trennen
+2022-12-28 18:40:10,446 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:40:10,455 INFO Ursprüngliche Haltung {81ECEB8D-98C1-4FA4-88A4-B5FAC77CEB17} löschen
+2022-12-28 18:40:10,469 INFO Neue Haltungen hinzufügen
+2022-12-28 18:40:10,750 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:40:10,938 INFO Haltungen mit Schacht {C4D3A39B-59B2-4C6E-8CFB-65BD10E651A5} trennen
+2022-12-28 18:40:12,438 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:40:12,445 INFO Ursprüngliche Haltung {F9347E73-C482-490D-90E4-71140B083775} löschen
+2022-12-28 18:40:12,459 INFO Neue Haltungen hinzufügen
+2022-12-28 18:40:12,703 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:40:12,873 INFO Haltungen mit Schacht {3C4704DA-EBE1-42CA-A6CA-58B1B4927460} trennen
+2022-12-28 18:40:14,168 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:40:14,175 INFO Ursprüngliche Haltung {F9347E73-C482-490D-90E4-71140B083775}_u löschen
+2022-12-28 18:40:14,190 INFO Neue Haltungen hinzufügen
+2022-12-28 18:40:14,431 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:40:14,585 INFO Haltungen mit Schacht {D997A891-5F42-415A-8CDB-5398BF7A63E7} trennen
+2022-12-28 18:40:16,086 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:40:16,093 INFO Ursprüngliche Haltung {7A344F50-9CCD-4273-9D82-D938DF03952C} löschen
+2022-12-28 18:40:16,104 INFO Neue Haltungen hinzufügen
+2022-12-28 18:40:16,343 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:40:16,492 INFO Haltungen mit Schacht {29133728-3864-47C5-A889-643BA2901A47} trennen
+2022-12-28 18:40:17,880 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:40:17,886 INFO Ursprüngliche Haltung {7A344F50-9CCD-4273-9D82-D938DF03952C}_u löschen
+2022-12-28 18:40:17,901 INFO Neue Haltungen hinzufügen
+2022-12-28 18:40:18,133 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:40:18,295 INFO Haltungen mit Schacht {94EAE0E3-9681-4609-A923-D13686E7CC16} trennen
+2022-12-28 18:40:19,858 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:40:19,865 INFO Ursprüngliche Haltung {D2EF27FA-0B74-4618-8DD4-11C7D38C19DB} löschen
+2022-12-28 18:40:19,882 INFO Neue Haltungen hinzufügen
+2022-12-28 18:40:20,119 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:40:20,281 INFO Haltungen mit Schacht {025F5E86-D375-4BDA-A97D-500A564E36E6} trennen
+2022-12-28 18:40:22,009 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:40:22,017 INFO Ursprüngliche Haltung {D2EF27FA-0B74-4618-8DD4-11C7D38C19DB}_u löschen
+2022-12-28 18:40:22,035 INFO Neue Haltungen hinzufügen
+2022-12-28 18:40:22,296 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:40:22,446 INFO Haltungen mit Schacht {0B317328-9A39-4544-89EF-F19BCED785B4} trennen
+2022-12-28 18:40:23,716 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:40:23,721 INFO Ursprüngliche Haltung {842F3CB5-9936-4DD8-B854-518C0539871D} löschen
+2022-12-28 18:40:23,737 INFO Neue Haltungen hinzufügen
+2022-12-28 18:40:23,977 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:40:24,149 INFO Haltungen mit Schacht {31A3601E-CFF2-4510-88E7-781C40D3E550} trennen
+2022-12-28 18:40:25,673 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:40:25,680 INFO Ursprüngliche Haltung {D10093A5-081C-4F2A-A12B-DDA6DCC30FB8} löschen
+2022-12-28 18:40:25,723 INFO Neue Haltungen hinzufügen
+2022-12-28 18:40:26,012 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:40:26,167 INFO Haltungen mit Schacht {5C250655-C9FB-4DAB-A712-1D0D9C4D11F3} trennen
+2022-12-28 18:40:27,441 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:40:27,447 INFO Ursprüngliche Haltung {BBA7DFD9-72CC-4B80-A78E-C5338D46538B} löschen
+2022-12-28 18:40:27,461 INFO Neue Haltungen hinzufügen
+2022-12-28 18:40:27,677 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:40:27,826 INFO Haltungen mit Schacht {7F786E94-2A2D-4183-92F2-4D695465988B} trennen
+2022-12-28 18:40:29,075 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:40:29,082 INFO Ursprüngliche Haltung {BBA7DFD9-72CC-4B80-A78E-C5338D46538B}_u löschen
+2022-12-28 18:40:29,099 INFO Neue Haltungen hinzufügen
+2022-12-28 18:40:29,333 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:40:29,492 INFO Haltungen mit Schacht {62344DB2-9C2F-42A3-BFD1-584164085E3E} trennen
+2022-12-28 18:40:30,840 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:40:30,847 INFO Ursprüngliche Haltung {F29327D6-6139-4F28-9B91-0143674BBE5C} löschen
+2022-12-28 18:40:30,863 INFO Neue Haltungen hinzufügen
+2022-12-28 18:40:31,093 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:40:31,243 INFO Haltungen mit Schacht {0D95D86E-8517-4121-B775-DD9F5D27B0D6} trennen
+2022-12-28 18:40:32,517 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:40:32,524 INFO Ursprüngliche Haltung {F29327D6-6139-4F28-9B91-0143674BBE5C}_u löschen
+2022-12-28 18:40:32,536 INFO Neue Haltungen hinzufügen
+2022-12-28 18:40:32,754 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:40:32,903 INFO Haltungen mit Schacht {30D0274B-FC7C-45D4-B8EA-9B0DA2878CF4} trennen
+2022-12-28 18:40:34,134 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:40:34,139 INFO Ursprüngliche Haltung {F29327D6-6139-4F28-9B91-0143674BBE5C}_u_u löschen
+2022-12-28 18:40:34,152 INFO Neue Haltungen hinzufügen
+2022-12-28 18:40:34,408 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:40:34,577 INFO Haltungen mit Schacht {EF7E7D74-3DF6-4B72-9F15-6C8A2AE856C3} trennen
+2022-12-28 18:40:36,219 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:40:36,225 INFO Ursprüngliche Haltung {F29327D6-6139-4F28-9B91-0143674BBE5C}_u_u_u löschen
+2022-12-28 18:40:36,243 INFO Neue Haltungen hinzufügen
+2022-12-28 18:40:36,478 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:40:36,641 INFO Haltungen mit Schacht {00B07B23-5066-4840-846A-AF0E47C4DB19} trennen
+2022-12-28 18:40:38,296 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:40:38,302 INFO Ursprüngliche Haltung {F29327D6-6139-4F28-9B91-0143674BBE5C}_u_u_u_u löschen
+2022-12-28 18:40:38,316 INFO Neue Haltungen hinzufügen
+2022-12-28 18:40:38,533 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:40:38,683 INFO Haltungen mit Schacht {AB41FDFF-4AC1-45F5-919D-59D3AF8F5D6F} trennen
+2022-12-28 18:40:40,151 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:40:40,159 INFO Ursprüngliche Haltung {DCC1B00C-100D-47B2-9607-A7F1FCF947DA} löschen
+2022-12-28 18:40:40,172 INFO Neue Haltungen hinzufügen
+2022-12-28 18:40:40,556 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:40:41,085 INFO Haltungen mit Schacht {F419D1A3-2D63-4E80-82E3-FE5907C88646} trennen
+2022-12-28 18:40:42,449 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:40:42,457 INFO Ursprüngliche Haltung {DCC1B00C-100D-47B2-9607-A7F1FCF947DA}_l löschen
+2022-12-28 18:40:42,472 INFO Neue Haltungen hinzufügen
+2022-12-28 18:40:42,778 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:40:42,960 INFO Haltungen mit Schacht {CD8892D0-7FFA-4928-895A-9C41EAD375C5} trennen
+2022-12-28 18:40:44,437 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:40:44,446 INFO Ursprüngliche Haltung {ABD13B8E-AED5-45CF-A9DC-6F2026742BA4} löschen
+2022-12-28 18:40:44,464 INFO Neue Haltungen hinzufügen
+2022-12-28 18:40:44,773 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:40:44,928 INFO Haltungen mit Schacht {C38AD4C8-5D21-4764-AF99-5C9691F7BA81} trennen
+2022-12-28 18:40:46,384 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:40:46,394 INFO Ursprüngliche Haltung {1318F20D-EC99-4EC2-A1AB-2A7F79731345} löschen
+2022-12-28 18:40:46,409 INFO Neue Haltungen hinzufügen
+2022-12-28 18:40:46,721 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:40:46,923 INFO Haltungen mit Schacht {4475C023-065A-420F-A38C-B7DB79AC3801} trennen
+2022-12-28 18:40:48,290 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:40:48,296 INFO Ursprüngliche Haltung {35EE35F6-B8AA-4C7B-8A0E-12FE42B1B991} löschen
+2022-12-28 18:40:48,308 INFO Neue Haltungen hinzufügen
+2022-12-28 18:40:48,531 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:40:48,687 INFO Haltungen mit Schacht {DDEE96B5-CEE1-4909-ACC7-8779F334D8B4} trennen
+2022-12-28 18:40:49,989 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:40:49,996 INFO Ursprüngliche Haltung {2C029BA1-B144-4E3C-9807-F10A53C0A6B2} löschen
+2022-12-28 18:40:50,009 INFO Neue Haltungen hinzufügen
+2022-12-28 18:40:50,235 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:40:50,392 INFO Haltungen mit Schacht {E4D05F7B-99DC-483E-A179-70C2D312FE79} trennen
+2022-12-28 18:40:52,084 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:40:52,091 INFO Ursprüngliche Haltung {788F8E89-92BF-4EDF-ADE0-77269A4F673A} löschen
+2022-12-28 18:40:52,110 INFO Neue Haltungen hinzufügen
+2022-12-28 18:40:52,357 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:40:52,519 INFO Haltungen mit Schacht {CCE2CDD8-A85D-48C5-874B-BA8A10DAD849} trennen
+2022-12-28 18:40:53,928 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:40:53,936 INFO Ursprüngliche Haltung {F9347E73-C482-490D-90E4-71140B083775}_u_l löschen
+2022-12-28 18:40:53,953 INFO Neue Haltungen hinzufügen
+2022-12-28 18:40:54,261 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:40:54,440 INFO Haltungen mit Schacht {75DD839C-553B-4288-8CF2-F05324AC3943} trennen
+2022-12-28 18:40:57,283 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:40:57,336 INFO Ursprüngliche Haltung {7A344F50-9CCD-4273-9D82-D938DF03952C}_l löschen
+2022-12-28 18:40:57,390 INFO Neue Haltungen hinzufügen
+2022-12-28 18:40:57,786 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:40:58,213 INFO Haltungen mit Schacht {321F9562-6F7F-411D-803D-B06AF60CFBD4} trennen
+2022-12-28 18:41:00,444 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:41:00,453 INFO Ursprüngliche Haltung {F74CF796-27D7-4866-B9D3-A82286A4FF42} löschen
+2022-12-28 18:41:00,474 INFO Neue Haltungen hinzufügen
+2022-12-28 18:41:00,758 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:41:00,923 INFO Haltungen mit Schacht {89CFF871-C663-4998-9689-A031417FF762} trennen
+2022-12-28 18:41:02,428 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:41:02,434 INFO Ursprüngliche Haltung {F74CF796-27D7-4866-B9D3-A82286A4FF42}_u löschen
+2022-12-28 18:41:02,449 INFO Neue Haltungen hinzufügen
+2022-12-28 18:41:02,722 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:41:02,902 INFO Haltungen mit Schacht {443F351D-2E56-4013-9460-116BFB328754} trennen
+2022-12-28 18:41:04,353 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:41:04,359 INFO Ursprüngliche Haltung {0A12B2B2-5809-4A42-A83E-0012AE945C17} löschen
+2022-12-28 18:41:04,372 INFO Neue Haltungen hinzufügen
+2022-12-28 18:41:04,590 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:41:04,771 INFO Haltungen mit Schacht {6931382A-65C9-4FDC-91B9-0009DD83B974} trennen
+2022-12-28 18:41:06,272 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:41:06,278 INFO Ursprüngliche Haltung {ED8CF264-B728-4D8B-AC47-0BF13C131F92} löschen
+2022-12-28 18:41:06,297 INFO Neue Haltungen hinzufügen
+2022-12-28 18:41:06,596 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:41:06,799 INFO Haltungen mit Schacht {48462822-8A06-4244-A36D-87017FE6E07D} trennen
+2022-12-28 18:41:08,301 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:41:08,307 INFO Ursprüngliche Haltung {35EE35F6-B8AA-4C7B-8A0E-12FE42B1B991}_u löschen
+2022-12-28 18:41:08,319 INFO Neue Haltungen hinzufügen
+2022-12-28 18:41:08,546 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:41:08,694 INFO Haltungen mit Schacht {3BBDE5D1-80F1-4B47-9AAE-8983926FD330} trennen
+2022-12-28 18:41:10,144 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:41:10,155 INFO Ursprüngliche Haltung {5D5B4467-0151-4336-B6AB-5F8482521211} löschen
+2022-12-28 18:41:10,175 INFO Neue Haltungen hinzufügen
+2022-12-28 18:41:10,398 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:41:10,608 INFO Haltungen mit Schacht {C3FACE43-D64C-4F52-B9E4-9ECD090AB3BC} trennen
+2022-12-28 18:41:11,942 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:41:11,957 INFO Ursprüngliche Haltung {5D5B4467-0151-4336-B6AB-5F8482521211}_l löschen
+2022-12-28 18:41:11,974 INFO Neue Haltungen hinzufügen
+2022-12-28 18:41:12,198 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:41:12,375 INFO Haltungen mit Schacht {6507012C-EC06-4DC9-B231-CCC2A55801E3} trennen
+2022-12-28 18:41:14,074 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:41:14,080 INFO Ursprüngliche Haltung {2194D7AF-FA12-4740-A086-5F3B1E877CA8} löschen
+2022-12-28 18:41:14,095 INFO Neue Haltungen hinzufügen
+2022-12-28 18:41:14,328 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:41:14,486 INFO Haltungen mit Schacht {50817A3F-F24B-48BA-896C-124893613B5F} trennen
+2022-12-28 18:41:16,258 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:41:16,266 INFO Ursprüngliche Haltung {F29327D6-6139-4F28-9B91-0143674BBE5C}_u_l löschen
+2022-12-28 18:41:16,280 INFO Neue Haltungen hinzufügen
+2022-12-28 18:41:16,508 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:41:16,669 INFO Haltungen mit Schacht {9DD0E74F-C3A9-40C2-B014-936608461A1D} trennen
+2022-12-28 18:41:18,054 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:41:18,062 INFO Ursprüngliche Haltung {BBA7DFD9-72CC-4B80-A78E-C5338D46538B}_u_l löschen
+2022-12-28 18:41:18,082 INFO Neue Haltungen hinzufügen
+2022-12-28 18:41:18,418 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:41:18,581 INFO Haltungen mit Schacht {006509DD-9CD2-4577-8C48-4072BE75CBB8} trennen
+2022-12-28 18:41:19,931 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:41:19,938 INFO Ursprüngliche Haltung {BBA7DFD9-72CC-4B80-A78E-C5338D46538B}_u_l_l löschen
+2022-12-28 18:41:19,953 INFO Neue Haltungen hinzufügen
+2022-12-28 18:41:20,178 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:41:20,331 INFO Haltungen mit Schacht {3CF6C0E9-6309-4D2E-93B5-5524E25B5E2F} trennen
+2022-12-28 18:41:21,906 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:41:21,913 INFO Ursprüngliche Haltung {842F3CB5-9936-4DD8-B854-518C0539871D}_l löschen
+2022-12-28 18:41:21,929 INFO Neue Haltungen hinzufügen
+2022-12-28 18:41:22,163 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:41:22,315 INFO Haltungen mit Schacht {6B976BDD-FC08-48AA-A082-DA8B9FEACF4E} trennen
+2022-12-28 18:41:23,780 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:41:23,787 INFO Ursprüngliche Haltung {D2EF27FA-0B74-4618-8DD4-11C7D38C19DB}_u_l löschen
+2022-12-28 18:41:23,801 INFO Neue Haltungen hinzufügen
+2022-12-28 18:41:24,031 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:41:24,191 INFO Haltungen mit Schacht {27687AA1-8700-40C1-B315-BF23CDE5D3EE} trennen
+2022-12-28 18:41:25,710 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:41:25,718 INFO Ursprüngliche Haltung {F74CF796-27D7-4866-B9D3-A82286A4FF42}_l löschen
+2022-12-28 18:41:25,738 INFO Neue Haltungen hinzufügen
+2022-12-28 18:41:26,050 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:41:26,277 INFO Haltungen mit Schacht {A3ECD94B-7FFE-4280-8484-F9310BD063AB} trennen
+2022-12-28 18:41:28,112 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:41:28,118 INFO Ursprüngliche Haltung {7A344F50-9CCD-4273-9D82-D938DF03952C}_u_u löschen
+2022-12-28 18:41:28,133 INFO Neue Haltungen hinzufügen
+2022-12-28 18:41:28,369 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:41:28,527 INFO Haltungen mit Schacht {61B0A445-46B5-46B6-8181-99EA5E6E6F51} trennen
+2022-12-28 18:41:29,921 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:41:29,927 INFO Ursprüngliche Haltung {7A344F50-9CCD-4273-9D82-D938DF03952C}_u_l löschen
+2022-12-28 18:41:29,941 INFO Neue Haltungen hinzufügen
+2022-12-28 18:41:30,161 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:41:30,313 INFO Haltungen mit Schacht {C89BFF86-4503-4509-B95A-58D8B9888E6F} trennen
+2022-12-28 18:41:31,591 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:41:31,597 INFO Ursprüngliche Haltung {7A344F50-9CCD-4273-9D82-D938DF03952C}_u_l_l löschen
+2022-12-28 18:41:31,609 INFO Neue Haltungen hinzufügen
+2022-12-28 18:41:31,854 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:41:32,007 INFO Haltungen mit Schacht {E4F17BEF-917F-41DB-A617-E03E8CE3161F} trennen
+2022-12-28 18:41:33,286 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:41:33,293 INFO Ursprüngliche Haltung {F9347E73-C482-490D-90E4-71140B083775}_u_l_l löschen
+2022-12-28 18:41:33,305 INFO Neue Haltungen hinzufügen
+2022-12-28 18:41:33,539 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:41:33,690 INFO Haltungen mit Schacht {95D880BA-C3CA-4CF6-8E19-D2A1085C3964} trennen
+2022-12-28 18:41:34,941 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:41:34,948 INFO Ursprüngliche Haltung {788F8E89-92BF-4EDF-ADE0-77269A4F673A}_u löschen
+2022-12-28 18:41:34,962 INFO Neue Haltungen hinzufügen
+2022-12-28 18:41:35,206 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:41:35,359 INFO Haltungen mit Schacht {2E151324-D716-4944-BC43-EAC693DD4829} trennen
+2022-12-28 18:41:36,806 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:41:36,820 INFO Ursprüngliche Haltung {CDED25E9-190C-4D1D-8D58-769EA575FD7F} löschen
+2022-12-28 18:41:36,845 INFO Neue Haltungen hinzufügen
+2022-12-28 18:41:37,118 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:41:37,277 INFO Haltungen mit Schacht {6EA684FB-5A89-410A-A200-C06C3ADA5EB6} trennen
+2022-12-28 18:41:38,561 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:41:38,569 INFO Ursprüngliche Haltung {CDED25E9-190C-4D1D-8D58-769EA575FD7F}_u löschen
+2022-12-28 18:41:38,581 INFO Neue Haltungen hinzufügen
+2022-12-28 18:41:38,807 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:41:38,961 INFO Haltungen mit Schacht {F3E0F560-5212-4E8E-A2A3-DD4267565CAA} trennen
+2022-12-28 18:41:40,244 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:41:40,251 INFO Ursprüngliche Haltung {4FB8AE3F-433C-48CE-8898-03E70DC0360C} löschen
+2022-12-28 18:41:40,264 INFO Neue Haltungen hinzufügen
+2022-12-28 18:41:40,481 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:41:40,628 INFO Haltungen mit Schacht {FB62B94F-710E-4634-BCF5-4A4047C534DF} trennen
+2022-12-28 18:41:41,889 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:41:41,895 INFO Ursprüngliche Haltung {4FB8AE3F-433C-48CE-8898-03E70DC0360C}_u löschen
+2022-12-28 18:41:41,908 INFO Neue Haltungen hinzufügen
+2022-12-28 18:41:42,138 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:41:42,289 INFO Haltungen mit Schacht {E2F1801C-A521-45DC-AAE6-B071D8507E0E} trennen
+2022-12-28 18:41:43,553 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:41:43,561 INFO Ursprüngliche Haltung {4FB8AE3F-433C-48CE-8898-03E70DC0360C}_u_u löschen
+2022-12-28 18:41:43,575 INFO Neue Haltungen hinzufügen
+2022-12-28 18:41:43,791 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:41:43,940 INFO Haltungen mit Schacht {7C952335-C61F-4DCC-B1BD-D927C3B912D1} trennen
+2022-12-28 18:41:45,196 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:41:45,203 INFO Ursprüngliche Haltung {4FB8AE3F-433C-48CE-8898-03E70DC0360C}_u_u_u löschen
+2022-12-28 18:41:45,220 INFO Neue Haltungen hinzufügen
+2022-12-28 18:41:45,446 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:41:45,599 INFO Haltungen mit Schacht {F71B048B-DC08-48AD-ADD7-DD2EA42AF0A7} trennen
+2022-12-28 18:41:46,877 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:41:46,883 INFO Ursprüngliche Haltung {9CB46948-DFD2-47E9-A231-CDD15021F12D} löschen
+2022-12-28 18:41:46,898 INFO Neue Haltungen hinzufügen
+2022-12-28 18:41:47,110 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:41:47,261 INFO Haltungen mit Schacht {55D06D0E-EEFE-4D14-A2CA-38E0668F3B95} trennen
+2022-12-28 18:41:48,634 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:41:48,643 INFO Ursprüngliche Haltung {9CB46948-DFD2-47E9-A231-CDD15021F12D}_l löschen
+2022-12-28 18:41:48,662 INFO Neue Haltungen hinzufügen
+2022-12-28 18:41:48,911 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:41:49,075 INFO Haltungen mit Schacht {B4BEDD68-4A13-490E-B709-12D4B7EB237B} trennen
+2022-12-28 18:41:50,516 INFO Die zwei neuen Haltungen aktualiseren
+2022-12-28 18:41:50,522 INFO Ursprüngliche Haltung {7CE3C7AE-1EA5-4C4C-A234-7FC92FDBCC44} löschen
+2022-12-28 18:41:50,536 INFO Neue Haltungen hinzufügen
+2022-12-28 18:41:50,814 INFO Temporäre Feature-Klasse mit getrennten Haltungen löschen
+2022-12-28 18:41:50,965 INFO 0 Schächte wurden gelöscht
+2022-12-28 18:41:50,966 INFO Bei 110 Einlaufschächten wurde die Haltung getrennt
+2022-12-28 18:41:50,966 INFO Listen mit aktualisierten Von- und Bis-Schächten erstellen
+2022-12-28 18:41:51,168 INFO Auslaufschächte definieren
+2022-12-28 18:41:51,191 INFO 2 Schächte wurden als Auslaufschächte definiert
+2022-12-28 18:41:51,192 INFO Sohlenkote von PAA-Netz interpolieren
+2022-12-28 18:41:51,196 INFO Liste mit allen Haltungen erstellen
+2022-12-28 18:41:51,231 INFO Dictionary mit allen Schächten mit den zugehörigen Haltungen (gemäss Topologie) erstellen
+2022-12-28 18:41:51,247 INFO Durch alle Schächte iterieren und Sohlenkote berechnen falls nicht vorhanden
+2022-12-28 18:41:51,249 WARNING Beim Schacht mit der ID {54FCA80C-E381-4063-BE5F-691E7CF2D58D} wurde die Mindesttiefe 0.1 unterschritten. Die berechnete Sohlenkote 589.1834534119135 wurde auf 580.701 angepasst.
+2022-12-28 18:41:51,254 INFO Von 71 Schächten Sohlenkote berechnet
+2022-12-28 18:41:51,257 INFO Schächte ohne Solhenkote selektieren
+2022-12-28 18:41:51,404 INFO Sohlenkote aktualisieren
+2022-12-28 18:41:51,415 INFO Von 71 Schächten Sohlenkote aktualisiert
+2022-12-28 18:41:51,618 INFO Schachttiefe aktualisieren
+2022-12-28 18:41:51,741 INFO slope-Feld erstellen
+2022-12-28 18:41:52,159 INFO Steigung (Gefälle) berechnen und Feldwert abfüllen
+2022-12-28 18:41:52,936 INFO Von 96 Leitungen Steigung berechnet
+2022-12-28 18:41:52,962 INFO Topologie für gesamte Netz erstellen
+2022-12-28 18:41:52,963 INFO Haltungen mit selben Von- und Bis-Schacht aktualisieren
+2022-12-28 18:41:52,990 INFO Haltungen ohne Von- oder Bis-Schacht löschen
+2022-12-28 18:41:52,997 INFO 0 Haltungen ohne Von- oder Bis-Schacht wurden gelöscht
+2022-12-28 18:41:52,998 INFO Listen mit Von- und Bis-Schächten erstellen
+2022-12-28 18:41:53,002 INFO Schächte die weder Von- noch Bis-Schacht einer Haltung sind löschen
+2022-12-28 18:41:53,006 WARNING Schacht mit ID {42E566E8-DE58-4AD8-A92B-62790AD1B04B} wird gelöscht
+2022-12-28 18:41:53,010 INFO 1 Schächte ohne zugehehörige Haltungen wurden gelöscht
+2022-12-28 18:41:53,011 INFO Einlaufschächte ohne Von-Schacht löschen
+2022-12-28 18:41:53,014 INFO 0 Einlaufschächte ohne Von-Schacht wurden gelöscht
+2022-12-28 18:41:53,016 INFO Layer mit relevanten Einlaufschächten erstellen
+2022-12-28 18:41:53,176 INFO Liste mit den IDs der relevanten Schächte und Haltungen erstellen
+2022-12-28 18:41:53,185 INFO Durch alle relevanten Schächte iterieren
+2022-12-28 18:41:53,185 INFO 0 Schächte wurden gelöscht
+2022-12-28 18:41:53,186 INFO Bei 0 Einlaufschächten wurde die Haltung getrennt
+2022-12-28 18:41:53,187 INFO Listen mit aktualisierten Von- und Bis-Schächten erstellen
+2022-12-28 18:41:53,349 INFO Auslaufschächte definieren
+2022-12-28 18:41:53,372 INFO 1 Schächte wurden als Auslaufschächte definiert
+2022-12-28 18:41:53,373 INFO Sohlenkote für gesamtes Netz interpolieren
+2022-12-28 18:41:53,439 INFO Liste mit allen Haltungen erstellen
+2022-12-28 18:41:53,449 INFO Dictionary mit allen Schächten mit den zugehörigen Haltungen (gemäss Topologie) erstellen
+2022-12-28 18:41:53,518 INFO Durch alle Schächte iterieren und Sohlenkote berechnen falls nicht vorhanden
+2022-12-28 18:41:53,520 WARNING Beim Schacht mit der ID {AF0BCDD2-9CCC-4826-BDB2-784CCB66B4F2} wurde die Mindesttiefe 0.1 unterschritten. Die berechnete Sohlenkote 593.9905946214685 wurde auf 591.617 angepasst.
+2022-12-28 18:41:53,521 WARNING Beim Schacht mit der ID {BEB8F4C7-F8A6-4378-B394-2BFC41D75CEE} wurde die Mindesttiefe 0.1 unterschritten. Die berechnete Sohlenkote 594.1768401291208 wurde auf 591.6899999999999 angepasst.
+2022-12-28 18:41:53,523 WARNING Um eine positive Steigung in Fliessrichtung zu verweiden wird beim Schacht mit der ID {E88422C4-BA00-40DB-A04F-D6F8346EAF54} die berechnete Sohlenkote von 580.0415960920117 auf 578.3939874854509 (zwischen Extremwerten) angepasst.
+2022-12-28 18:41:53,526 WARNING Beim Schacht mit der ID {8E7EBE63-D042-40E5-A637-1991E2D335E6} wurde die Mindesttiefe 0.1 unterschritten. Die berechnete Sohlenkote 577.7772543411907 wurde auf 577.66 angepasst.
+2022-12-28 18:41:53,528 WARNING Beim Schacht mit der ID {86F6B7CC-AD19-4D77-B304-B97694FA1B44} wurde die Mindesttiefe 0.1 unterschritten. Die berechnete Sohlenkote 556.3867290505535 wurde auf 556.281 angepasst.
+2022-12-28 18:41:53,530 WARNING Beim Schacht mit der ID {D2A5C3E3-979B-43E7-B315-A46199F5AB46} wurde die Mindesttiefe 0.1 unterschritten. Die berechnete Sohlenkote 557.4452441061737 wurde auf 557.198 angepasst.
+2022-12-28 18:41:53,531 WARNING Beim Schacht mit der ID {2450A6C4-F723-4D29-80FF-12E2B996B1E0} wurde die Mindesttiefe 0.1 unterschritten. Die berechnete Sohlenkote 568.0305348129224 wurde auf 566.405 angepasst.
+2022-12-28 18:41:53,533 WARNING Beim Schacht mit der ID {2D68C65C-F62D-4214-925B-85D287D72F98} wurde die Mindesttiefe 0.1 unterschritten. Die berechnete Sohlenkote 561.1654075651599 wurde auf 560.919 angepasst.
+2022-12-28 18:41:53,536 WARNING Beim Schacht mit der ID {354388AE-1A10-44DB-925A-D3E62EFC5D4E} wurde die Mindesttiefe 0.1 unterschritten. Die berechnete Sohlenkote 583.5781783582105 wurde auf 583.3779999999999 angepasst.
+2022-12-28 18:41:53,539 WARNING Beim Schacht mit der ID {E01EA186-B0FA-463E-8A01-DF108D43C89F} wurde die Mindesttiefe 0.1 unterschritten. Die berechnete Sohlenkote 594.5523343270326 wurde auf 594.401 angepasst.
+2022-12-28 18:41:53,541 WARNING Um eine positive Steigung in Fliessrichtung zu verweiden wird beim Schacht mit der ID {95459DD8-4605-4733-97CC-14148F906845} die berechnete Sohlenkote von 560.1378684338297 auf 559.59 (zwischen Extremwerten) angepasst.
+2022-12-28 18:41:53,542 WARNING Um eine positive Steigung in Fliessrichtung zu verweiden wird beim Schacht mit der ID {E8F5B04C-7A64-4EFD-9BFE-BAFC85DEF98F} die berechnete Sohlenkote von 566.1055165108577 auf 565.91 (zwischen Extremwerten) angepasst.
+2022-12-28 18:41:53,544 INFO Von 209 Schächten Sohlenkote berechnet
+2022-12-28 18:41:53,545 INFO Schächte ohne Solhenkote selektieren
+2022-12-28 18:41:53,699 INFO Sohlenkote aktualisieren
+2022-12-28 18:41:53,719 INFO Von 209 Schächten Sohlenkote aktualisiert
+2022-12-28 18:41:53,862 INFO Schachttiefe aktualisieren
+2022-12-28 18:41:53,983 INFO Vorhandenes slope-Feld löschen
+2022-12-28 18:41:54,190 INFO slope-Feld erstellen
+2022-12-28 18:41:54,394 INFO Steigung (Gefälle) berechnen und Feldwert abfüllen
+2022-12-28 18:41:56,124 INFO Von 361 Leitungen Steigung berechnet
+2022-12-28 18:41:56,138 INFO Skript Laufzeit: 117 sec.
+2022-12-28 18:41:56,140 INFO 0 Fehler gefunden. Check Log.
+2022-12-28 18:41:56,141 INFO End time: Wed Dec 28 18:41:56 2022
+2022-12-28 18:41:56,141 INFO ****************************************************************
+
