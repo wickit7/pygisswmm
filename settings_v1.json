@@ -165,5 +165,5 @@
 		"parcel_workspace": "C:/src/data/Input.gdb",
 		"in_parcel": "LIEGENSCHAFTEN",
 		"parcel_id": "NUMMER",
-		"template_swmm_file": "C:/pygisswmm/4_GISSWMM2SWMM/swmm_template_5-yr.inp"
+		"template_swmm_file": "4_GISSWMM2SWMM/swmm_template_5-yr.inp"
 }

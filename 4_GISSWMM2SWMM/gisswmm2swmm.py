@@ -67,7 +67,7 @@ def main(out_node, out_link, out_subcatchment, template_swmm_file, sim_nr):
         template_swmm_file -- Template .inp-Datei die alle Angaben ausser der Bauwerke enthält
         sim_nr -- Wird als Postfix für Log-Dateinamen und Feature-Klassen verwendet
     """
-    # Pfad zu Output SWMM-Datei
+    # Pfad zur Output SWMM-Datei
     in_path, in_name = os.path.split(template_swmm_file)
     out_path = os.path.join(in_path, sim_nr)
     out_name = in_name.split(".inp")[0] + "_" + sim_nr + '.inp'
