@@ -29,7 +29,7 @@ Es wurden mehrere Python-Skripte erstellt, die nacheinander ausgeführt werden. 
 ### JSON-Datei mit den Eingabeparametern
 Alle Eingabeparameter werden in einer JSON-Datei (Beispiel: [settings_v1](settings_v1.json)) angegeben. Der Pfad zur JSON-Datei kann entweder direkt in den Python-Skripts angegeben ("paramFile = "...".json) werden oder als Parameter, zum Beispiel in einer Batch-Datei, übergeben werden:
 
-> C:\Users\wickit7\AppData\Local\ESRI\conda\envs\arcgispro-py3-swmm\python.exe  "sia2gisswmm.py" "sia2gisswmm_v1.json" 
+> C:\Users\...\AppData\Local\ESRI\conda\envs\arcgispro-py3-swmm\python.exe  "sia2gisswmm.py" "sia2gisswmm_v1.json" 
 
 Die JSON-Datei enthält folgende Parameter:
 
