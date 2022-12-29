@@ -18,6 +18,7 @@ Die Umgebung enthält unter anderem die Python-Bibliothek arcpy (v. 2.9).
 Zusätzlich werden die Python-Bibliotheken «swmmio» und «swmm_api» benötigt:
 
 > pip install swmmio==0.4.9
+
 > pip install swmm_api==0.2.0.18.3
 
 Die vorhandenen JSON- und Batch-Dateien wurden für die Testdaten (data\INPUT.gdb) erstellt. Diese Dateien müssen für die eigenen Daten jeweils entsprechend angepasst werden.
