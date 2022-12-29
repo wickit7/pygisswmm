@@ -27,7 +27,7 @@ Die JSON-Datei [settings_v1](settings_v1.json) mit den Inputparametern wurde fü
 Es wurden mehrere Python-Skripte erstellt, die nacheinander ausgeführt werden. Die Skripte werden im Folgenden kurz beschrieben.
 
 ### JSON-Datei mit den Eingabeparametern
-Alle Eingabeparameter werden in einer JSON-Datei (Beispiel: [settings_v1](settings_v1.json)) angegeben. Der Pfad zur JSON-Datei kann entweder direkt in den Python-Skripts angegeben ("paramFile = "...".json) werden oder als Parameter, zum Beispiel in einer Batch-Datei, übergeben werden:
+Alle Eingabeparameter werden in einer JSON-Datei (Beispiel: [settings_v1](settings_v1.json)) angegeben. Der Pfad zur JSON-Datei kann entweder direkt in den Python-Skripts angegeben werden ("paramFile = "...".json) oder als Parameter, zum Beispiel in einer Batch-Datei, übergeben werden:
 
 > C:\Users\...\AppData\Local\ESRI\conda\envs\arcgispro-py3-swmm\python.exe  "sia2gisswmm.py" "sia2gisswmm_v1.json" 
 
