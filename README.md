@@ -55,8 +55,8 @@ Die JSON-Datei enthält folgende Parameter:
 | node_id | Die Bezeichnung vom ID-Feld in der Feature-Klasse "out_node". | "Name" |
 | node_dk | Die Bezeichnung vom Feld mit der Deckelkote in der Feature-Klasse "out_node". | "Elev" |
 | node_sk | Die Bezeichnung vom Feld mit der Sohlenkote in der Feature-Klasse "out_node". | "InvertElev" |
-| tag_dk (optional)| Den Wert für das tag-Feld, um zu kennzeichnen, welche Deckelkoten mit dem DHM berechnet wurden. | "dk_dhm" |
-| tag_sk (optional)| Den Wert für das tag-Feld, um zu kennzeichnen, welche Sohlenkoten durch Interpolation ermittelt wurden. | "sk_ip" |
+| tag_dk (optional)| Der Wert für das tag-Feld,der angibt, welche Deckelkoten mit dem DHM berechnet wurden. | "dk_dhm" |
+| tag_sk (optional)| Der Wert für das tag-Feld, der angibt, welche Sohlenkoten durch Interpolation ermittelt wurden. | "sk_ip" |
 | node_to_link | Der Name des Feldes in der Feature-Klasse "out_node", das die ID der Haltung enthält, auf der sich der Einlaufschacht befindet. | "NodeToLink" |
 | node_type | Die Bezeichnung vom Feld mit dem Schachttyp in der Feature-Klasse "out_node". | "SWMM_TYPE" |
 | type_inlet | Der Wert im Feld Schachttyp ("node_type"), welcher dem Einlaufschacht entspricht. | "INLET" |
