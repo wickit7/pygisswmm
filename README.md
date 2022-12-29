@@ -6,7 +6,10 @@ Die folgende Abbildung gibt einen Überblick über die wichtigsten Inputdaten, A
 
 <img  src="https://user-images.githubusercontent.com/45633047/205504102-8909d633-ce2b-4543-8006-7da86f31b50b.png" width=70% height=70%>
 
-## Erstellung virtuelle Umgebung für Python
+### Skizze Kanalisation
+<img  src="https://user-images.githubusercontent.com/45633047/209981377-910ad649-ff40-4886-88f4-701653b6fc4e.png" width=70% height=70%>
+
+## Erstellung virtuelle Python-Umgebung
 Die virtuelle Python-Umgebung von ArcGIS Pro 2.9.4 wurde in eine neue virtuelle Python-Umgebung kopiert, indem in der Python Command Prompt folgender Befehl ausgeführt wurde:
 
 > conda create --name arcgispro-py3-swmm --clone arcgispro-py3
