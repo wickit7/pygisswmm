@@ -21,7 +21,7 @@ Zusätzlich werden die Python-Bibliotheken «swmmio» und «swmm_api» benötigt
 
 > pip install swmm_api==0.2.0.18.3
 
-Die vorhandenen JSON- und Batch-Dateien wurden für die Testdaten (data\INPUT.gdb) erstellt. Diese Dateien müssen für die eigenen Daten jeweils entsprechend angepasst werden.
+Die JSON-Datei [settings_v1](settings_v1.json) mit den Inputparametern wurde für die Testdaten (data\INPUT.gdb) erstellt und muss für die eigenen Daten jeweils entsprechend angepasst werden.
 
 ## Ausführung Skripte
 Es wurden mehrere Python-Skripte erstellt, die nacheinander ausgeführt werden. Die Skripte werden im Folgenden kurz beschrieben.
