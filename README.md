@@ -122,6 +122,7 @@ Die Teileinzugsgebiete mit einer der folgenden vier Methoden erstellen:
  2. Parzellen unterteilt in Flächen mit homogener Bodenbedeckung
  3. Topographische Einzugsgebiete als Teileinzugsgebiete
  4. Topographische Einzugsgebite untrteilt in Flächen mit homogener Bodenbedeckung
+
 Bei der Methode 1 und 2 werden die topographischen Einzugsgebiete verwendet, um den Entwässerungsknoten der Teileinzugsgebiete (Parzellen) zu bestimmen.
 Dem Skript wird eine JSON-Datei mit den Parametern übergeben (Beispiel: [settings_v1](settings_v1.json)).
 
