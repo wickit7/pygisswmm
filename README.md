@@ -1,5 +1,5 @@
 # pygisswmm
-Automatische Erstellung eines SWMM-Modells aus einem Abwasserkataster (sia 405). Die Skripte wurden im Zusammenhang mit der UNIGIS Masterarbeit "Effekt der Einzugsgebietsmodellierung auf die Abflusssimulation im urbanen Gebiet" erstellt.
+Automatische Erstellung eines SWMM-Modells aus einem Abwasserkataster (sia 405). Die Skripte wurden im Zusammenhang mit der UNIGIS Masterarbeit ["Effekt der Einzugsgebietsmodellierung auf die Abflusssimulation im urbanen Gebiet"](http://map.stadtluzern.ch/unigis/Master_Thesis_Timo_Wicki.pdf) erstellt.
 
 ## Methodik
 Die folgende Abbildung gibt einen Überblick über die wichtigsten Inputdaten, Arbeitsschritte und Ergebnisse. Die Prozesse wurden mittels der Programmiersprache Python (Rossum & Drake, 2009) automatisiert. Die hydrodynamische Simulation wird mit der Open Source Software [Stormwater Managment Model (SWMM)](https://www.epa.gov/water-research/storm-water-management-model-swmm) der US Environmental Protection Agency (EPA) durchgeführt (Rossman, 2015). Die GIS-Analysen erfolgen mit dem Softwareprodukt ArcGIS unter Verwendung der Python-Bibliothek [arcpy, v. 2.9](https://pro.arcgis.com/de/pro-app/latest/arcpy/get-started/what-is-arcpy-.htm). Für die Schnittstelle zum Simulationsprogramm SWMM werden die Python-Bibliotheken [swmmio, v. 0.4.9](https://github.com/aerispaha/swmmio) (Erispaha & Brown, 2018) und [swmm_api, v. 0.2.0.18.3](https://gitlab.com/markuspichler/swmm_api) (Pichler, 2022) verwendet. Weitere Informationen sind im PDF der Masterarbeit zu finden.
@@ -36,7 +36,7 @@ Alle Eingabeparameter werden in einer JSON-Datei (Beispiel: [settings_v1](settin
 
 Die JSON-Datei enthält folgende Parameter:
 
-| Parameter | Beschreibung | Beispiel |
+| Parameter |    Beschreibung    | Beispiel |
 | --- | --- | --- |
 | log_folder | Der Pfad zum Ordner, in dem die log-Dateien gespeichert werden sollen. | "C:/pygisswmm/1_SIA2GISSWMM/Logs" |
 | sim_nr | Die Bezeichnung der aktuellen Simulation (Szenario). Das Esri Feature-Dataset im Workspace "gisswmm _workspace" erhält diese Bezeichnung. Zudem wird die Bezeichnung den Feature-Klassen ("out_node", "out_link", "out_subcatchment") und den Log-Dateien als Postfix ("_sim_nr") hinzugefügt. | "v1" |
