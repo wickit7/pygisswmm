@@ -151,7 +151,7 @@ Die SWMM-Outputdateien ".rpt" werden zu Excel-Dateien konvertiert, die anschlies
 
 [Beispieldiagramme](5_RESULT/figures/)
 
-### Ideen für Erweiterungen
+## Ideen für Erweiterungen
 - Interlis ImportAbgleich der GIS-Daten mit dem bestehenden SWMM-Modell anstelle der Erstellung eines neuen Modells
 - Berücksichtigung von zusätzlichen Inputdaten (z. B. Informationen zu Sonderbauwerken, Pumpenkennlinie)
 - Berücksichtigung von Green Infrastructure Elementen
