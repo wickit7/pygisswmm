@@ -151,6 +151,13 @@ Die SWMM-Outputdateien ".rpt" werden zu Excel-Dateien konvertiert, die anschlies
 
 [Beispieldiagramme](5_RESULT/figures/)
 
+### Ideen für Erweiterungen
+- Interlis ImportAbgleich der GIS-Daten mit dem bestehenden SWMM-Modell anstelle der Erstellung eines neuen Modells
+- Berücksichtigung von zusätzlichen Inputdaten (z. B. Informationen zu Sonderbauwerken, Pumpenkennlinie)
+- Berücksichtigung von Green Infrastructure Elementen
+- Hinzufügen einer Option, die es ermöglicht, Teileinzugsgebiete aus den GEP-Daten zu importieren, anstatt sie neu zu erstellen.
+- Abgleich der GIS-Daten mit dem bestehenden SWMM-Modell anstelle der Erstellung eines neuen Modells
+
 ## Referenzen
 - Erispaha, A. S., & Brown, C. (2018). Automating Model Builds for Sequence Optimization of Flood Mitigation Investment Phases. Journal of Water Management Modeling.
 - Pichler, M. (2022). swmm-api: API for reading, manipulating and running SWMM-Projects with python. In (Version 0.2.0.18.3) Zenodo. https://doi.org/10.5281/zenodo.5862141
